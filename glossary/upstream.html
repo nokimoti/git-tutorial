@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>アップストリーム - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,44 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>アップストリーム (Upstream)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      ローカルブランチが「<strong>どのリモートブランチと連動しているか</strong>」を示す紐付け。これが設定されていれば <code>git push</code> や <code>git pull</code> を引数なしで実行できます。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>初回プッシュで設定される</h2>
+    <pre><code>git push -u origin main</code></pre>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
+      この <code>-u</code> がアップストリームを設定するオプションです。意味は
+      「ローカルの <code>main</code> ブランチは、リモート <code>origin</code> の <code>main</code> ブランチに push/pull するものとして覚えておいて」。
     </p>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>設定後は引数不要</h2>
+    <pre><code>git push   # → 自動で origin/main に送る
+git pull   # → 自動で origin/main から取る</code></pre>
+
+    <h2>確認する</h2>
+    <pre><code>git branch -vv</code></pre>
+    <p>
+      ブランチごとに「どのリモートブランチに紐付いているか」が表示されます。
+    </p>
+    <pre><code>* main f1e2d3c [origin/main] 最初のコミット</code></pre>
+    <p><code>[origin/main]</code> の部分がアップストリームの設定です。</p>
+
+    <h2>後から設定/変更</h2>
+    <pre><code>git branch --set-upstream-to=origin/main main</code></pre>
+
+    <h2>関連用語</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li><a class="term" href="remote.html">リモート</a></li>
+      <li><a class="term" href="origin.html">origin</a></li>
+      <li><a class="term" href="push.html">プッシュ</a></li>
     </ul>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/16-push-pull.html">STEP 16: プッシュとプル</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

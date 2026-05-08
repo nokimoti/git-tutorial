@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>チェックアウト - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,42 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>チェックアウト (Checkout)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      Git の古くからあるコマンド <code>git checkout</code> のこと。<strong>「ブランチ切替」と「ファイル復元」の両方</strong> をこの1コマンドが担っていて、初心者には混乱しやすいため、現在は2つに分割した <code>git switch</code> と <code>git restore</code> の使用が推奨されています。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>新旧コマンドの対応</h2>
+    <table>
+      <thead><tr><th>古い書き方</th><th>新しい書き方</th><th>意味</th></tr></thead>
+      <tbody>
+        <tr><td><code>git checkout main</code></td><td><code>git switch main</code></td><td>ブランチを切り替え</td></tr>
+        <tr><td><code>git checkout -b feature</code></td><td><code>git switch -c feature</code></td><td>作成して切り替え</td></tr>
+        <tr><td><code>git checkout -- file.txt</code></td><td><code>git restore file.txt</code></td><td>ファイルの変更を破棄</td></tr>
+        <tr><td><code>git checkout HEAD file.txt</code></td><td><code>git restore --source=HEAD file.txt</code></td><td>HEADの状態に戻す</td></tr>
+      </tbody>
+    </table>
+
+    <h2>古い記事ではこの呼び方が多い</h2>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
+      Web 上の Git 記事や書籍は <code>checkout</code> を使ったものが大半です。意味がわからないときは <strong>「これは switch か restore のどっちのことかな」</strong> と考えると整理がつきます。
     </p>
 
-    <h2>2種類のリポジトリ</h2>
+    <div class="note">
+      <code>git checkout</code> は今でも動きます。新規に学ぶなら <code>switch</code> / <code>restore</code> が分かりやすい、という話。
+    </div>
+
+    <h2>関連用語</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li><a class="term" href="branch.html">ブランチ</a></li>
+      <li><a class="term" href="head.html">HEAD</a></li>
     </ul>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/10-branch-switch.html">STEP 10: ブランチを切り替える</a></li>
+      <li><a href="../steps/08-undo.html">STEP 08: 変更を取り消す</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

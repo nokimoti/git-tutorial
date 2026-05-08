@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>リセット - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,52 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>リセット (Reset)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <code>git reset</code> のこと。<strong><a class="term" href="head.html">HEAD</a> を別のコミットに「巻き戻す」</strong> 操作。3つのモード (soft / mixed / hard) で「どこまで巻き戻すか」を制御できます。
     </div>
 
-    <h2>もう少し詳しく</h2>
-    <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
+    <h2>3つのモード</h2>
+    <table>
+      <thead><tr><th>モード</th><th>HEAD</th><th>ステージング</th><th>ファイル</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td><code>--soft</code></td><td>移動</td><td>そのまま</td><td>そのまま</td><td>コミットだけ取り消し、変更は再コミットしたい</td></tr>
+        <tr><td><code>(--mixed)</code> ※デフォルト</td><td>移動</td><td>クリア</td><td>そのまま</td><td>コミットとステージングを取り消し、編集は残す</td></tr>
+        <tr><td><code>--hard</code></td><td>移動</td><td>クリア</td><td><strong>クリア</strong></td><td>すべて巻き戻す (危険)</td></tr>
+      </tbody>
+    </table>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>使い方の例</h2>
+    <pre><code># 直前のコミットだけ取り消し (変更は手元に残す)
+git reset --soft HEAD~1
+
+# 直前のコミットとステージングを取り消し (編集は残る)
+git reset HEAD~1
+
+# 直前のコミットを変更ごと完全に破棄
+git reset --hard HEAD~1</code></pre>
+
+    <h2>リバートとの使い分け</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li><strong>未公開 (push 前) のコミット</strong> を整理 → <code>git reset</code></li>
+      <li><strong>公開済み (push 済み) のコミット</strong> を取り消し → <a class="term" href="revert.html">リバート</a></li>
+    </ul>
+    <div class="warning">
+      <code>--hard</code> は <strong>未コミットの変更まで消えます</strong>。実行前に必ず <code>git status</code> で確認しましょう。
+      消したコミット自体は <code>git reflog</code> + <code>git reset --hard &lt;ID&gt;</code> でしばらくは復活できます。
+    </div>
+
+    <h2>関連用語</h2>
+    <ul>
+      <li><a class="term" href="revert.html">リバート</a></li>
+      <li><a class="term" href="head.html">HEAD</a></li>
+      <li><a class="term" href="commit.html">コミット</a></li>
     </ul>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/08-undo.html">STEP 08: 変更を取り消す</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

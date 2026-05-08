@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コマンド一覧 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">用語集</a></li>
+        <li><a href="commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">リファレンス</div>
+    <h1>コマンド一覧</h1>
+
+    <p>
+      よく使う Git コマンドのチートシートです。各コマンドの詳しい使い方や前提知識は、関連する STEP のリンクから参照してください。
+    </p>
+    <div class="note">
+      コマンド中の <code>&lt;...&gt;</code> は自分の値に置き換える部分です。
+    </div>
+
+    <h2>初期設定</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git config --global user.name "名前"</code></td><td>ユーザー名を設定 (1度きり)</td><td><a href="../steps/03-setup.html">STEP 03</a></td></tr>
+        <tr><td><code>git config --global user.email "メール"</code></td><td>メールアドレスを設定 (1度きり)</td><td><a href="../steps/03-setup.html">STEP 03</a></td></tr>
+        <tr><td><code>git config --global init.defaultBranch main</code></td><td>新規リポジトリの初期ブランチ名を main に</td><td><a href="../steps/03-setup.html">STEP 03</a></td></tr>
+        <tr><td><code>git config --list</code></td><td>現在の設定を一覧表示</td><td>—</td></tr>
+        <tr><td><code>git --version</code></td><td>インストール済みの Git バージョンを確認</td><td><a href="../steps/02-install.html">STEP 02</a></td></tr>
+      </tbody>
+    </table>
+
+    <h2>リポジトリの作成・取得</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git init</code></td><td>カレントフォルダをリポジトリ化</td><td><a href="../steps/04-create-repo.html">STEP 04</a></td></tr>
+        <tr><td><code>git clone &lt;URL&gt;</code></td><td>リモートリポジトリを丸ごとコピー</td><td><a href="../steps/17-clone.html">STEP 17</a></td></tr>
+        <tr><td><code>git clone &lt;URL&gt; &lt;フォルダ名&gt;</code></td><td>名前を指定してクローン</td><td><a href="../steps/17-clone.html">STEP 17</a></td></tr>
+      </tbody>
+    </table>
+
+    <h2>状態の確認</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git status</code></td><td>変更・ステージング・ブランチの状況を表示</td><td><a href="../steps/06-status.html">STEP 06</a></td></tr>
+        <tr><td><code>git status -s</code></td><td>短縮形式で表示 (慣れたら便利)</td><td>—</td></tr>
+        <tr><td><code>git diff</code></td><td>未ステージの変更内容を表示</td><td><a href="../steps/06-status.html">STEP 06</a></td></tr>
+        <tr><td><code>git diff --staged</code></td><td>ステージ済みの変更内容を表示</td><td><a href="../steps/06-status.html">STEP 06</a></td></tr>
+        <tr><td><code>git diff &lt;コミット1&gt; &lt;コミット2&gt;</code></td><td>2つのコミット間の差分を表示</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2>ステージング・コミット</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git add &lt;ファイル&gt;</code></td><td>ファイルをステージングに追加</td><td><a href="../steps/05-add-commit.html">STEP 05</a></td></tr>
+        <tr><td><code>git add .</code></td><td>カレント以下の全変更をステージング</td><td><a href="../steps/05-add-commit.html">STEP 05</a></td></tr>
+        <tr><td><code>git add -A</code></td><td>削除も含めて全変更をステージング</td><td>—</td></tr>
+        <tr><td><code>git add -p</code></td><td>変更を分割して対話的に選んでステージング</td><td>—</td></tr>
+        <tr><td><code>git commit -m "メッセージ"</code></td><td>ステージ済みの内容をコミット</td><td><a href="../steps/05-add-commit.html">STEP 05</a></td></tr>
+        <tr><td><code>git commit -am "メッセージ"</code></td><td>追跡中ファイルの変更を add+commit を一発で</td><td>—</td></tr>
+        <tr><td><code>git commit --amend</code></td><td>直前のコミットを書き換え</td><td><a href="../steps/08-undo.html">STEP 08</a></td></tr>
+      </tbody>
+    </table>
+
+    <h2>履歴を見る</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git log</code></td><td>コミット履歴を新しい順に表示</td><td><a href="../steps/07-log.html">STEP 07</a></td></tr>
+        <tr><td><code>git log --oneline</code></td><td>1コミット1行のコンパクト表示</td><td><a href="../steps/07-log.html">STEP 07</a></td></tr>
+        <tr><td><code>git log --oneline --graph --all</code></td><td>ブランチを含むグラフ表示</td><td><a href="../steps/07-log.html">STEP 07</a></td></tr>
+        <tr><td><code>git log -p</code></td><td>各コミットの差分も表示</td><td>—</td></tr>
+        <tr><td><code>git log -n 5</code></td><td>直近5件だけ表示</td><td>—</td></tr>
+        <tr><td><code>git show &lt;コミットID&gt;</code></td><td>特定コミットの内容と差分を表示</td><td>—</td></tr>
+        <tr><td><code>git blame &lt;ファイル&gt;</code></td><td>各行を最後に編集したコミットを表示</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2>変更を取り消す</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git restore &lt;ファイル&gt;</code></td><td>未ステージの変更を破棄</td><td><a href="../steps/08-undo.html">STEP 08</a></td></tr>
+        <tr><td><code>git restore --staged &lt;ファイル&gt;</code></td><td>ステージングを解除 (編集は保持)</td><td><a href="../steps/08-undo.html">STEP 08</a></td></tr>
+        <tr><td><code>git revert &lt;コミットID&gt;</code></td><td>指定コミットを打ち消す新コミットを作る (履歴は残る)</td><td><a href="../steps/08-undo.html">STEP 08</a></td></tr>
+        <tr><td><code>git reset --soft HEAD~1</code></td><td>直前のコミットだけ取り消し (変更とステージは残す)</td><td><a href="reset.html">用語</a></td></tr>
+        <tr><td><code>git reset HEAD~1</code></td><td>直前のコミットを取り消し、ステージも解除 (デフォルト=mixed)</td><td><a href="reset.html">用語</a></td></tr>
+        <tr><td><code>git reset --hard HEAD~1</code></td><td><strong>変更ごと</strong> 直前のコミットを破棄 (危険)</td><td><a href="reset.html">用語</a></td></tr>
+      </tbody>
+    </table>
+
+    <h2>ブランチ操作</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git branch</code></td><td>ローカルブランチ一覧</td><td><a href="../steps/09-branch-create.html">STEP 09</a></td></tr>
+        <tr><td><code>git branch -a</code></td><td>リモート含む全ブランチ一覧</td><td>—</td></tr>
+        <tr><td><code>git branch &lt;名前&gt;</code></td><td>ブランチを作成 (移動はしない)</td><td><a href="../steps/09-branch-create.html">STEP 09</a></td></tr>
+        <tr><td><code>git switch &lt;名前&gt;</code></td><td>ブランチに切り替え</td><td><a href="../steps/10-branch-switch.html">STEP 10</a></td></tr>
+        <tr><td><code>git switch -c &lt;名前&gt;</code></td><td>作成と同時に切り替え (よく使う)</td><td><a href="../steps/09-branch-create.html">STEP 09</a></td></tr>
+        <tr><td><code>git switch -</code></td><td>直前のブランチに戻る</td><td>—</td></tr>
+        <tr><td><code>git branch -d &lt;名前&gt;</code></td><td>マージ済みブランチを削除</td><td><a href="../steps/11-merge.html">STEP 11</a></td></tr>
+        <tr><td><code>git branch -D &lt;名前&gt;</code></td><td><strong>強制削除</strong> (未マージでも消す)</td><td>—</td></tr>
+        <tr><td><code>git branch -m &lt;旧&gt; &lt;新&gt;</code></td><td>ブランチ名を変更</td><td>—</td></tr>
+        <tr><td><code>git merge &lt;ブランチ&gt;</code></td><td>指定ブランチを現ブランチに統合</td><td><a href="../steps/11-merge.html">STEP 11</a></td></tr>
+        <tr><td><code>git merge --abort</code></td><td>進行中のマージを中止</td><td><a href="../steps/12-conflict.html">STEP 12</a></td></tr>
+        <tr><td><code>git rebase &lt;ブランチ&gt;</code></td><td>履歴を別ブランチの上に積み直す</td><td><a href="rebase.html">用語</a></td></tr>
+      </tbody>
+    </table>
+
+    <h2>タグ</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git tag</code></td><td>タグ一覧</td><td><a href="../steps/13-tag.html">STEP 13</a></td></tr>
+        <tr><td><code>git tag &lt;名前&gt;</code></td><td>軽量タグを現在のコミットに付ける</td><td><a href="../steps/13-tag.html">STEP 13</a></td></tr>
+        <tr><td><code>git tag -a &lt;名前&gt; -m "メッセージ"</code></td><td>注釈付きタグを作成 (リリース推奨)</td><td><a href="../steps/13-tag.html">STEP 13</a></td></tr>
+        <tr><td><code>git tag -d &lt;名前&gt;</code></td><td>タグを削除</td><td><a href="../steps/13-tag.html">STEP 13</a></td></tr>
+        <tr><td><code>git push origin &lt;タグ&gt;</code></td><td>タグを1つリモートに送る</td><td><a href="../steps/13-tag.html">STEP 13</a></td></tr>
+        <tr><td><code>git push --tags</code></td><td>全タグをまとめてリモートに送る</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2>リモート操作</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git remote -v</code></td><td>登録済みリモート一覧</td><td><a href="../steps/15-remote.html">STEP 15</a></td></tr>
+        <tr><td><code>git remote add origin &lt;URL&gt;</code></td><td>リモートを origin として追加</td><td><a href="../steps/15-remote.html">STEP 15</a></td></tr>
+        <tr><td><code>git remote set-url origin &lt;URL&gt;</code></td><td>リモートの URL を変更</td><td>—</td></tr>
+        <tr><td><code>git remote rename &lt;旧&gt; &lt;新&gt;</code></td><td>リモートの呼び名を変更</td><td>—</td></tr>
+        <tr><td><code>git remote remove &lt;名前&gt;</code></td><td>リモートを登録解除</td><td>—</td></tr>
+        <tr><td><code>git push</code></td><td>現ブランチをリモートに送信</td><td><a href="../steps/16-push-pull.html">STEP 16</a></td></tr>
+        <tr><td><code>git push -u origin &lt;ブランチ&gt;</code></td><td>初回プッシュ (上流追跡を設定)</td><td><a href="../steps/16-push-pull.html">STEP 16</a></td></tr>
+        <tr><td><code>git push origin --delete &lt;ブランチ&gt;</code></td><td>リモートのブランチを削除</td><td>—</td></tr>
+        <tr><td><code>git pull</code></td><td>fetch + merge を一発で</td><td><a href="../steps/16-push-pull.html">STEP 16</a></td></tr>
+        <tr><td><code>git fetch</code></td><td>リモートの情報だけダウンロード</td><td><a href="fetch.html">用語</a></td></tr>
+        <tr><td><code>git fetch --prune</code></td><td>リモートに無いブランチ参照を削除</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2>一時退避 (Stash)</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git stash</code></td><td>未コミットの変更を一時的に退避</td><td><a href="stash.html">用語</a></td></tr>
+        <tr><td><code>git stash push -m "メモ"</code></td><td>メッセージ付きで退避</td><td>—</td></tr>
+        <tr><td><code>git stash list</code></td><td>退避一覧</td><td>—</td></tr>
+        <tr><td><code>git stash pop</code></td><td>最新の退避を復元 (リストから削除)</td><td>—</td></tr>
+        <tr><td><code>git stash apply</code></td><td>復元するがリストには残す</td><td>—</td></tr>
+        <tr><td><code>git stash drop</code></td><td>最新の退避を破棄</td><td>—</td></tr>
+        <tr><td><code>git stash clear</code></td><td>退避をすべて破棄</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2>ファイル操作</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git rm &lt;ファイル&gt;</code></td><td>ファイルを削除し、削除をステージング</td><td>—</td></tr>
+        <tr><td><code>git rm --cached &lt;ファイル&gt;</code></td><td>追跡対象から外す (ファイル自体は残す)</td><td><a href="../steps/18-gitignore.html">STEP 18</a></td></tr>
+        <tr><td><code>git mv &lt;旧&gt; &lt;新&gt;</code></td><td>ファイル名を変更 (履歴を保ちつつ)</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2>その他便利</h2>
+    <table>
+      <thead><tr><th>コマンド</th><th>意味</th><th>関連</th></tr></thead>
+      <tbody>
+        <tr><td><code>git help &lt;コマンド&gt;</code></td><td>コマンドのヘルプを開く</td><td>—</td></tr>
+        <tr><td><code>git &lt;コマンド&gt; --help</code></td><td>同上 (短縮形)</td><td>—</td></tr>
+        <tr><td><code>git reflog</code></td><td>HEAD の移動履歴 (失敗からの復活に便利)</td><td>—</td></tr>
+        <tr><td><code>git cherry-pick &lt;コミットID&gt;</code></td><td>特定コミットだけを現ブランチに取り込む</td><td>—</td></tr>
+        <tr><td><code>git clean -n</code></td><td>未追跡ファイルを <strong>確認だけ</strong> (削除せず)</td><td>—</td></tr>
+        <tr><td><code>git clean -fd</code></td><td>未追跡ファイル/フォルダを <strong>削除</strong> (危険)</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning">
+      <code>--hard</code> や <code>-D</code>、<code>clean -fd</code> など <strong>「強制」「破棄」</strong> 系のオプションは取り返しがつかない場合があります。実行前に <code>git status</code> で本当に消していい状態か確認しましょう。
+    </div>
+
+    <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

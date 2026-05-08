@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>スタッシュ - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,43 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>スタッシュ (Stash)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <code>git stash</code> のこと。<strong>未コミットの変更を一時的に「棚 (stash)」に退避</strong> して、ワーキングディレクトリを最後のコミット時点に戻す操作。あとで取り出せます。
     </div>
 
-    <h2>もう少し詳しく</h2>
-    <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
-
-    <h2>2種類のリポジトリ</h2>
+    <h2>使う場面</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li>編集中だけど、急いで別のブランチに切り替えたい</li>
+      <li><code>git pull</code> したいのに「未コミットの変更があります」と怒られる</li>
+      <li>「まだコミットしたくないけど、現状を一旦リセットして実験したい」</li>
     </ul>
+
+    <h2>基本の使い方</h2>
+    <pre><code># 現在の変更を退避
+git stash
+
+# 退避した一覧を見る
+git stash list
+
+# 最新の退避を取り出す (リストから消える)
+git stash pop
+
+# 取り出すがリストには残す
+git stash apply</code></pre>
+
+    <h2>メッセージ付きで退避</h2>
+    <pre><code>git stash push -m "ログイン画面の途中"</code></pre>
+    <p>後から「あれ、これは何だったっけ?」となるのを防げます。</p>
+
+    <h2>退避の捨て方</h2>
+    <pre><code>git stash drop          # 最新の退避を破棄
+git stash clear         # すべての退避を破棄</code></pre>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/10-branch-switch.html">STEP 10: ブランチを切り替える</a> — 切替できないときの選択肢として紹介</li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

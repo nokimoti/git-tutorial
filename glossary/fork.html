@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>フォーク - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,43 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>フォーク (Fork)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      GitHub の機能。<strong>他人のリポジトリを「自分のアカウント上にコピー」</strong> する操作。コピーされたリポジトリは自分の所有物として自由に編集でき、必要なら元の作者に <a class="term" href="pull-request.html">プルリクエスト</a> で変更を提案できます。
     </div>
 
-    <h2>もう少し詳しく</h2>
-    <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
+    <h2>クローンとの違い</h2>
+    <table>
+      <thead><tr><th></th><th>フォーク</th><th><a class="term" href="clone.html">クローン</a></th></tr></thead>
+      <tbody>
+        <tr><td>コピー先</td><td>GitHub 上 (自分のアカウント)</td><td>自分のパソコン</td></tr>
+        <tr><td>書き込み権限</td><td>あり (自分のもの)</td><td>あり (ローカル)</td></tr>
+        <tr><td>用途</td><td>他人のリポジトリに貢献したい</td><td>編集環境を手元に作りたい</td></tr>
+      </tbody>
+    </table>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>典型的な流れ</h2>
+    <ol>
+      <li>GitHub で対象リポジトリを開いて、右上の「<strong>Fork</strong>」ボタン</li>
+      <li>自分のアカウントにコピーが作られる</li>
+      <li>そのコピーを <code>git clone</code> で手元に持ってくる</li>
+      <li>新しいブランチを切って改修</li>
+      <li>自分のフォークに push</li>
+      <li>元のリポジトリに <a class="term" href="pull-request.html">プルリクエスト</a> を出す</li>
+    </ol>
+
+    <h2>使う場面</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li>OSS (オープンソース) に貢献したい</li>
+      <li>他人のテンプレートを土台にして自分用に改造したい</li>
+      <li>書き込み権限のないリポジトリで実験したい</li>
     </ul>
 
-    <h2>関連ステップ</h2>
+    <h2>関連用語</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a class="term" href="clone.html">クローン</a></li>
+      <li><a class="term" href="pull-request.html">プルリクエスト</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

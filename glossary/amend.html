@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>アメンド - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,42 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>アメンド (Amend)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <code>git commit --amend</code> のこと。<strong>直前のコミットを書き換える</strong> 操作。コミットメッセージを直したい・add 漏れを補いたいときに便利です。
     </div>
 
-    <h2>もう少し詳しく</h2>
-    <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
-
-    <h2>2種類のリポジトリ</h2>
+    <h2>使う場面</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li>コミットメッセージを書き間違えた</li>
+      <li>add し忘れたファイルがある</li>
+      <li>ちょっとしたタイポを直したい</li>
+    </ul>
+
+    <h2>使い方</h2>
+    <pre><code># メッセージだけ変更
+git commit --amend -m "新しいメッセージ"
+
+# 抜けたファイルを追加してコミットを作り直す
+git add 漏れたファイル
+git commit --amend --no-edit  # メッセージは変えない</code></pre>
+
+    <h2>注意: 履歴が書き換わる</h2>
+    <div class="warning">
+      アメンドは <strong>直前のコミットを別物に置き換える</strong> 操作です。コミットID も変わります。
+      <strong>共有済み (push 済み) のコミットを amend するのは避ける</strong> こと。他の人の手元と矛盾が起き、混乱の元になります。自分1人のリポジトリでだけ気軽に使いましょう。
+    </div>
+
+    <h2>関連用語</h2>
+    <ul>
+      <li><a class="term" href="commit.html">コミット</a></li>
+      <li><a class="term" href="commit-id.html">コミットID</a></li>
     </ul>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/08-undo.html">STEP 08: 変更を取り消す</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

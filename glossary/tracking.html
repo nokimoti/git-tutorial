@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>追跡 / 未追跡 - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,40 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>追跡 / 未追跡 (Tracked / Untracked)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      ファイルが Git に <strong>管理されているかどうか</strong> を表す状態。一度でも <code>git add</code> した経験があるファイルが「追跡 (Tracked)」、まったくないファイルが「未追跡 (Untracked)」。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>ファイルが取りうる状態</h2>
+    <ol>
+      <li><strong>未追跡 (Untracked)</strong> — 新しく作ったが <code>git add</code> していないファイル</li>
+      <li><strong>追跡 (Tracked)</strong> — Git の管理下にあるファイル。さらに細かく:
+        <ul>
+          <li><strong>変更なし (Unmodified)</strong> — 最後のコミット時と同じ</li>
+          <li><strong>変更あり (Modified)</strong> — 編集されたが未ステージング</li>
+          <li><strong>ステージ済み (Staged)</strong> — <code>git add</code> されてコミット待ち</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h2>状態の確認</h2>
+    <pre><code>git status</code></pre>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
+      未追跡ファイルは「Untracked files:」、変更ありファイルは「Changes not staged for commit:」、ステージ済みは「Changes to be committed:」のセクションに表示されます。
     </p>
 
-    <h2>2種類のリポジトリ</h2>
-    <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
-    </ul>
+    <h2>追跡をやめさせる</h2>
+    <pre><code>git rm --cached &lt;ファイル&gt;</code></pre>
+    <p>
+      ファイル自体は残しつつ、Git の管理対象から外します。<a class="term" href="gitignore.html">.gitignore</a> で除外したいのに既にコミットしてしまったファイルに使います。
+    </p>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/06-status.html">STEP 06: 状態を確認する</a></li>
+      <li><a href="../steps/18-gitignore.html">STEP 18: .gitignore</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

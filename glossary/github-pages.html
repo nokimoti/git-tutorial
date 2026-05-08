@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>GitHub Pages - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,46 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>GitHub Pages</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      GitHub が提供する <strong>無料の静的サイトホスティング</strong> サービス。リポジトリにある HTML/CSS/JS を、URL付きで Web に公開できます。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>典型的な URL</h2>
+    <pre><code>https://&lt;ユーザー名&gt;.github.io/&lt;リポジトリ名&gt;/</code></pre>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
+      たとえば <code>nokimoti</code> さんの <code>git-tutorial</code> リポジトリなら:
     </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
+    <pre><code>https://nokimoti.github.io/git-tutorial/</code></pre>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>有効化のしかた</h2>
+    <ol>
+      <li>GitHub のリポジトリページ → <strong>Settings</strong></li>
+      <li>左メニューの <strong>Pages</strong></li>
+      <li>「Source」で「Deploy from a branch」を選ぶ</li>
+      <li>Branch: <code>main</code>、フォルダ: <code>/ (root)</code></li>
+      <li>「Save」をクリック</li>
+      <li>1〜2分待って同じページをリロードすると、上部に公開URLが表示</li>
+    </ol>
+
+    <h2>制約</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li>静的ファイルのみ (PHP・Ruby などのサーバ処理は不可)</li>
+      <li>リポジトリは <strong>Public</strong> である必要あり (無料プランの場合)</li>
+      <li>1リポジトリにつき配信できるのは1ブランチ</li>
+      <li>サイズ上限: 1GB、月間転送量: 100GB (ソフトリミット)</li>
     </ul>
 
-    <h2>関連ステップ</h2>
+    <h2>更新のしかた</h2>
+    <p>
+      設定したブランチに <code>git push</code> すれば、自動で再デプロイされます (1〜2分)。CSS や HTML を編集して push するだけ。
+    </p>
+
+    <h2>関連用語</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a class="term" href="push.html">プッシュ</a></li>
+      <li><a class="term" href="branch.html">ブランチ</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

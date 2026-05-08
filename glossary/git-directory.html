@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>.git ディレクトリ - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,35 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>.git ディレクトリ</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <code>git init</code> や <a class="term" href="clone.html">クローン</a> したフォルダの中に作られる <strong>Git の管理データ本体</strong> (隠しフォルダ)。すべてのコミット・ブランチ・タグ・設定がここに収まっています。
     </div>
 
-    <h2>もう少し詳しく</h2>
-    <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
-
-    <h2>2種類のリポジトリ</h2>
+    <h2>中に入っているもの (一部)</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li><code>HEAD</code> — 現在のブランチを指すファイル</li>
+      <li><code>config</code> — リポジトリ固有の設定</li>
+      <li><code>objects/</code> — 全コミット・ファイル内容のスナップショット</li>
+      <li><code>refs/</code> — ブランチやタグの参照</li>
+      <li><code>logs/</code> — HEAD・ブランチの移動履歴</li>
+      <li><code>index</code> — <a class="term" href="staging.html">ステージング</a> エリアの実体</li>
     </ul>
+
+    <h2>絶対に手で触らない</h2>
+    <div class="warning">
+      <code>.git</code> フォルダを手動で削除・編集すると、これまでの履歴が完全に失われたり壊れたりします。Git コマンド経由でしか触らないこと。
+    </div>
+
+    <h2>「ただのフォルダ」を「Gitリポジトリ」に変える正体</h2>
+    <p>
+      <code>git init</code> がやっているのは、実質的に <strong>このフォルダを作る</strong> だけ。逆に <code>.git</code> を消せば、フォルダは Git の管理外に戻ります。
+    </p>
 
     <h2>関連ステップ</h2>
     <ul>
       <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

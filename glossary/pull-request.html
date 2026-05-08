@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>プルリクエスト - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,41 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>プルリクエスト (Pull Request / PR)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      GitHub などが提供する機能。「<strong>このブランチの変更をメインブランチに取り込んでください</strong>」とお願い (request) を出す仕組みです。レビュー・議論・自動チェックを経てからマージされます。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>これは Git の機能ではない</h2>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
+      <code>git pull-request</code> のようなコマンドは存在しません。プルリクエストは GitHub・GitLab・Bitbucket など、<strong>ホスティングサービスが用意した独自機能</strong> です (GitLabでは「マージリクエスト」と呼ぶ)。
     </p>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>典型的な流れ</h2>
+    <ol>
+      <li>新しいブランチを切って機能を実装 (<code>git switch -c feature</code>)</li>
+      <li>コミット → <code>git push -u origin feature</code></li>
+      <li>GitHub のリポジトリページで「Compare &amp; pull request」ボタンが表示される</li>
+      <li>説明を書いて「Create pull request」</li>
+      <li>同僚にレビューしてもらう</li>
+      <li>承認されたら「Merge pull request」で main にマージ</li>
+      <li>不要になった feature ブランチを削除</li>
+    </ol>
+
+    <h2>なぜ便利?</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li>コードの変更内容を <strong>視覚的に</strong> 一覧できる</li>
+      <li>行ごとにコメントを付けて議論できる</li>
+      <li>テスト・Lint を <strong>自動実行</strong> してマージ前にチェックできる</li>
+      <li>履歴に「いつ・誰が・なぜ」マージしたか残る</li>
     </ul>
 
-    <h2>関連ステップ</h2>
+    <h2>関連用語</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a class="term" href="branch.html">ブランチ</a></li>
+      <li><a class="term" href="merge.html">マージ</a></li>
+      <li><a class="term" href="fork.html">フォーク</a> — 他人のリポジトリへ PR を出すときに使う</li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

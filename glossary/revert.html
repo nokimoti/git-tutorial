@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>リバート - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,52 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>リバート (Revert)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <code>git revert</code> のこと。<strong>過去のコミットを「打ち消す」新しいコミットを作る</strong> 操作。元のコミットは履歴に残ったまま、その変更だけを無効化します。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>イメージ</h2>
+    <pre><code>変更前: A ── B ── C ── D
+                       ↑ D を打ち消したい
+
+git revert D
+
+変更後: A ── B ── C ── D ── D'
+                            ↑ D の変更を取り消す内容のコミット</code></pre>
+
+    <h2>リセットとの違い</h2>
+    <table>
+      <thead><tr><th></th><th>リバート</th><th><a class="term" href="reset.html">リセット</a></th></tr></thead>
+      <tbody>
+        <tr><td>履歴</td><td>残る (打ち消しコミット追加)</td><td>消える</td></tr>
+        <tr><td>共有済みコミット</td><td><strong>安全に使える</strong></td><td>危険 (使うべきでない)</td></tr>
+        <tr><td>用途</td><td>公開後の取り消し</td><td>未公開のローカル整理</td></tr>
+      </tbody>
+    </table>
+
+    <h2>使い方</h2>
+    <pre><code>git revert &lt;コミットID&gt;</code></pre>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
+      実行するとエディタが立ち上がり、打ち消しコミットのメッセージを入力できます。デフォルトのままでも問題ありません。
     </p>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>マージコミットを revert する</h2>
+    <pre><code>git revert -m 1 &lt;マージコミットID&gt;</code></pre>
+    <p>
+      マージコミットには2つの親があるため、<code>-m 1</code> で「1番目の親 (= 取り込み先) の方向に戻す」と明示が必要です。
+    </p>
+
+    <h2>関連用語</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li><a class="term" href="commit.html">コミット</a></li>
+      <li><a class="term" href="reset.html">リセット</a></li>
     </ul>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/08-undo.html">STEP 08: 変更を取り消す</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

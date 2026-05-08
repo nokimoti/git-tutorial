@@ -37,6 +37,7 @@
       <h3>リファレンス</h3>
       <ul class="nav-list">
         <li><a href="index.html">用語集</a></li>
+        <li><a href="commands.html">コマンド一覧</a></li>
       </ul>
     </div>
   </aside>
@@ -44,8 +45,8 @@
   <main class="main">
     <h1>用語集</h1>
     <p>
-      Git の学習でよく出てくる専門用語の一覧です。各用語をクリックすると、詳しい説明ページに飛びます。
-      文中で <span class="term">こんなふうに</span> 表示される語は、すべてこの用語集にリンクしています。
+      Git の学習でよく出てくる専門用語の一覧です。各用語をクリックすると詳しい説明ページに飛びます。
+      文中で <span class="term">こんなふうに</span> 表示される語はすべてここにリンクされています。
     </p>
 
     <h2>基本</h2>
@@ -60,6 +61,12 @@
         <a href="commit.html">
           <div class="term-name">コミット</div>
           <div class="term-desc">変更のセーブポイント</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="commit-id.html">
+          <div class="term-name">コミットID</div>
+          <div class="term-desc">コミットの「指紋」 (ハッシュ)</div>
         </a>
       </div>
       <div class="glossary-item">
@@ -80,9 +87,37 @@
           <div class="term-desc">いま見ているコミットを示す目印</div>
         </a>
       </div>
+      <div class="glossary-item">
+        <a href="detached-head.html">
+          <div class="term-name">ディタッチド HEAD</div>
+          <div class="term-desc">ブランチを離れた HEAD 状態</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="git-directory.html">
+          <div class="term-name">.git ディレクトリ</div>
+          <div class="term-desc">履歴データの本体</div>
+        </a>
+      </div>
     </div>
 
-    <h2>ブランチ関連</h2>
+    <h2>ファイルの状態</h2>
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <a href="tracking.html">
+          <div class="term-name">追跡 / 未追跡</div>
+          <div class="term-desc">Git 管理対象かどうか</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="gitignore.html">
+          <div class="term-name">.gitignore</div>
+          <div class="term-desc">無視するファイルを指定</div>
+        </a>
+      </div>
+    </div>
+
+    <h2>ブランチ・タグ関連</h2>
     <div class="glossary-grid">
       <div class="glossary-item">
         <a href="branch.html">
@@ -103,6 +138,12 @@
         </a>
       </div>
       <div class="glossary-item">
+        <a href="fast-forward.html">
+          <div class="term-name">ファストフォワード</div>
+          <div class="term-desc">マージの一種 (早送り)</div>
+        </a>
+      </div>
+      <div class="glossary-item">
         <a href="conflict.html">
           <div class="term-name">コンフリクト</div>
           <div class="term-desc">マージ時の衝突</div>
@@ -112,6 +153,46 @@
         <a href="tag.html">
           <div class="term-name">タグ</div>
           <div class="term-desc">特定コミットの動かない目印</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="checkout.html">
+          <div class="term-name">チェックアウト</div>
+          <div class="term-desc">古い切替コマンド (旧 checkout)</div>
+        </a>
+      </div>
+    </div>
+
+    <h2>変更の取り消し・整理</h2>
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <a href="amend.html">
+          <div class="term-name">アメンド</div>
+          <div class="term-desc">直前のコミットを書き換える</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="revert.html">
+          <div class="term-name">リバート</div>
+          <div class="term-desc">打ち消しコミットを作る</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="reset.html">
+          <div class="term-name">リセット</div>
+          <div class="term-desc">HEAD を巻き戻す (3モード)</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="rebase.html">
+          <div class="term-name">リベース</div>
+          <div class="term-desc">履歴を別ブランチ上に積み直す</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="stash.html">
+          <div class="term-name">スタッシュ</div>
+          <div class="term-desc">未コミット変更を一時退避</div>
         </a>
       </div>
     </div>
@@ -128,6 +209,12 @@
         <a href="origin.html">
           <div class="term-name">origin</div>
           <div class="term-desc">リモートの慣習的な呼び名</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="upstream.html">
+          <div class="term-name">アップストリーム</div>
+          <div class="term-desc">ローカル↔リモートの紐付け</div>
         </a>
       </div>
       <div class="glossary-item">
@@ -156,12 +243,24 @@
       </div>
     </div>
 
-    <h2>その他</h2>
+    <h2>GitHub 関連</h2>
     <div class="glossary-grid">
       <div class="glossary-item">
-        <a href="gitignore.html">
-          <div class="term-name">.gitignore</div>
-          <div class="term-desc">無視するファイルを指定</div>
+        <a href="pull-request.html">
+          <div class="term-name">プルリクエスト</div>
+          <div class="term-desc">変更取り込みの依頼 (PR)</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="fork.html">
+          <div class="term-name">フォーク</div>
+          <div class="term-desc">他人リポジトリのコピーを作る</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="github-pages.html">
+          <div class="term-name">GitHub Pages</div>
+          <div class="term-desc">無料の静的サイトホスティング</div>
         </a>
       </div>
     </div>
@@ -171,9 +270,9 @@
         <span class="nav-label">← トップページ</span>
         <span class="nav-title">Git はじめの一歩</span>
       </a>
-      <a class="next" href="../steps/01-what-is-git.html">
-        <span class="nav-label">学習をはじめる →</span>
-        <span class="nav-title">STEP 01: Git とは</span>
+      <a class="next" href="commands.html">
+        <span class="nav-label">次のリファレンス →</span>
+        <span class="nav-title">コマンド一覧</span>
       </a>
     </div>
   </main>

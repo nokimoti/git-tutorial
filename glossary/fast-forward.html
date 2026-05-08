@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>ファストフォワード - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,43 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>ファストフォワード (Fast-forward)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <a class="term" href="merge.html">マージ</a> の一種。取り込み先のブランチに新しいコミットがない場合に、<strong>ブランチの指す先を「先送り」するだけ</strong> でマージ完了とする方式。新しいマージコミットは作られません。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>イメージ</h2>
+    <pre><code>main:        A ── B
+                     \
+feature:              C ── D
+
+↓ git merge feature (Fast-forward)
+
+main:        A ── B ── C ── D
+                                 ↑ 単に main の矢印を D に動かしただけ</code></pre>
+
+    <h2>反対は「マージコミット」</h2>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
+      取り込み先・取り込み元の両方に新しいコミットがあると Fast-forward は不可能で、
+      代わりに <strong>マージコミット</strong> という新しい合流地点コミットが作られます。
     </p>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>強制的に Fast-forward を使わない</h2>
+    <pre><code>git merge --no-ff feature</code></pre>
+    <p>
+      履歴をすっきり保ちたい場合は Fast-forward が便利ですが、「機能ブランチを取り込んだ」という痕跡を残したい場合は <code>--no-ff</code> でマージコミットを強制できます。
+    </p>
+
+    <h2>関連用語</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li><a class="term" href="merge.html">マージ</a></li>
+      <li><a class="term" href="branch.html">ブランチ</a></li>
     </ul>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/11-merge.html">STEP 11: ブランチをマージする</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

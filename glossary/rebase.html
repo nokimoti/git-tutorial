@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>リベース - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,53 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>リベース (Rebase)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <code>git rebase</code> のこと。<strong>自分のブランチのコミット列を、別のブランチの最新コミットの上に「並べ直す」</strong> 操作。マージとは別の方法でブランチを統合します。
     </div>
 
-    <h2>もう少し詳しく</h2>
-    <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
+    <h2>イメージ</h2>
+    <pre><code>変更前:
+main:        A ── B ── C
+                  \
+feature:           D ── E
 
-    <h2>2種類のリポジトリ</h2>
+git rebase main (feature ブランチで実行)
+
+変更後:
+main:        A ── B ── C
+                        \
+feature:                 D'── E'   ← C の上に積み直された</code></pre>
+
+    <h2>マージとの違い</h2>
+    <table>
+      <thead><tr><th></th><th>マージ</th><th>リベース</th></tr></thead>
+      <tbody>
+        <tr><td>履歴の形</td><td>枝分かれ・合流が残る</td><td>1本の直線になる</td></tr>
+        <tr><td>マージコミット</td><td>作られる</td><td>作られない</td></tr>
+        <tr><td>コミットID</td><td>変わらない</td><td><strong>新しくなる</strong> (D→D')</td></tr>
+        <tr><td>初心者向け</td><td>○ 安全</td><td>△ 注意点多い</td></tr>
+      </tbody>
+    </table>
+
+    <h2>使う場面</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li>機能ブランチを最新の main の上に追従させたい</li>
+      <li>コミット履歴をきれいな1本線に保ちたい</li>
+      <li>複数のコミットをまとめたい (<code>git rebase -i</code>)</li>
     </ul>
 
-    <h2>関連ステップ</h2>
+    <h2>注意</h2>
+    <div class="warning">
+      リベースは <strong>コミットID を作り直す</strong> ため、共有済みのコミットでやると他人のリポジトリと不整合が起きます。
+      <strong>まだ push していない自分のローカルブランチだけ</strong> で使うのが鉄則。
+    </div>
+
+    <h2>関連用語</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a class="term" href="merge.html">マージ</a> — もう1つの統合方法</li>
+      <li><a class="term" href="commit-id.html">コミットID</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

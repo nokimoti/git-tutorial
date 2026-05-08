@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>コミットID - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,38 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>コミットID (ハッシュ)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      各 <a class="term" href="commit.html">コミット</a> を一意に区別する <strong>40文字の英数字 (SHA-1 ハッシュ)</strong>。コミットの「指紋」のようなもの。
     </div>
 
-    <h2>もう少し詳しく</h2>
-    <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
-    </p>
-    <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
-    </p>
+    <h2>例</h2>
+    <pre><code>f1e2d3c4b5a698765432abcdef1234567890abcd</code></pre>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>短縮形</h2>
+    <p>
+      普段は最初の <strong>7文字</strong> だけで指定すれば十分です。Git が自動で「これだ」と判別してくれます。
+    </p>
+    <pre><code>git show f1e2d3c
+git revert f1e2d3c</code></pre>
+
+    <h2>なぜハッシュ?</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
+      <li>コミットの内容 (変更・親コミット・作者・日時など) すべてから自動計算される</li>
+      <li>1文字でも違えば全く違うIDになる → <strong>同じIDのコミットは存在しない</strong></li>
+      <li>履歴を改ざんすると IDが変わるので、検出可能</li>
+    </ul>
+
+    <h2>関連用語</h2>
+    <ul>
+      <li><a class="term" href="commit.html">コミット</a></li>
+      <li><a class="term" href="head.html">HEAD</a> — 「現在のコミットID」を指す目印</li>
     </ul>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a href="../steps/07-log.html">STEP 07: 履歴を見る</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>

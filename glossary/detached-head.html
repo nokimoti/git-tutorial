@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リポジトリ - 用語集 - Git はじめの一歩</title>
+<title>ディタッチド HEAD - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -44,31 +44,45 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>リポジトリ (Repository)</h1>
+    <h1>ディタッチド HEAD (Detached HEAD)</h1>
 
     <div class="definition">
-      Git で <strong>変更履歴を保管する箱</strong> のこと。あなたのファイルと、その過去の変更すべてが入っています。
+      <a class="term" href="head.html">HEAD</a> が <strong>ブランチではなく、特定のコミットを直接指している状態</strong>。「分離した」HEAD なのでこう呼ばれます。
     </div>
 
-    <h2>もう少し詳しく</h2>
+    <h2>いつ起きる?</h2>
     <p>
-      Git で管理しているフォルダには、必ず <code>.git</code> という隠しフォルダがあります。
-      この <code>.git</code> こそが「リポジトリの本体」で、ここにすべての <a class="term" href="commit.html">コミット</a>、ブランチ、設定が保管されています。
+      過去の特定コミットを <code>git checkout &lt;ID&gt;</code> や <code>git switch --detach &lt;ID&gt;</code> で覗いたとき。
     </p>
+    <pre><code>git switch --detach abc1234</code></pre>
     <p>
-      普段「リポジトリ」と言うときは、この <code>.git</code> を含む <strong>プロジェクトフォルダ全体</strong> を指していることが多いです。
+      実行すると、<code>git status</code> にこんな警告が出ます。
+    </p>
+    <pre><code>HEAD detached at abc1234</code></pre>
+
+    <h2>何が問題?</h2>
+    <p>
+      この状態でコミットを作っても、<strong>どのブランチにも所属しないコミット</strong> になります。
+      他のブランチに切り替えると、新しく作ったコミットへの目印が消えて事実上アクセス不能に。
+    </p>
+    <div class="warning">
+      ディタッチド HEAD で作業した変更を残したい場合は、必ず <strong>新しいブランチを作って</strong> から離れること。
+    </div>
+
+    <h2>抜け出すには</h2>
+    <p>普通の状態に戻るには、ブランチに切り替えます。</p>
+    <pre><code>git switch main          # 既存ブランチに戻る
+git switch -c new-branch # その地点を新ブランチにする (変更を保存)</code></pre>
+
+    <h2>困ったら reflog</h2>
+    <p>
+      ディタッチド HEAD で作ったコミットを「うっかり消した」ように見えても、<code>git reflog</code> で HEAD の移動履歴を辿れば復活できる場合があります。
     </p>
 
-    <h2>2種類のリポジトリ</h2>
+    <h2>関連用語</h2>
     <ul>
-      <li><strong>ローカルリポジトリ</strong> = あなたのパソコン上にあるリポジトリ</li>
-      <li><a class="term" href="remote.html">リモートリポジトリ</a> = GitHub などサーバ上のリポジトリ</li>
-    </ul>
-
-    <h2>関連ステップ</h2>
-    <ul>
-      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
-      <li><a href="../steps/01-what-is-git.html">STEP 01: Gitとは何か</a></li>
+      <li><a class="term" href="head.html">HEAD</a></li>
+      <li><a class="term" href="branch.html">ブランチ</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
