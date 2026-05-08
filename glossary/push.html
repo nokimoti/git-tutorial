@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プッシュ - 用語集 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="../steps/14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="../steps/15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="../steps/16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="../steps/17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">用語集</div>
+    <h1>プッシュ (Push)</h1>
+
+    <div class="definition">
+      ローカル <a class="term" href="repository.html">リポジトリ</a> の変更を、<a class="term" href="remote.html">リモート</a> リポジトリに <strong>アップロード</strong> する操作。
+    </div>
+
+    <h2>使い方</h2>
+    <pre><code># 通常のプッシュ
+git push
+
+# 初回のプッシュ (上流ブランチを覚えさせる)
+git push -u origin main</code></pre>
+
+    <h2>イメージ</h2>
+    <pre><code>あなたのPC      ── push ──→      GitHub</code></pre>
+
+    <h2>よくある間違い</h2>
+    <p>
+      コミットしないとプッシュできません。「変更したのに反映されない」と思ったら、
+      <code>git status</code> でコミット済みか確認しましょう。
+    </p>
+
+    <h2>関連用語</h2>
+    <ul>
+      <li><a class="term" href="pull.html">プル</a> — 逆方向の操作</li>
+      <li><a class="term" href="origin.html">origin</a> — プッシュ先のリモート名</li>
+    </ul>
+
+    <h2>関連ステップ</h2>
+    <ul>
+      <li><a href="../steps/15-push-pull.html">STEP 15: プッシュとプル</a></li>
+    </ul>
+
+    <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

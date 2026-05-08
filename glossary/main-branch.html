@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>main ブランチ - 用語集 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="../steps/14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="../steps/15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="../steps/16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="../steps/17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">用語集</div>
+    <h1>main ブランチ</h1>
+
+    <div class="definition">
+      リポジトリの <strong>本流となる <a class="term" href="branch.html">ブランチ</a></strong>。
+      <code>git init</code> で作ったリポジトリには、最初からこの <code>main</code> ブランチがあります。
+    </div>
+
+    <h2>位置づけ</h2>
+    <p>
+      多くのプロジェクトで、<code>main</code> は次のような役割を持ちます。
+    </p>
+    <ul>
+      <li>常に動作する最新の状態を保つ</li>
+      <li>他のブランチ (機能ブランチなど) はここから分岐する</li>
+      <li>リリースされる安定版は最終的にここにマージされる</li>
+    </ul>
+
+    <h2>master との違い</h2>
+    <p>
+      昔は <code>master</code> という名前が使われていました。今でも古いリポジトリでは見かけますが、
+      新しく作られるリポジトリでは <code>main</code> が標準になっています (GitHub のデフォルトも 2020 年から <code>main</code>)。
+      機能的にはまったく同じものです。
+    </p>
+
+    <h2>main ブランチの確認</h2>
+    <pre><code># いまのブランチを表示
+git branch
+
+# main に切り替え
+git switch main</code></pre>
+
+    <h2>関連用語</h2>
+    <ul>
+      <li><a class="term" href="branch.html">ブランチ</a> — ブランチ全般の説明</li>
+      <li><a class="term" href="head.html">HEAD</a> — main にいるとき HEAD は main を指す</li>
+    </ul>
+
+    <h2>関連ステップ</h2>
+    <ul>
+      <li><a href="../steps/04-create-repo.html">STEP 04: リポジトリを作る</a></li>
+      <li><a href="../steps/09-branch-create.html">STEP 09: ブランチを作る</a></li>
+    </ul>
+
+    <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

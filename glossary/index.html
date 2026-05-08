@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用語集 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="../steps/14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="../steps/15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="../steps/16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="../steps/17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <h1>用語集</h1>
+    <p>
+      Git の学習でよく出てくる専門用語の一覧です。各用語をクリックすると、詳しい説明ページに飛びます。
+      文中で <span class="term">こんなふうに</span> 表示される語は、すべてこの用語集にリンクしています。
+    </p>
+
+    <h2>基本</h2>
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <a href="repository.html">
+          <div class="term-name">リポジトリ</div>
+          <div class="term-desc">変更履歴の入れ物</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="commit.html">
+          <div class="term-name">コミット</div>
+          <div class="term-desc">変更のセーブポイント</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="working-directory.html">
+          <div class="term-name">ワーキングディレクトリ</div>
+          <div class="term-desc">普段ファイルを編集する場所</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="staging.html">
+          <div class="term-name">ステージング</div>
+          <div class="term-desc">コミット前の一時置き場</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="head.html">
+          <div class="term-name">HEAD</div>
+          <div class="term-desc">いま見ているコミットを示す目印</div>
+        </a>
+      </div>
+    </div>
+
+    <h2>ブランチ関連</h2>
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <a href="branch.html">
+          <div class="term-name">ブランチ</div>
+          <div class="term-desc">履歴の枝分かれ</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="main-branch.html">
+          <div class="term-name">main ブランチ</div>
+          <div class="term-desc">本流となるブランチ</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="merge.html">
+          <div class="term-name">マージ</div>
+          <div class="term-desc">ブランチを統合する操作</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="conflict.html">
+          <div class="term-name">コンフリクト</div>
+          <div class="term-desc">マージ時の衝突</div>
+        </a>
+      </div>
+    </div>
+
+    <h2>リモート関連</h2>
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <a href="remote.html">
+          <div class="term-name">リモート</div>
+          <div class="term-desc">サーバ上のリポジトリ</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="origin.html">
+          <div class="term-name">origin</div>
+          <div class="term-desc">リモートの慣習的な呼び名</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="push.html">
+          <div class="term-name">プッシュ</div>
+          <div class="term-desc">ローカル → リモートへ送る</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="pull.html">
+          <div class="term-name">プル</div>
+          <div class="term-desc">リモート → ローカルへ取り込む</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="fetch.html">
+          <div class="term-name">フェッチ</div>
+          <div class="term-desc">リモートの情報だけ取得</div>
+        </a>
+      </div>
+      <div class="glossary-item">
+        <a href="clone.html">
+          <div class="term-name">クローン</div>
+          <div class="term-desc">リモートを丸ごと複製</div>
+        </a>
+      </div>
+    </div>
+
+    <h2>その他</h2>
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <a href="gitignore.html">
+          <div class="term-name">.gitignore</div>
+          <div class="term-desc">無視するファイルを指定</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <a href="../index.html">
+        <span class="nav-label">← トップページ</span>
+        <span class="nav-title">Git はじめの一歩</span>
+      </a>
+      <a class="next" href="../steps/01-what-is-git.html">
+        <span class="nav-label">学習をはじめる →</span>
+        <span class="nav-title">STEP 01: Git とは</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

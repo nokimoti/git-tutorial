@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 02: インストール - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 02</div>
+    <h1>Git をインストールする</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>自分のパソコンに Git を入れる</li>
+        <li>(GUI を使う場合) GitHub Desktop もインストールする</li>
+        <li>インストールが成功したかを確認する</li>
+      </ul>
+    </div>
+
+    <h2>Git本体のインストール</h2>
+
+    <div class="tabs" data-group="install">
+      <button class="tab-button active" data-target="windows">Windows</button>
+      <button class="tab-button" data-target="mac">macOS</button>
+      <button class="tab-button" data-target="linux">Linux</button>
+    </div>
+
+    <div class="tab-content active" data-group="install" data-name="windows">
+      <h3>Windows の場合</h3>
+      <ol>
+        <li><a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git-scm.com の Windows ダウンロードページ</a> にアクセスする</li>
+        <li>「64-bit Git for Windows Setup」をダウンロード</li>
+        <li>ダウンロードしたインストーラを起動する</li>
+        <li>基本は <strong>「Next」を押し続ければ OK</strong> です。デフォルト設定で進めましょう</li>
+        <li>インストールが終わると、スタートメニューに <strong>Git Bash</strong> が追加されます</li>
+      </ol>
+      <div class="note">
+        <strong>Git Bash</strong> は Windows で bash コマンドを使うための小さなターミナルです。
+        このサイトで「bash でこう入力」と書いてあるところは、すべて Git Bash で実行してください。
+      </div>
+    </div>
+
+    <div class="tab-content" data-group="install" data-name="mac">
+      <h3>macOS の場合</h3>
+      <p>ターミナル (アプリ「ターミナル.app」) を開いて、次のコマンドを実行します。</p>
+      <pre><code>git --version</code></pre>
+      <p>
+        まだ Git が入っていない場合は、Xcode コマンドラインツールのインストールを促されるので、
+        「インストール」を押すだけで完了します。
+      </p>
+      <p>
+        Homebrew が入っている方なら、より新しい Git を入れることもできます。
+      </p>
+      <pre><code>brew install git</code></pre>
+    </div>
+
+    <div class="tab-content" data-group="install" data-name="linux">
+      <h3>Linux の場合</h3>
+      <p>ディストリビューションに応じて、次のいずれかを実行します。</p>
+      <p><strong>Ubuntu / Debian:</strong></p>
+      <pre><code>sudo apt update
+sudo apt install git</code></pre>
+      <p><strong>Fedora / RHEL:</strong></p>
+      <pre><code>sudo dnf install git</code></pre>
+      <p><strong>Arch:</strong></p>
+      <pre><code>sudo pacman -S git</code></pre>
+    </div>
+
+    <h2>インストールできたか確認する</h2>
+    <p>ターミナル (Windows なら Git Bash) を開いて、次のコマンドを実行してみましょう。</p>
+    <pre><code>git --version</code></pre>
+    <p>
+      「<code>git version 2.xx.x</code>」のように数字が表示されたら成功です。
+      お疲れさまでした。これで Git 本体は使える状態になりました。
+    </p>
+
+    <div class="warning">
+      もし「<code>git: command not found</code>」のように表示された場合は、
+      ターミナルを一度閉じてから再起動してみてください。それでも改善しない場合は、
+      インストールが失敗している可能性があるので、もう一度ダウンロードからやり直しましょう。
+    </div>
+
+    <h2>(任意) GitHub Desktop をインストールする</h2>
+    <p>
+      GUI で Git を操作したい人は、<strong>GitHub Desktop</strong> も一緒に入れておくのがおすすめです。
+      初心者にも優しい、無料のツールです。
+    </p>
+    <ol>
+      <li><a href="https://desktop.github.com/" target="_blank" rel="noopener">desktop.github.com</a> にアクセスする</li>
+      <li>「Download for Windows」または「Download for macOS」をクリック</li>
+      <li>ダウンロードしたインストーラを起動して、案内のとおりに進める</li>
+    </ol>
+
+    <div class="tip">
+      VS Code を普段使っている方は、VS Code に最初から Git 機能が入っています。
+      別途インストールは不要で、左サイドバーの「ソース管理」アイコンからすぐ使えます。
+    </div>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li><code>git --version</code> でバージョンが表示されればインストール成功</li>
+      <li>Windows では「Git Bash」を使ってコマンドを実行する</li>
+      <li>GUI 派は「GitHub Desktop」または「VS Code の Git」を使う</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="01-what-is-git.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 01: Gitとは何か</span>
+      </a>
+      <a class="next" href="03-setup.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 03: 初期設定</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

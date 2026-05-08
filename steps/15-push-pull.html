@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 15: プッシュとプル - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 15</div>
+    <h1>プッシュとプル</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>ローカルの変更を GitHub に <a class="term" href="../glossary/push.html">プッシュ</a> できるようになる</li>
+        <li>GitHub の変更を <a class="term" href="../glossary/pull.html">プル</a> でローカルに取り込めるようになる</li>
+      </ul>
+    </div>
+
+    <h2>プッシュとプルの関係</h2>
+    <p>
+      <a class="term" href="../glossary/remote.html">リモート</a> と連携した後の作業は、ほぼこの2つの操作だけです。
+    </p>
+    <ul>
+      <li><strong><a class="term" href="../glossary/push.html">プッシュ (push)</a></strong> = ローカルの変更を、リモート (GitHub) にアップロード</li>
+      <li><strong><a class="term" href="../glossary/pull.html">プル (pull)</a></strong> = リモートの変更を、ローカルにダウンロード</li>
+    </ul>
+    <pre><code>あなたのPC                          GitHub
+┌─────────────┐ ── push ──→         ┌─────────────┐
+│ ローカル    │                     │ リモート    │
+│             │ ←── pull ──         │             │
+└─────────────┘                     └─────────────┘</code></pre>
+
+    <h2>はじめてのプッシュ</h2>
+
+    <div class="tabs" data-group="push">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="push" data-name="cli">
+      <h3>初回プッシュは <code>-u</code> をつける</h3>
+      <pre><code>git push -u origin main</code></pre>
+      <p>
+        意味を分解すると:
+      </p>
+      <ul>
+        <li><code>git push</code> = プッシュする</li>
+        <li><code>origin</code> = STEP 14 で設定したリモートの呼び名</li>
+        <li><code>main</code> = プッシュするブランチ</li>
+        <li><code>-u</code> = 「次回からは <code>git push</code> だけでこの場所に送れるよう覚えておいて」の意</li>
+      </ul>
+      <p>
+        コマンドを実行すると、初回はブラウザが自動で開いて GitHub への認証を求められます。
+        指示に従って認証を完了させてください。
+      </p>
+      <p>成功するとこんな表示が出ます。</p>
+      <pre><code>Enumerating objects: 6, done.
+...
+To https://github.com/.../my-first-repo.git
+ * [new branch]      main -&gt; main
+branch 'main' set up to track 'origin/main'.</code></pre>
+
+      <h3>2回目以降のプッシュ</h3>
+      <pre><code>git push</code></pre>
+      <p>これだけで OK。<code>-u</code> で覚えさせた設定が効いています。</p>
+    </div>
+
+    <div class="tab-content" data-group="push" data-name="gui">
+      <h3>GitHub Desktop でプッシュ</h3>
+      <p>
+        コミットを作ると、画面上部に「Push origin」ボタンが現れます。
+      </p>
+      <ol>
+        <li>「Push origin」ボタンをクリック</li>
+        <li>初回は GitHub への認証ダイアログが出るので、画面の指示に従う</li>
+        <li>完了すると、ボタンの数字 (送信待ちのコミット数) がリセットされる</li>
+      </ol>
+      <p>これだけ。GUI ならコマンドを覚える必要がないのが楽です。</p>
+    </div>
+
+    <h2>GitHub で確認してみる</h2>
+    <p>
+      ブラウザで GitHub のリポジトリページを開いて (リロードして) みましょう。
+      <code>hello.txt</code> がアップロードされ、コミット履歴も全部見られるはずです。
+    </p>
+    <div class="tip">
+      ここまで来たら、もうあなたのコードは安全です。
+      パソコンが故障しても、GitHub にコピーが残っています。
+    </div>
+
+    <h2>プルしてみる</h2>
+    <p>
+      練習として、<strong>GitHub 上で直接ファイルを編集</strong> して、それをローカルにプルしてみましょう。
+    </p>
+
+    <h3>① GitHub 上で編集する</h3>
+    <ol>
+      <li>GitHub のリポジトリページで <code>hello.txt</code> をクリック</li>
+      <li>右上の鉛筆アイコン (Edit this file) をクリック</li>
+      <li>1行追加: <code>GitHub から直接編集した行。</code></li>
+      <li>右上の「Commit changes...」 → 「Commit changes」</li>
+    </ol>
+
+    <h3>② ローカルにプルする</h3>
+
+    <div class="tabs" data-group="pull">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="pull" data-name="cli">
+      <pre><code>git pull</code></pre>
+      <p>こんな表示が出れば成功。</p>
+      <pre><code>Updating f1e2d3c..abcd789
+Fast-forward
+ hello.txt | 1 +
+ 1 file changed, 1 insertion(+)</code></pre>
+      <p>ローカルの <code>hello.txt</code> にも、追加した行が反映されているはずです。</p>
+    </div>
+
+    <div class="tab-content" data-group="pull" data-name="gui">
+      <ol>
+        <li>GitHub Desktop の上部に「Pull origin」ボタンが現れる<br>
+          <span style="color:#64748b; font-size:14px;">(ボタンが見えないときは「Repository」メニュー → 「Pull」)</span></li>
+        <li>クリックすればプル完了</li>
+      </ol>
+    </div>
+
+    <h2>fetch と pull の違い</h2>
+    <p>
+      Git にはもうひとつ <a class="term" href="../glossary/fetch.html">フェッチ (fetch)</a> という操作があります。
+    </p>
+    <ul>
+      <li><strong>fetch</strong> = リモートの最新情報をダウンロードするだけ (作業中ブランチには反映しない)</li>
+      <li><strong>pull</strong> = fetch + merge をまとめてやる</li>
+    </ul>
+    <p>
+      要するに <code>git pull</code> は「ダウンロードして自動でマージする」ショートカットです。
+      初心者のうちは <code>git pull</code> だけ使えば困りません。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>ローカル → リモートに送る = <strong>プッシュ</strong> (<code>git push</code>)</li>
+      <li>リモート → ローカルに取り込む = <strong>プル</strong> (<code>git pull</code>)</li>
+      <li>初回プッシュは <code>git push -u origin main</code></li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="14-remote.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 14: リモート連携</span>
+      </a>
+      <a class="next" href="16-clone.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 16: クローン</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

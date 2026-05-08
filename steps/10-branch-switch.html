@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 10: ブランチを切替 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 10</div>
+    <h1>ブランチを切り替える</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>ブランチ間を行き来できるようになる</li>
+        <li>切り替え時にファイルの中身が変わることを体感する</li>
+      </ul>
+    </div>
+
+    <h2>ブランチ切り替えの基本</h2>
+    <p>
+      <a class="term" href="../glossary/branch.html">ブランチ</a> 間の移動は、<strong>ファイルの中身も一緒に変わる</strong> 操作です。
+      <code>main</code> ブランチで作ったファイルが、<code>experiment</code> ブランチに移動すると違う内容に見える、ということが起こります。
+      これは混乱しやすいポイントなので、実際に体験してみるのが一番です。
+    </p>
+
+    <h2>練習: ブランチを切り替えて、違いを見る</h2>
+    <p>
+      STEP 09 で <code>experiment</code> ブランチを作りましたね。
+      このブランチで <code>hello.txt</code> を変更して、その後 <code>main</code> に戻ってみましょう。
+    </p>
+
+    <div class="tabs" data-group="switch">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="switch" data-name="cli">
+      <h3>① いまのブランチを確認</h3>
+      <pre><code>git branch</code></pre>
+      <p><code>* experiment</code> と表示されていれば OK。</p>
+
+      <h3>② experiment ブランチで <code>hello.txt</code> を編集</h3>
+      <p>エディタで <code>hello.txt</code> を開いて、こう書き換えます。</p>
+      <pre><code>これは experiment ブランチでの変更です。</code></pre>
+      <p>そしてコミットします。</p>
+      <pre><code>git add hello.txt
+git commit -m "experiment ブランチで実験的な変更"</code></pre>
+
+      <h3>③ main ブランチに戻る</h3>
+      <pre><code>git switch main</code></pre>
+      <p>切り替えに成功すると、<code>hello.txt</code> の中身が <strong>experiment で変更する前の状態に戻っている</strong> のが確認できます。</p>
+      <div class="note">
+        古い書き方では <code>git checkout main</code> ですが、新しい <code>git switch</code> のほうがブランチ切り替え専用なので分かりやすいです。
+      </div>
+
+      <h3>④ experiment に戻ってみる</h3>
+      <pre><code>git switch experiment</code></pre>
+      <p>すると、<code>hello.txt</code> はまた「experiment ブランチでの変更」の内容に戻ります。</p>
+    </div>
+
+    <div class="tab-content" data-group="switch" data-name="gui">
+      <h3>① ブランチ切り替えメニューを開く</h3>
+      <p>画面上部の「Current branch」と書かれたボタンをクリック。</p>
+
+      <h3>② 切り替えたいブランチを選ぶ</h3>
+      <p>ブランチ一覧が表示されるので、<code>experiment</code> や <code>main</code> をクリックすれば切り替わります。</p>
+      <p>切り替えた瞬間、エディタで開いている <code>hello.txt</code> の中身も自動で変わります。</p>
+      <div class="tip">
+        <strong>VS Code では</strong> 画面左下に現在のブランチ名が表示されています。
+        そこをクリックすると、即座にブランチ切り替えメニューが開くので便利です。
+      </div>
+    </div>
+
+    <h2>切り替えできないときの対処</h2>
+    <p>
+      ファイルを編集中で、まだコミットしていない状態で他のブランチに切り替えようとすると、
+      Git に怒られることがあります。
+    </p>
+    <pre><code>error: Your local changes to the following files would be overwritten by checkout</code></pre>
+    <p>これは「変更が消えてしまうから切り替えできないよ」という警告です。対処は3通り。</p>
+    <ol>
+      <li><strong>コミットする</strong> — その変更を残しておきたいなら、まず <code>git commit</code></li>
+      <li><strong>変更を捨てる</strong> — いらないなら <code>git restore</code> で消してから切り替え</li>
+      <li><strong>一時保存する</strong> — <code>git stash</code> で「いったん退避」も可能 (慣れてきたらでOK)</li>
+    </ol>
+
+    <h2>HEAD はブランチと一緒に動く</h2>
+    <p>
+      ブランチを切り替えると、<a class="term" href="../glossary/head.html">HEAD</a> もそのブランチを指すように動きます。
+      ブランチが「特定のコミットを指すラベル」、<a class="term" href="../glossary/head.html">HEAD</a> が「いまどのブランチを見ているかを指すラベル」、と覚えておきましょう。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li><code>git switch &lt;ブランチ名&gt;</code> で切り替え</li>
+      <li>切り替えると、ファイルの中身もブランチごとの状態に変わる</li>
+      <li>未コミットの変更があると切り替えに失敗することがある</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="09-branch-create.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 09: ブランチを作る</span>
+      </a>
+      <a class="next" href="11-merge.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 11: マージする</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

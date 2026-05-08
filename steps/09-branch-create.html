@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 09: ブランチを作る - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 09</div>
+    <h1>ブランチを作る</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li><a class="term" href="../glossary/branch.html">ブランチ</a> が何のためにあるかを理解する</li>
+        <li>新しいブランチを作れるようになる</li>
+      </ul>
+    </div>
+
+    <h2>ブランチって何のためにある？</h2>
+    <p>
+      <a class="term" href="../glossary/branch.html">ブランチ</a> は「履歴の枝分かれ」を作る仕組みです。
+      たとえば、こんな場面で役立ちます。
+    </p>
+    <ul>
+      <li>「ちょっと実験的に機能を追加してみたいけど、失敗したらすぐ戻したい」</li>
+      <li>「メイン作業を中断して、緊急のバグ修正だけ先にやりたい」</li>
+      <li>「2人で別々の機能を、お互いの邪魔をせずに開発したい」</li>
+    </ul>
+    <p>
+      ブランチを作ると、そのブランチでの変更は <strong>他のブランチには影響しません</strong>。
+      気軽に試して、よければ後で <a class="term" href="../glossary/merge.html">マージ</a> して取り込めばよく、ダメなら捨てればいいだけ。
+    </p>
+
+    <h2>main ブランチ</h2>
+    <p>
+      <code>git init</code> したリポジトリには、最初から <code>main</code> という名前のブランチがあります。
+      これは「本流」を意味する <a class="term" href="../glossary/main-branch.html">main ブランチ</a> です。
+      普段の作業はここで行い、必要に応じて他のブランチを切って実験する、という使い方が一般的。
+    </p>
+    <div class="note">
+      昔は <code>master</code> という名前が使われていました。今でも古いリポジトリでは見かけますが、新規には <code>main</code> が推奨されています。
+    </div>
+
+    <h2>新しいブランチを作る</h2>
+
+    <div class="tabs" data-group="branch-create">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="branch-create" data-name="cli">
+      <h3>ブランチを作るだけ</h3>
+      <p>たとえば <code>experiment</code> という名前のブランチを作るには:</p>
+      <pre><code>git branch experiment</code></pre>
+      <p>これでブランチが作られます。<strong>ただし、まだそのブランチに移動はしていません。</strong></p>
+
+      <h3>ブランチ一覧を見る</h3>
+      <pre><code>git branch</code></pre>
+      <p>こんな表示が出ます。</p>
+      <pre><code>  experiment
+* main</code></pre>
+      <p><code>*</code> がついているのが、いま自分がいるブランチです。</p>
+
+      <h3>作成と移動を一度にやる (これがよく使われる)</h3>
+      <pre><code>git switch -c experiment</code></pre>
+      <p>
+        <code>-c</code> は「create」の略。<strong>ブランチを作って、すぐそのブランチに切り替える</strong>、という意味です。
+        実際の現場では、こちらを使うことが多いです。
+      </p>
+      <div class="note">
+        古い書き方では <code>git checkout -b experiment</code> ですが、新しい <code>git switch</code> のほうがおすすめ。
+      </div>
+    </div>
+
+    <div class="tab-content" data-group="branch-create" data-name="gui">
+      <h3>GitHub Desktop でブランチを作る</h3>
+      <ol>
+        <li>上部の「Current branch」と書かれたボタンをクリック</li>
+        <li>「New branch」ボタンを押す</li>
+        <li>ブランチ名を入力 (例: <code>experiment</code>)</li>
+        <li>「Create branch」をクリック</li>
+      </ol>
+      <p>
+        作成と同時に、自動でそのブランチに切り替わります。
+        現在のブランチは画面上部の「Current branch」欄に表示されているので、いつでも確認できます。
+      </p>
+    </div>
+
+    <h2>ブランチが作られた仕組み</h2>
+    <p>
+      ブランチを作った直後は、見た目には何も変わりません。<code>hello.txt</code> も同じ内容のままです。
+    </p>
+    <p>
+      しかしここで、新しいブランチで <code>hello.txt</code> に何か変更を加えてコミットしても、
+      <strong><code>main</code> ブランチの <code>hello.txt</code> には影響しません</strong>。これがブランチの威力です。
+    </p>
+    <pre><code>main:        コミット1 ── コミット2
+                              \
+experiment:                    新しいコミット (これは main には影響なし)</code></pre>
+
+    <h2>ブランチ名のつけかた</h2>
+    <p>慣例として、ブランチ名は次のような形がよく使われます。</p>
+    <ul>
+      <li><code>feature/login-form</code> — 新機能の開発</li>
+      <li><code>fix/typo-on-top-page</code> — バグ修正</li>
+      <li><code>experiment/try-new-design</code> — 実験</li>
+    </ul>
+    <p>
+      <code>/</code> や <code>-</code> を使うのは普通ですが、スペースや日本語は避けたほうが無難です。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li><code>git switch -c &lt;名前&gt;</code> で「ブランチを作って、そこに移動」できる</li>
+      <li>ブランチを切ると、本流 (<code>main</code>) を傷つけずに作業できる</li>
+      <li>GUI なら「Current branch」→「New branch」で作れる</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="08-undo.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 08: 変更を取り消す</span>
+      </a>
+      <a class="next" href="10-branch-switch.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 10: ブランチを切替</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

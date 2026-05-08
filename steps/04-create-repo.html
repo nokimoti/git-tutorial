@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 04: リポジトリを作る - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 04</div>
+    <h1>はじめてのリポジトリを作る</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>練習用のフォルダを <a class="term" href="../glossary/repository.html">リポジトリ</a> にする</li>
+        <li><code>.git</code> という隠しフォルダの存在を理解する</li>
+      </ul>
+    </div>
+
+    <h2>練習用のフォルダを準備する</h2>
+    <p>
+      まずは練習のため、新しいフォルダを作りましょう。場所はどこでも構いませんが、
+      ここでは <code>my-first-repo</code> という名前で作ります。
+    </p>
+    <p>例:</p>
+    <ul>
+      <li>Windows: <code>C:\Users\あなたの名前\Documents\my-first-repo</code></li>
+      <li>macOS / Linux: <code>~/Documents/my-first-repo</code></li>
+    </ul>
+    <p>エクスプローラー (Finder) で普通にフォルダを新規作成すれば OK です。</p>
+
+    <h2>リポジトリにする (= Git の管理を始める)</h2>
+
+    <div class="tabs" data-group="init">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="init" data-name="cli">
+      <h3>bash で初期化する</h3>
+      <p>ターミナルで、作ったフォルダに移動します。</p>
+      <pre><code>cd ~/Documents/my-first-repo</code></pre>
+      <p>そして、次のコマンドを実行するだけ。</p>
+      <pre><code>git init</code></pre>
+      <p>
+        次のような表示が出ます。
+      </p>
+      <pre><code>Initialized empty Git repository in /Users/.../my-first-repo/.git/</code></pre>
+      <p>これで完了。<strong>このフォルダは Git のリポジトリになりました。</strong></p>
+    </div>
+
+    <div class="tab-content" data-group="init" data-name="gui">
+      <h3>GitHub Desktop で初期化する</h3>
+      <ol>
+        <li>GitHub Desktop を起動する</li>
+        <li>メニューから <strong>File → New repository...</strong> を選ぶ</li>
+        <li>表示されたダイアログで以下を入力:
+          <ul>
+            <li><strong>Name</strong>: <code>my-first-repo</code></li>
+            <li><strong>Local path</strong>: 保存場所を指定 (例: <code>Documents</code> フォルダ)</li>
+            <li>そのほかはデフォルトのままで OK</li>
+          </ul>
+        </li>
+        <li>「Create repository」を押す</li>
+      </ol>
+      <p>
+        指定した場所に <code>my-first-repo</code> フォルダが自動で作られ、すでに Git の管理下になっています。
+      </p>
+    </div>
+
+    <h2><code>.git</code> フォルダって何？</h2>
+    <p>
+      リポジトリにすると、フォルダの中に <code>.git</code> という名前の隠しフォルダが作られます。
+      ここに、Git が管理するすべての履歴情報が入っています。
+    </p>
+    <p>隠しフォルダを表示する方法:</p>
+    <ul>
+      <li>Windows: エクスプローラーの「表示」→「隠しファイル」にチェック</li>
+      <li>macOS: Finder で <code>⌘ + Shift + .</code> を押す</li>
+      <li>bash: <code>ls -a</code> と入力する</li>
+    </ul>
+    <div class="warning">
+      <code>.git</code> フォルダは <strong>絶対に手動で消したり編集したりしないでください</strong>。
+      消してしまうと、これまでの履歴がすべて失われます。気にせず存在を忘れて大丈夫です。
+    </div>
+
+    <h2>もう少し詳しい仕組み</h2>
+    <p>
+      <code>git init</code> したフォルダは、3つの領域から成り立っていると考えてください。
+    </p>
+    <ul>
+      <li><a class="term" href="../glossary/working-directory.html">ワーキングディレクトリ</a> — あなたが普段ファイルを編集する場所</li>
+      <li><a class="term" href="../glossary/staging.html">ステージングエリア</a> — 「次のコミットに含める変更」を一時的に置く場所</li>
+      <li><a class="term" href="../glossary/repository.html">リポジトリ</a> (<code>.git</code> 内) — 過去のすべてのコミットを保管する場所</li>
+    </ul>
+    <p>
+      この3つを行ったり来たりしながら、変更を保存していくのが Git の使い方です。
+      次のステップで、実際の流れを体験します。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>フォルダの中で <code>git init</code> すれば <a class="term" href="../glossary/repository.html">リポジトリ</a> になる</li>
+      <li><code>.git</code> フォルダが作られるが、絶対に触らない</li>
+      <li>3つの領域 (ワーキングディレクトリ・ステージング・リポジトリ) をイメージで理解する</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="03-setup.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 03: 初期設定</span>
+      </a>
+      <a class="next" href="05-add-commit.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 05: 追加とコミット</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

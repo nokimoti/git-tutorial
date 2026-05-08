@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 03: 初期設定 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 03</div>
+    <h1>初期設定 (名前とメールアドレス)</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>Git に「あなたが誰なのか」を教える</li>
+        <li><a class="term" href="../glossary/commit.html">コミット</a> に名前とメールアドレスが記録されるようにする</li>
+      </ul>
+    </div>
+
+    <h2>なぜ初期設定が必要？</h2>
+    <p>
+      Git では、すべての <a class="term" href="../glossary/commit.html">コミット</a> に「誰が変更したか」という情報が記録されます。
+      そのため Git に対して、最初に <strong>あなたの名前とメールアドレス</strong> を教えておく必要があります。
+    </p>
+    <p>
+      この設定は <strong>1度やれば、ずっと有効</strong> です。パソコンを買い替えるか、Git を入れ直すまでは再設定不要です。
+    </p>
+
+    <div class="tabs" data-group="setup">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="setup" data-name="cli">
+      <h3>bash で設定する</h3>
+      <p>ターミナル (Windows なら Git Bash) を開いて、次のコマンドを順に実行します。</p>
+      <pre><code>git config --global user.name "あなたの名前"
+git config --global user.email "your@example.com"</code></pre>
+      <p>
+        例えば「山田太郎」さんなら、こう入力します。
+      </p>
+      <pre><code>git config --global user.name "Taro Yamada"
+git config --global user.email "taro@example.com"</code></pre>
+      <p>
+        <code>--global</code> をつけると、このパソコン全体に設定が反映されます。
+      </p>
+
+      <h3>設定できたか確認する</h3>
+      <p>次のコマンドで現在の設定を確認できます。</p>
+      <pre><code>git config --global user.name
+git config --global user.email</code></pre>
+      <p>入力した名前とメールアドレスが表示されたら成功です。</p>
+    </div>
+
+    <div class="tab-content" data-group="setup" data-name="gui">
+      <h3>GitHub Desktop で設定する</h3>
+      <ol>
+        <li>GitHub Desktop を起動する</li>
+        <li>メニューから <strong>File → Options (Windows)</strong> または <strong>GitHub Desktop → Settings (Mac)</strong> を開く</li>
+        <li>左の「Git」タブを選択</li>
+        <li><strong>Name</strong> 欄にあなたの名前、<strong>Email</strong> 欄にメールアドレスを入力</li>
+        <li>「Save」を押して完了</li>
+      </ol>
+      <div class="note">
+        GitHub Desktop で設定すると、内部的には <code>git config --global</code> と同じ設定が書き込まれます。
+        bash でも同じ設定として扱われるので安心してください。
+      </div>
+    </div>
+
+    <h2>メールアドレスの注意点</h2>
+    <div class="warning">
+      ここで設定したメールアドレスは、将来 GitHub にコミットを公開したときに <strong>誰でも見える状態</strong> になります。
+      公開したくない場合は、GitHub が提供する非公開メールアドレス (<code>xxxxx@users.noreply.github.com</code> 形式) を使うとよいでしょう。
+      これは STEP 13 で再度説明します。
+    </div>
+
+    <h2>(任意) よく使う設定</h2>
+    <p>初心者のうちは不要ですが、慣れてきたら次の設定もおすすめです。</p>
+    <pre><code># デフォルトのブランチ名を main にする
+git config --global init.defaultBranch main
+
+# 改行コードの自動変換 (Windows の方向け)
+git config --global core.autocrlf true</code></pre>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li><code>git config --global user.name</code> と <code>user.email</code> で自分を登録する</li>
+      <li>1度だけやれば OK の設定</li>
+      <li>GUI を使う場合は GitHub Desktop の設定画面でも同じことができる</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="02-install.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 02: インストール</span>
+      </a>
+      <a class="next" href="04-create-repo.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 04: リポジトリを作る</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

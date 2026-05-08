@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 07: 履歴を見る - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 07</div>
+    <h1>変更履歴を見る (log)</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>過去のコミットを一覧表示できるようになる</li>
+        <li>各コミットを区別する「コミットID」の存在を知る</li>
+      </ul>
+    </div>
+
+    <h2>練習: 2回目のコミットを残す</h2>
+    <p>
+      STEP 06 で編集した <code>hello.txt</code> を、もう一度コミットしましょう (流れの復習です)。
+    </p>
+    <pre><code>git add hello.txt
+git commit -m "ステータス確認の練習行を追加"</code></pre>
+    <p>これで、リポジトリに2つのコミットが残った状態になりました。</p>
+
+    <div class="tabs" data-group="log">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="log" data-name="cli">
+      <h3>git log で履歴を見る</h3>
+      <pre><code>git log</code></pre>
+      <p>こんなふうに表示されます。</p>
+      <pre><code>commit f1e2d3c4b5a6... (HEAD -> main)
+Author: Taro Yamada &lt;taro@example.com&gt;
+Date:   Fri May 8 14:30:25 2026 +0900
+
+    ステータス確認の練習行を追加
+
+commit 9876abc...
+Author: Taro Yamada &lt;taro@example.com&gt;
+Date:   Fri May 8 14:00:10 2026 +0900
+
+    最初のコミット</code></pre>
+      <p>新しいコミットが上、古いコミットが下に並びます。</p>
+      <div class="note">
+        画面の下に <code>:</code> という記号が出ていたら、<strong>キーボードの「q」を押す</strong>と元のプロンプトに戻れます。
+      </div>
+
+      <h3>もっとコンパクトに見る</h3>
+      <pre><code>git log --oneline</code></pre>
+      <p>1コミット1行に短縮されて、ぱっと見がわかりやすくなります。</p>
+      <pre><code>f1e2d3c (HEAD -> main) ステータス確認の練習行を追加
+9876abc 最初のコミット</code></pre>
+
+      <h3>グラフ付きで見る (おすすめ)</h3>
+      <pre><code>git log --oneline --graph --all</code></pre>
+      <p>
+        将来 <a class="term" href="../glossary/branch.html">ブランチ</a> を使うようになると、この表示が威力を発揮します。
+      </p>
+    </div>
+
+    <div class="tab-content" data-group="log" data-name="gui">
+      <h3>GitHub Desktop で履歴を見る</h3>
+      <ol>
+        <li>上部のタブで「History」をクリック</li>
+        <li>左側にコミット一覧が、最新のものが上に表示される</li>
+        <li>コミットをクリックすると、右側にそのコミットでの変更内容 (差分) が表示される</li>
+      </ol>
+      <p>
+        <code>git log</code> よりはるかに直感的です。コミット日時、メッセージ、変更ファイル、差分まですべて1画面で確認できます。
+      </p>
+    </div>
+
+    <h2>コミットIDって何？</h2>
+    <p>
+      <code>f1e2d3c4b5a6...</code> のような長い英数字は <strong>コミットID (ハッシュ)</strong> と呼ばれます。
+      これはコミットを一意に区別する「指紋」のようなものです。
+    </p>
+    <ul>
+      <li>同じコミットが2つ存在することはない (中身が違えばIDも違う)</li>
+      <li>普段は最初の7文字 (<code>f1e2d3c</code>) だけで指定すれば十分</li>
+      <li>「あのコミットに戻したい」というときに、このIDを使う</li>
+    </ul>
+
+    <h2>HEAD という言葉</h2>
+    <p>
+      <code>git log</code> の出力には <code>(HEAD -&gt; main)</code> という表示が出ます。
+      <a class="term" href="../glossary/head.html">HEAD</a> は「いま自分がどのコミットを見ているか」を指す矢印です。
+      ブランチ操作 (STEP 09 以降) で何度も出てくる言葉なので、頭の片隅に置いておきましょう。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li><code>git log</code> で履歴を一覧できる</li>
+      <li><code>git log --oneline</code> でコンパクト表示</li>
+      <li>コミットには「コミットID」という指紋がある</li>
+      <li><a class="term" href="../glossary/head.html">HEAD</a> = いま見ているコミットを指す矢印</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="06-status.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 06: 状態を確認</span>
+      </a>
+      <a class="next" href="08-undo.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 08: 変更を取り消す</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

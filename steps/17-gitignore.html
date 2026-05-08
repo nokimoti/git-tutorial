@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 17: .gitignore - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 17</div>
+    <h1>.gitignore で「無視する」ファイルを指定する</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>Git に管理させたくないファイルを除外できるようになる</li>
+        <li><a class="term" href="../glossary/gitignore.html">.gitignore</a> の書き方を覚える</li>
+      </ul>
+    </div>
+
+    <h2>なぜ「無視する」設定が必要？</h2>
+    <p>
+      プロジェクトを作っていると、リポジトリに <strong>含めたくないファイル</strong> が必ず出てきます。
+    </p>
+    <ul>
+      <li>パスワードや API キーが入った設定ファイル (<code>.env</code> など)</li>
+      <li>ビルドの中間生成物 (<code>node_modules/</code>, <code>dist/</code>, <code>build/</code> など)</li>
+      <li>OS が勝手に作るファイル (<code>.DS_Store</code>, <code>Thumbs.db</code>)</li>
+      <li>エディタの設定フォルダ (<code>.vscode/</code> の一部, <code>.idea/</code> など)</li>
+    </ul>
+    <p>
+      これらをコミットしてしまうと、リポジトリが重くなったり、
+      最悪パスワードを世界中に公開してしまうことになります。<a class="term" href="../glossary/gitignore.html">.gitignore</a> はそれを防ぎます。
+    </p>
+
+    <h2>.gitignore を作る</h2>
+    <p>
+      リポジトリの一番上に、<code>.gitignore</code> という名前のファイルを作るだけ。中身に「無視したいファイルやフォルダの名前」を1行ずつ書きます。
+    </p>
+
+    <h3>例: シンプルな .gitignore</h3>
+    <pre><code># OS が作る邪魔なファイル
+.DS_Store
+Thumbs.db
+
+# パスワードや API キー
+.env
+
+# ログファイル
+*.log
+
+# ビルド成果物
+node_modules/
+dist/
+build/</code></pre>
+    <p>
+      <code>#</code> から始まる行はコメントです。Git は無視するので、自分用のメモとして使えます。
+    </p>
+
+    <h2>書き方のルール</h2>
+    <table style="width:100%; border-collapse: collapse; margin: 16px 0;">
+      <thead>
+        <tr style="background:#f1f5f9;">
+          <th style="padding:10px; border:1px solid #e2e8f0; text-align:left;">書き方</th>
+          <th style="padding:10px; border:1px solid #e2e8f0; text-align:left;">意味</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:10px; border:1px solid #e2e8f0;"><code>secret.txt</code></td><td style="padding:10px; border:1px solid #e2e8f0;">この名前のファイルを無視 (どの階層でも)</td></tr>
+        <tr><td style="padding:10px; border:1px solid #e2e8f0;"><code>*.log</code></td><td style="padding:10px; border:1px solid #e2e8f0;"><code>.log</code> で終わるすべてのファイル</td></tr>
+        <tr><td style="padding:10px; border:1px solid #e2e8f0;"><code>build/</code></td><td style="padding:10px; border:1px solid #e2e8f0;"><code>build</code> という名前のフォルダ全体</td></tr>
+        <tr><td style="padding:10px; border:1px solid #e2e8f0;"><code>/secret.txt</code></td><td style="padding:10px; border:1px solid #e2e8f0;">リポジトリ直下の <code>secret.txt</code> だけ (深い階層は対象外)</td></tr>
+        <tr><td style="padding:10px; border:1px solid #e2e8f0;"><code>!important.log</code></td><td style="padding:10px; border:1px solid #e2e8f0;">無視リストから除外 (例外的に管理対象にする)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>テンプレートを使う</h2>
+    <p>
+      自分でゼロから書かなくても、よく使われる <code>.gitignore</code> のテンプレートが GitHub に用意されています。
+    </p>
+    <ul>
+      <li><a href="https://github.com/github/gitignore" target="_blank" rel="noopener">github.com/github/gitignore</a> — 公式のテンプレート集</li>
+      <li><a href="https://www.toptal.com/developers/gitignore" target="_blank" rel="noopener">gitignore.io</a> — 言語/ツール名を入れると、最適な内容を自動生成してくれるサービス</li>
+    </ul>
+    <div class="tip">
+      たとえば「Node.js + macOS + VS Code」と指定すれば、それらに最適化された .gitignore がワンクリックで生成できます。
+    </div>
+
+    <h2>動作を確認する</h2>
+    <p>
+      <code>.gitignore</code> をリポジトリの直下に置いた後、無視されるはずのファイルを作ってみましょう。
+    </p>
+    <pre><code>echo "secret password" &gt; .env
+git status</code></pre>
+    <p>
+      <code>.env</code> が表示されなければ、無視がきちんと効いています。
+    </p>
+
+    <div class="warning">
+      <strong>すでにコミット済みのファイルは、後から .gitignore に追加しても無視されません。</strong>
+      その場合は、まず <code>git rm --cached &lt;ファイル名&gt;</code> でリポジトリから削除してから、コミットし直す必要があります。
+    </div>
+
+    <h2>.gitignore も忘れずにコミット</h2>
+    <p>
+      <code>.gitignore</code> 自体はリポジトリで管理するファイルです。作ったらコミットしましょう。
+    </p>
+    <pre><code>git add .gitignore
+git commit -m ".gitignore を追加"
+git push</code></pre>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>リポジトリ直下の <code>.gitignore</code> に「無視するファイル名」を書く</li>
+      <li>パスワード・ビルド成果物・OS のゴミファイルを必ず除外する</li>
+      <li>テンプレートを使えば自分で書く必要なし</li>
+      <li><strong>コミット済みファイルは後から無視できない</strong> ので注意</li>
+    </ul>
+
+    <h2>🎉 全ステップお疲れさまでした</h2>
+    <p>
+      ここまで読んでくださってありがとうございます。これで Git の基本操作はひととおり身につきました。
+      日常の作業はこの17ステップの組み合わせで90%カバーできます。
+    </p>
+    <p>
+      もっと詳しく知りたいときや、用語の意味を忘れてしまったときは、
+      <a href="../glossary/index.html">用語集</a> や、各ステップを見直してください。
+    </p>
+
+    <div class="step-nav">
+      <a href="16-clone.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 16: クローン</span>
+      </a>
+      <a class="next" href="../glossary/index.html">
+        <span class="nav-label">用語集 →</span>
+        <span class="nav-title">専門用語の説明一覧</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

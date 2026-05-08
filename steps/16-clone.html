@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 16: クローン - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 16</div>
+    <h1>リポジトリをクローンする</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>GitHub にあるリポジトリを、まるごと自分のパソコンに持ってこられるようになる</li>
+        <li><a class="term" href="../glossary/clone.html">クローン</a> と <code>git init</code> の違いを理解する</li>
+      </ul>
+    </div>
+
+    <h2>クローンってどんな場面で使う？</h2>
+    <p>
+      <a class="term" href="../glossary/clone.html">クローン</a> は、リモートにあるリポジトリを丸ごと複製してローカルに持ってくる操作です。
+      こんな場面で使います。
+    </p>
+    <ul>
+      <li>会社のリポジトリを自宅のパソコンでも触りたい</li>
+      <li>新しいパソコンを買ったので、これまでのリポジトリを持ってくる</li>
+      <li>GitHub で誰かが公開しているライブラリを使いたい</li>
+      <li>チームの新メンバーになって、開発中のプロジェクトに参加する</li>
+    </ul>
+    <div class="note">
+      クローンには、過去のすべてのコミット履歴も丸ごと含まれます。単なるダウンロードではなく、「リポジトリ全体のコピー」です。
+    </div>
+
+    <h2>クローンの URL を取得する</h2>
+    <p>
+      まず GitHub のリポジトリページを開いて、緑色の「Code」ボタンをクリックします。
+      表示される URL がクローン用の URL です。
+    </p>
+    <pre><code>https://github.com/&lt;ユーザー名&gt;/my-first-repo.git</code></pre>
+    <div class="tip">
+      URL 入力欄の右側にあるコピーアイコンをクリックすると、ワンタッチでコピーできます。
+    </div>
+
+    <h2>クローンする</h2>
+
+    <div class="tabs" data-group="clone">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="clone" data-name="cli">
+      <h3>① クローン先の場所に移動</h3>
+      <p>クローンしたいフォルダ (例: ドキュメント) に移動します。</p>
+      <pre><code>cd ~/Documents</code></pre>
+
+      <h3>② クローンを実行</h3>
+      <pre><code>git clone https://github.com/&lt;ユーザー名&gt;/my-first-repo.git</code></pre>
+      <p>
+        実行すると、現在の場所の下に <code>my-first-repo</code> という名前のフォルダができ、
+        その中にリポジトリの全ファイルと履歴が入っています。
+      </p>
+
+      <h3>③ クローンしたフォルダに入る</h3>
+      <pre><code>cd my-first-repo
+git log --oneline</code></pre>
+      <p>すべてのコミット履歴が見られるはずです。</p>
+
+      <div class="tip">
+        違う名前のフォルダにしたいときは、URL の後ろにフォルダ名を指定できます:
+        <pre><code>git clone &lt;URL&gt; my-new-name</code></pre>
+      </div>
+    </div>
+
+    <div class="tab-content" data-group="clone" data-name="gui">
+      <h3>GitHub Desktop でクローン</h3>
+      <ol>
+        <li>「File」メニュー → 「Clone repository...」</li>
+        <li>「GitHub.com」タブを選ぶと、自分のリポジトリ一覧が出る</li>
+        <li>クローンしたいリポジトリを選ぶ</li>
+        <li>下の「Local path」で保存先を指定</li>
+        <li>「Clone」をクリック</li>
+      </ol>
+      <p>
+        他人のリポジトリをクローンしたいときは、「URL」タブを選んで URL を入力します。
+      </p>
+    </div>
+
+    <h2>クローンしたあとは？</h2>
+    <p>
+      クローンしたリポジトリは、もう完全に「使える状態」です。
+      <code>git remote -v</code> を見ると、自動で <a class="term" href="../glossary/origin.html">origin</a> が設定されているのがわかります。
+    </p>
+    <p>つまり、クローンしてすぐに:</p>
+    <ul>
+      <li>編集 → コミットができる</li>
+      <li><code>git push</code> でリモートに送れる</li>
+      <li><code>git pull</code> でリモートの変更を取り込める</li>
+    </ul>
+    <p>すべて準備済み、というわけです。</p>
+
+    <h2><code>git init</code> との違い</h2>
+    <table style="width:100%; border-collapse: collapse; margin: 16px 0;">
+      <thead>
+        <tr style="background:#f1f5f9;">
+          <th style="padding:10px; border:1px solid #e2e8f0; text-align:left;">操作</th>
+          <th style="padding:10px; border:1px solid #e2e8f0; text-align:left;">使う場面</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px; border:1px solid #e2e8f0;"><code>git init</code></td>
+          <td style="padding:10px; border:1px solid #e2e8f0;">手元のフォルダを<strong>新しく</strong> Git 管理にする</td>
+        </tr>
+        <tr>
+          <td style="padding:10px; border:1px solid #e2e8f0;"><code>git clone</code></td>
+          <td style="padding:10px; border:1px solid #e2e8f0;"><strong>すでにある</strong> リモートリポジトリをコピーしてくる</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li><code>git clone &lt;URL&gt;</code> で、リモートのリポジトリを丸ごと取得</li>
+      <li>クローンしたフォルダは <a class="term" href="../glossary/origin.html">origin</a> 設定済みで、すぐ <code>push</code> / <code>pull</code> できる</li>
+      <li>新規作成は <code>init</code>、既存を持ってくるのは <code>clone</code></li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="15-push-pull.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 15: プッシュとプル</span>
+      </a>
+      <a class="next" href="17-gitignore.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 17: .gitignore</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

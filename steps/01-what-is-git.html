@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 01: Gitとは何か - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 01</div>
+    <h1>Gitとは何か</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>Git が何をしてくれるツールなのかをイメージできる</li>
+        <li>「バージョン管理」が何のために必要かを理解する</li>
+      </ul>
+    </div>
+
+    <h2>Git は「ファイルの歴史を残す道具」</h2>
+    <p>
+      Git とは、ファイルの変更履歴を記録・管理できるツールです。
+      たとえばレポートや作品を作っているとき、こんな経験はありませんか？
+    </p>
+    <ul>
+      <li>「report_最新.docx」「report_最新2.docx」「report_最新_本当に最終.docx」…とファイルが増えていく</li>
+      <li>昨日まで動いていたコードが、今日はなぜか動かない</li>
+      <li>誰かが書き換えたコードを元に戻したいけど、どこを変えたのかわからない</li>
+    </ul>
+    <p>
+      Git を使うと、こうした問題はすべて解決できます。Git は「いつ・誰が・どのファイルを・どう変えたか」を、
+      きれいに記録してくれます。
+    </p>
+
+    <h2>具体的に何ができる？</h2>
+    <ol>
+      <li><strong>過去のあらゆる時点に戻れる</strong> — 1週間前のあの状態に一瞬で復元できる</li>
+      <li><strong>変更内容を1行単位で確認できる</strong> — どこを足して、どこを消したかが一目瞭然</li>
+      <li><strong>複数人で同じファイルを編集できる</strong> — 衝突を検出してまとめてくれる</li>
+      <li><strong>試したい変更を「枝分かれ」で試せる</strong> — 失敗したらすぐ戻れる (これを <a class="term" href="../glossary/branch.html">ブランチ</a> と呼びます)</li>
+    </ol>
+
+    <h2>「リポジトリ」という言葉</h2>
+    <p>
+      Git を使うときに必ず出てくる言葉が <a class="term" href="../glossary/repository.html">リポジトリ</a> です。
+      リポジトリは「Git が変更履歴を保管する箱」のようなものだと考えてください。
+      この箱の中には、あなたのファイルと、その変更履歴のすべてが入ります。
+    </p>
+
+    <h2>「コミット」という言葉</h2>
+    <p>
+      もうひとつよく出てくる言葉が <a class="term" href="../glossary/commit.html">コミット</a> です。
+      コミットは「変更の保存ポイント」のようなもの。ゲームのセーブポイントだと思ってください。
+      コミットを残しておくと、いつでもその時点に戻ることができます。
+    </p>
+
+    <div class="note">
+      この2つの言葉 (リポジトリ・コミット) は、これからずっと出てきます。
+      今はぼんやりとしたイメージだけで大丈夫です。手を動かしていくうちに自然と理解できます。
+    </div>
+
+    <h2>GitHub とは違うの？</h2>
+    <p>
+      よく混同されますが、Git と GitHub は別のものです。
+    </p>
+    <ul>
+      <li><strong>Git</strong> = あなたのパソコンの中で動く、履歴管理ツール</li>
+      <li><strong>GitHub</strong> = インターネット上で Git のリポジトリを共有できる Web サービス</li>
+    </ul>
+    <p>
+      まずは Git だけで十分。GitHub は STEP 13 から触れていきます。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>Git は変更履歴を管理してくれるツール</li>
+      <li>履歴は <a class="term" href="../glossary/repository.html">リポジトリ</a> という箱に保管される</li>
+      <li><a class="term" href="../glossary/commit.html">コミット</a> はセーブポイントのようなもの</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="../index.html">
+        <span class="nav-label">← トップページ</span>
+        <span class="nav-title">Git はじめの一歩</span>
+      </a>
+      <a class="next" href="02-install.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 02: インストール</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

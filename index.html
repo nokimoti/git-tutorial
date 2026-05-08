@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git はじめの一歩 - 初心者向け Git 入門</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="steps/13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="steps/14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="steps/15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="steps/16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="steps/17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <h1>Git はじめの一歩</h1>
+      <p>コマンドライン (bash) と GUI の両方で学べる、Git 完全入門</p>
+      <a class="btn-primary" href="steps/01-what-is-git.html">最初のステップへ →</a>
+    </div>
+
+    <h2>このサイトについて</h2>
+    <p>
+      このサイトは、Git をまったく触ったことのない方を対象に、
+      ひとつずつ小さなステップで学べるように作られています。
+      各ステップは <strong>コマンドライン (bash)</strong> と <strong>GUI</strong> の両方の手順を併記しているので、
+      自分のスタイルに合わせて学習できます。
+    </p>
+
+    <p>
+      文中の専門用語は <a class="term" href="glossary/repository.html">こんなふうに</a> リンクになっています。
+      意味がわからなくなったら、リンクをクリックすると用語の説明ページにジャンプできます。
+    </p>
+
+    <h2>学習の流れ</h2>
+    <div class="card-grid">
+      <div class="card">
+        <a href="steps/01-what-is-git.html">
+          <div class="step-num">STEP 01 — 02</div>
+          <div class="card-title">準備編</div>
+          <div class="card-desc">Git とは何か、インストールから始めます。</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="steps/03-setup.html">
+          <div class="step-num">STEP 03 — 08</div>
+          <div class="card-title">基本操作編</div>
+          <div class="card-desc">リポジトリ作成、コミット、履歴確認まで。</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="steps/09-branch-create.html">
+          <div class="step-num">STEP 09 — 12</div>
+          <div class="card-title">ブランチ編</div>
+          <div class="card-desc">ブランチを作って分岐・統合する操作を学びます。</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="steps/13-github.html">
+          <div class="step-num">STEP 13 — 17</div>
+          <div class="card-title">GitHub・応用編</div>
+          <div class="card-desc">リモートリポジトリと共同作業のための知識。</div>
+        </a>
+      </div>
+    </div>
+
+    <h2>このサイトで前提とする環境</h2>
+    <ul>
+      <li>OS: Windows / macOS / Linux いずれでも対応</li>
+      <li>コマンドライン: bash (Windows では Git Bash)</li>
+      <li>GUI ツール: <strong>GitHub Desktop</strong> または <strong>VS Code の Git 機能</strong> を例に解説します</li>
+    </ul>
+
+    <div class="note">
+      コマンドラインに慣れていなくても大丈夫です。GUI だけ読み進めても操作を完結できるよう作っています。
+    </div>
+
+    <h2>はじめての方へ</h2>
+    <p>
+      まずは <a href="steps/01-what-is-git.html">STEP 01: Git とは何か</a> からゆっくり読み進めてみてください。
+      1ステップあたり 5〜10分程度で読み終わるボリュームになっています。
+    </p>
+
+    <div class="footer">
+      Git はじめの一歩 — はじめて Git を学ぶあなたのための入門サイト
+    </div>
+  </main>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

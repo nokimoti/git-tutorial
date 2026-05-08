@@ -1,0 +1,544 @@
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #2c3e50;
+  background: #f7f9fc;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+/* Layout */
+.container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 24px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar .site-title {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 24px 20px;
+  border-bottom: 1px solid #334155;
+  margin-bottom: 20px;
+}
+
+.sidebar .site-title a {
+  color: #f1f5f9;
+}
+
+.sidebar .site-title a:hover {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.sidebar .nav-section {
+  padding: 0 24px;
+  margin-bottom: 24px;
+}
+
+.sidebar .nav-section h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.sidebar .nav-list {
+  list-style: none;
+}
+
+.sidebar .nav-list li {
+  margin: 4px 0;
+}
+
+.sidebar .nav-list a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.sidebar .nav-list a:hover {
+  background: #334155;
+  color: #f1f5f9;
+  text-decoration: none;
+}
+
+.sidebar .nav-list a.active {
+  background: #2563eb;
+  color: white;
+}
+
+.sidebar .nav-list .step-number {
+  display: inline-block;
+  width: 28px;
+  font-weight: 600;
+  color: #60a5fa;
+}
+
+.sidebar .nav-list a.active .step-number {
+  color: #bfdbfe;
+}
+
+/* Main Content */
+.main {
+  padding: 40px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.main h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+  color: #0f172a;
+  border-bottom: 3px solid #2563eb;
+  padding-bottom: 12px;
+  display: inline-block;
+}
+
+.main .step-label {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.main h2 {
+  font-size: 24px;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  color: #1e293b;
+  border-left: 5px solid #2563eb;
+  padding-left: 12px;
+}
+
+.main h3 {
+  font-size: 19px;
+  margin-top: 28px;
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.main p {
+  margin-bottom: 16px;
+}
+
+.main ul, .main ol {
+  margin-bottom: 16px;
+  padding-left: 28px;
+}
+
+.main li {
+  margin-bottom: 8px;
+}
+
+/* Goal Box */
+.goal-box {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-left: 5px solid #2563eb;
+  padding: 20px 24px;
+  border-radius: 8px;
+  margin: 24px 0;
+}
+
+.goal-box h2 {
+  margin-top: 0;
+  border: none;
+  padding: 0;
+  font-size: 18px;
+  color: #1e40af;
+}
+
+.goal-box p, .goal-box ul {
+  margin-bottom: 0;
+}
+
+/* Code blocks */
+pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 18px 22px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 16px 0;
+  font-family: "Consolas", "Monaco", "Menlo", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+code {
+  background: #f1f5f9;
+  color: #be123c;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Consolas", "Monaco", "Menlo", "Courier New", monospace;
+  font-size: 0.92em;
+}
+
+/* Glossary link style */
+.term {
+  border-bottom: 2px dotted #2563eb;
+  color: #2563eb;
+  cursor: help;
+  padding: 0 1px;
+  font-weight: 500;
+}
+
+.term:hover {
+  background: #dbeafe;
+  text-decoration: none;
+  border-bottom-style: solid;
+}
+
+/* Tabs (CLI vs GUI) */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #64748b;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.tab-button:hover {
+  color: #2563eb;
+}
+
+.tab-button.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px 0;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Note boxes */
+.note {
+  background: #fef9c3;
+  border-left: 4px solid #eab308;
+  padding: 14px 18px;
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.note::before {
+  content: "💡 ";
+}
+
+.warning {
+  background: #fee2e2;
+  border-left: 4px solid #dc2626;
+  padding: 14px 18px;
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.warning::before {
+  content: "⚠️ ";
+}
+
+.tip {
+  background: #dcfce7;
+  border-left: 4px solid #16a34a;
+  padding: 14px 18px;
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.tip::before {
+  content: "✅ ";
+}
+
+/* Step navigation (prev/next) */
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 2px solid #e2e8f0;
+  gap: 16px;
+}
+
+.step-nav a {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  flex: 1;
+  max-width: 48%;
+  transition: all 0.2s;
+}
+
+.step-nav a:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+  text-decoration: none;
+}
+
+.step-nav .nav-label {
+  font-size: 12px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.step-nav .nav-title {
+  font-size: 15px;
+  color: #1e293b;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.step-nav a.next {
+  text-align: right;
+  margin-left: auto;
+}
+
+/* Hero section (top page) */
+.hero {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  color: white;
+  padding: 60px 40px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  color: white;
+  font-size: 40px;
+  border: none;
+  margin-bottom: 16px;
+  padding-bottom: 0;
+}
+
+.hero p {
+  font-size: 18px;
+  opacity: 0.95;
+  margin-bottom: 24px;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: white;
+  color: #2563eb;
+  padding: 14px 32px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: #1e40af;
+}
+
+/* Cards (top page) */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  transition: all 0.2s;
+}
+
+.card:hover {
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.card a {
+  display: block;
+  color: inherit;
+}
+
+.card a:hover {
+  text-decoration: none;
+}
+
+.card .step-num {
+  font-size: 13px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.card .card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 6px 0;
+}
+
+.card .card-desc {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Glossary specific */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.glossary-item {
+  background: white;
+  border: 2px solid #e2e8f0;
+  padding: 16px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.glossary-item:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.glossary-item a {
+  color: inherit;
+  display: block;
+}
+
+.glossary-item a:hover {
+  text-decoration: none;
+}
+
+.glossary-item .term-name {
+  font-weight: 700;
+  color: #2563eb;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.glossary-item .term-desc {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Definition page */
+.definition {
+  background: white;
+  padding: 24px 28px;
+  border-radius: 8px;
+  border-left: 5px solid #2563eb;
+  margin: 24px 0;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    padding: 16px;
+  }
+
+  .main {
+    padding: 24px 16px;
+  }
+
+  .main h1 {
+    font-size: 24px;
+  }
+
+  .step-nav {
+    flex-direction: column;
+  }
+
+  .step-nav a {
+    max-width: 100%;
+  }
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  color: #94a3b8;
+  font-size: 13px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 60px;
+}

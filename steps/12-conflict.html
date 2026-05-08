@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 12: コンフリクト解決 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 12</div>
+    <h1>コンフリクト (衝突) を解決する</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li><a class="term" href="../glossary/conflict.html">コンフリクト</a> がどんな状態かを理解する</li>
+        <li>落ち着いて手作業で解決できるようになる</li>
+      </ul>
+    </div>
+
+    <h2>コンフリクトはなぜ起きる？</h2>
+    <p>
+      <a class="term" href="../glossary/conflict.html">コンフリクト</a> は、同じファイルの同じ場所を、複数のブランチで別々に変更したときに起きます。
+      Git は「どちらを採用すればいいか自分では判断できない」ので、人間に判断を委ねます。
+    </p>
+    <div class="note">
+      コンフリクトは <strong>失敗ではなく正常な動作</strong> です。Git があなたに「ここどうしましょう？」と聞いてきている状態だと考えてください。
+    </div>
+
+    <h2>練習: わざとコンフリクトを起こしてみる</h2>
+    <p>怖がらずに、自分でコンフリクトを起こして解決する練習をしてみましょう。</p>
+
+    <h3>① 準備: 新しいブランチを作る</h3>
+    <pre><code>git switch main
+git switch -c feature</code></pre>
+
+    <h3>② feature ブランチで <code>hello.txt</code> を変更してコミット</h3>
+    <p><code>hello.txt</code> の1行目を以下のように書き換えます。</p>
+    <pre><code>これは feature ブランチの行です。</code></pre>
+    <pre><code>git add hello.txt
+git commit -m "feature ブランチでの変更"</code></pre>
+
+    <h3>③ main に戻って、同じ1行目を別の内容に書き換えてコミット</h3>
+    <pre><code>git switch main</code></pre>
+    <p><code>hello.txt</code> の1行目を以下のように書き換えます。</p>
+    <pre><code>これは main ブランチの行です。</code></pre>
+    <pre><code>git add hello.txt
+git commit -m "main ブランチでの変更"</code></pre>
+
+    <h3>④ feature を main にマージしてみる</h3>
+    <pre><code>git merge feature</code></pre>
+    <p>すると、こんなメッセージが出ます。</p>
+    <pre><code>Auto-merging hello.txt
+CONFLICT (content): Merge conflict in hello.txt
+Automatic merge failed; fix conflicts and then commit the result.</code></pre>
+    <p>これがコンフリクトです。</p>
+
+    <h2>コンフリクトしたファイルを確認する</h2>
+    <p>
+      <code>hello.txt</code> をエディタで開くと、こんな状態になっています。
+    </p>
+    <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+これは main ブランチの行です。
+=======
+これは feature ブランチの行です。
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature</code></pre>
+    <p>記号の意味を読み解くとこうなります。</p>
+    <ul>
+      <li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> から <code>=======</code> まで → <strong>現在のブランチ (main)</strong> の内容</li>
+      <li><code>=======</code> から <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature</code> まで → <strong>取り込もうとしているブランチ (feature)</strong> の内容</li>
+    </ul>
+
+    <h2>解決のしかた</h2>
+    <p>解決とは、要するに <strong>「どっちを採用するか (または両方を組み合わせるか) を決めて、記号を消す」</strong> ことです。</p>
+
+    <div class="tabs" data-group="conflict">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (VS Code / GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="conflict" data-name="cli">
+      <h3>① エディタで手作業で書き換える</h3>
+      <p>たとえば main の内容を採用するなら、こう書き換えます。</p>
+      <pre><code>これは main ブランチの行です。</code></pre>
+      <p>両方を組み合わせたいなら、こうも書けます。</p>
+      <pre><code>これは main ブランチの行です。
+これは feature ブランチの行です。</code></pre>
+      <p>大事なのは <strong><code>&lt;&lt;&lt;</code> や <code>===</code> や <code>&gt;&gt;&gt;</code> の記号をすべて消す</strong> こと。これらの記号は最終的に1つも残ってはいけません。</p>
+
+      <h3>② 解決済みとして add → commit</h3>
+      <pre><code>git add hello.txt
+git commit</code></pre>
+      <p>
+        コミットメッセージはエディタが起動して自動で入る場合があります。何も書き換えずに保存・閉じれば OK。
+      </p>
+    </div>
+
+    <div class="tab-content" data-group="conflict" data-name="gui">
+      <h3>VS Code でのコンフリクト解決</h3>
+      <p>VS Code はコンフリクト解決にとても優しいツールです。</p>
+      <ol>
+        <li>コンフリクトしているファイルを開く</li>
+        <li>各コンフリクトの上に <strong>「Accept Current Change」「Accept Incoming Change」「Accept Both Changes」「Compare Changes」</strong> というクリック可能なリンクが表示される</li>
+        <li>採用したい選択肢をクリック</li>
+        <li>すべてのコンフリクトを解決したら、ファイルを保存</li>
+        <li>左サイドバーの「Source Control」を開き、ステージング (+ ボタン) → コミット</li>
+      </ol>
+
+      <h3>GitHub Desktop でのコンフリクト解決</h3>
+      <p>
+        GitHub Desktop でマージ中にコンフリクトが起きると、ダイアログが出て「VS Code などのエディタで開きますか？」と聞かれます。
+        エディタで上記の手順で解決し、保存してから戻ってくると、自動でコミット待ち状態になります。
+        「Continue merge」ボタンを押せば完了です。
+      </p>
+    </div>
+
+    <h2>マージをやめたいとき</h2>
+    <p>
+      コンフリクト解決中に「やっぱりマージやめたい」と思ったら、こうします。
+    </p>
+    <pre><code>git merge --abort</code></pre>
+    <p>マージ前の状態に戻ります。困ったときの脱出ボタンです。</p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>コンフリクトは「人間に判断を委ねる正常な動作」</li>
+      <li><code>&lt;&lt;&lt;</code> <code>===</code> <code>&gt;&gt;&gt;</code> の記号を消して、採用する内容に整える</li>
+      <li>整え終わったら <code>git add</code> → <code>git commit</code></li>
+      <li>やめたいときは <code>git merge --abort</code></li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="11-merge.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 11: マージする</span>
+      </a>
+      <a class="next" href="13-github.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 13: GitHub登録</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

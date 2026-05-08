@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 08: 変更を取り消す - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 08</div>
+    <h1>変更を取り消す</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>「まだコミットしていない変更」を取り消せるようになる</li>
+        <li>間違って <a class="term" href="../glossary/staging.html">ステージング</a> したものを取り消せるようになる</li>
+      </ul>
+    </div>
+
+    <h2>取り消しは「いまどの段階か」で方法が変わる</h2>
+    <p>
+      Git の取り消し操作は、<strong>「ファイルがどの状態にあるか」</strong> によって変わります。
+    </p>
+    <ol>
+      <li>編集しただけ (まだ <code>add</code> していない) → ケース A</li>
+      <li><code>add</code> した (まだ <code>commit</code> していない) → ケース B</li>
+      <li><code>commit</code> までしてしまった → ケース C</li>
+    </ol>
+    <p>順番に見ていきましょう。</p>
+
+    <h2>ケースA: 編集を取り消したい</h2>
+    <p>
+      <code>hello.txt</code> を編集したけど「やっぱり編集前に戻したい」というケースです。
+    </p>
+
+    <div class="tabs" data-group="undoA">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="undoA" data-name="cli">
+      <pre><code>git restore hello.txt</code></pre>
+      <p>
+        これで <code>hello.txt</code> は最後にコミットした状態に戻ります。
+      </p>
+      <div class="warning">
+        この操作は <strong>編集内容を完全に捨てる</strong> ため、戻せません。本当に消していいかよく確認しましょう。
+      </div>
+    </div>
+
+    <div class="tab-content" data-group="undoA" data-name="gui">
+      <ol>
+        <li>左の「Changes」タブで対象ファイルを右クリック</li>
+        <li>「Discard changes」を選ぶ</li>
+        <li>確認ダイアログで「Discard Changes」をクリック</li>
+      </ol>
+      <p>これで変更内容が破棄され、最後のコミット時点に戻ります。</p>
+    </div>
+
+    <h2>ケースB: ステージングだけ取り消したい</h2>
+    <p>
+      <code>git add</code> したけど、「やっぱりこのファイルはコミットに含めたくない」という場合。
+      <strong>編集内容は残したまま</strong>、ステージングだけ解除します。
+    </p>
+
+    <div class="tabs" data-group="undoB">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="undoB" data-name="cli">
+      <pre><code>git restore --staged hello.txt</code></pre>
+      <p>
+        ファイルの編集内容はそのままで、ステージングからは外れます。
+      </p>
+      <div class="note">
+        古い書き方では <code>git reset HEAD hello.txt</code> ですが、新しい <code>git restore --staged</code> のほうがおすすめです。
+      </div>
+    </div>
+
+    <div class="tab-content" data-group="undoB" data-name="gui">
+      <p>
+        GitHub Desktop ではチェックボックスがそのまま「ステージングするかどうか」を意味します。
+      </p>
+      <ul>
+        <li>チェックを <strong>外す</strong> = ステージング解除</li>
+        <li>チェックを <strong>付ける</strong> = ステージングに追加</li>
+      </ul>
+      <p>これだけで切り替えできます。</p>
+    </div>
+
+    <h2>ケースC: コミットを取り消したい</h2>
+    <p>
+      コミットしてしまった変更を取り消す方法は2つあります。
+    </p>
+    <h3>方法1: 直前のコミットをやり直す (履歴を作り変える)</h3>
+    <pre><code>git commit --amend</code></pre>
+    <p>
+      <strong>直前のコミット</strong> を上書きできます。コミットメッセージを書き間違えたとき、
+      ファイルを add し忘れたときなどに便利。
+    </p>
+    <div class="warning">
+      他人と共有済みのコミットを <code>--amend</code> で書き換えるのは混乱のもとです。
+      自分1人で使っているリポジトリだけで使いましょう。
+    </div>
+
+    <h3>方法2: 「打ち消しコミット」を作る (履歴は残す)</h3>
+    <pre><code>git revert &lt;コミットID&gt;</code></pre>
+    <p>
+      指定したコミットを <strong>打ち消す新しいコミット</strong> を作ります。
+      履歴は残るので、共有済みのコミットでも安全に取り消せます。
+    </p>
+
+    <h3>GUI で revert する場合</h3>
+    <ol>
+      <li>GitHub Desktop の「History」タブを開く</li>
+      <li>取り消したいコミットを右クリック</li>
+      <li>「Revert changes in commit」を選ぶ</li>
+    </ol>
+
+    <h2>覚えるべきは「困ったときの合言葉」</h2>
+    <div class="tip">
+      慣れないうちはこの一覧表を覚えるよりも、<strong>「困ったらまず <code>git status</code>」</strong> の習慣をつけるほうが大切です。
+      status の表示には、必ず「次に何をすればいいか」のヒントが書いてあります。
+    </div>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>編集だけ取り消し → <code>git restore &lt;ファイル&gt;</code></li>
+      <li>ステージング取り消し → <code>git restore --staged &lt;ファイル&gt;</code></li>
+      <li>直前のコミットを直す → <code>git commit --amend</code></li>
+      <li>過去のコミットを打ち消す → <code>git revert &lt;ID&gt;</code></li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="07-log.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 07: 履歴を見る</span>
+      </a>
+      <a class="next" href="09-branch-create.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 09: ブランチを作る</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 13: GitHubに登録 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 13</div>
+    <h1>GitHub のアカウントを作る</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>GitHub のアカウントを取得する</li>
+        <li>GitHub 上に空のリポジトリを作っておく</li>
+      </ul>
+    </div>
+
+    <h2>GitHub とは何か (改めて)</h2>
+    <p>
+      <strong>GitHub</strong> は、Git のリポジトリをインターネット上に置けるサービスです。
+      これによって以下のことが可能になります。
+    </p>
+    <ul>
+      <li>自分のコードをバックアップできる (パソコンが壊れても安心)</li>
+      <li>他のパソコンと同期できる (会社と自宅、両方で同じコードを編集)</li>
+      <li>他の人と一緒に作業できる (チーム開発)</li>
+      <li>世界中の人にコードを公開できる</li>
+    </ul>
+
+    <h2>アカウントを作る</h2>
+    <ol>
+      <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> にアクセス</li>
+      <li>メールアドレスを入力 → 「Continue」</li>
+      <li>パスワードを設定 → 「Continue」</li>
+      <li>ユーザー名を決める (英数字とハイフンのみ。後で変更も可能)</li>
+      <li>あとは画面の指示に従う (アンケート画面はスキップしてOK)</li>
+      <li>登録したメールに届く確認コードを入力して、登録完了</li>
+    </ol>
+    <div class="tip">
+      無料プランで個人開発には十分な機能が使えます。クレジットカードは不要です。
+    </div>
+
+    <h2>非公開メールアドレスを使う設定 (推奨)</h2>
+    <p>
+      STEP 03 で説明したとおり、コミットに記録されるメールアドレスは公開されてしまうリスクがあります。
+      GitHub には、自分のメールアドレスを隠せる仕組みがあります。
+    </p>
+    <ol>
+      <li>GitHub にログイン</li>
+      <li>右上のアバター → 「Settings」</li>
+      <li>左メニューの「Emails」</li>
+      <li>「Keep my email addresses private」にチェック</li>
+      <li>すぐ上に表示される <code>12345678+ユーザー名@users.noreply.github.com</code> 形式のアドレスをコピー</li>
+      <li>このアドレスを Git の <code>user.email</code> に設定:
+        <pre><code>git config --global user.email "12345678+ユーザー名@users.noreply.github.com"</code></pre>
+      </li>
+    </ol>
+
+    <h2>GitHub 上に空のリポジトリを作る</h2>
+    <p>
+      自分のパソコンにあるリポジトリを GitHub にアップロードする準備として、
+      GitHub 側に「受け皿」となる空のリポジトリを作りましょう。
+    </p>
+    <ol>
+      <li>GitHub のトップページ右上の「+」ボタン → 「New repository」</li>
+      <li>「Repository name」に名前を入力 (例: <code>my-first-repo</code>)</li>
+      <li>公開範囲を選ぶ
+        <ul>
+          <li><strong>Public</strong> = 誰でも見られる</li>
+          <li><strong>Private</strong> = 自分と招待した人だけ見られる</li>
+        </ul>
+      </li>
+      <li>その他のチェックボックスは <strong>すべて空のまま</strong> にする
+        <div class="warning">
+          「Add a README file」「Add .gitignore」「Choose a license」のチェックは <strong>絶対につけない</strong> でください。
+          これらにチェックすると、自分のローカルリポジトリと衝突して連携が面倒になります。
+        </div>
+      </li>
+      <li>「Create repository」をクリック</li>
+    </ol>
+    <p>作成後の画面に、リポジトリの URL が表示されます。次のステップで使うので、画面はこのまま開いておいてください。</p>
+    <pre><code>https://github.com/&lt;ユーザー名&gt;/my-first-repo.git</code></pre>
+
+    <h2>(任意) GitHub Desktop でログイン</h2>
+    <p>GUI 派の方は、GitHub Desktop に GitHub アカウントでログインしておくと便利です。</p>
+    <ol>
+      <li>GitHub Desktop を開く</li>
+      <li>「File」 → 「Options」 → 「Accounts」</li>
+      <li>GitHub.com の「Sign in」をクリック</li>
+      <li>ブラウザが開くので、GitHub にログイン</li>
+      <li>「Authorize desktop」ボタンで承認</li>
+    </ol>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>GitHub アカウントは無料で作れる</li>
+      <li>非公開メールアドレスを使うと、メールアドレスが公開されない</li>
+      <li>GitHub 上に <strong>空の</strong> リポジトリを作っておくのが大事 (チェックボックスはつけない)</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="12-conflict.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 12: コンフリクト解決</span>
+      </a>
+      <a class="next" href="14-remote.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 14: リモート連携</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

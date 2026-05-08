@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 05: 追加とコミット - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 05</div>
+    <h1>ファイルを追加してコミットする</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>ファイルを <a class="term" href="../glossary/staging.html">ステージング</a> する</li>
+        <li>はじめての <a class="term" href="../glossary/commit.html">コミット</a> を残す</li>
+        <li>「add → commit」の流れを身につける</li>
+      </ul>
+    </div>
+
+    <h2>練習用ファイルを作る</h2>
+    <p>
+      STEP 04 で作った <code>my-first-repo</code> フォルダの中に、<strong>テキストファイルを1つ作りましょう</strong>。
+      内容は何でも構いませんが、ここでは <code>hello.txt</code> という名前で次のような内容を書いてみます。
+    </p>
+    <pre><code>はじめての Git のメモ。
+今日からバージョン管理を学ぶ。</code></pre>
+
+    <h2>2段階で保存する</h2>
+    <p>
+      Git では、変更を保存するときに <strong>2段階</strong> の手順を踏みます。
+    </p>
+    <ol>
+      <li><strong>add</strong> — 変更したファイルを <a class="term" href="../glossary/staging.html">ステージング</a> に置く</li>
+      <li><strong>commit</strong> — ステージングにあるものをまとめて <a class="term" href="../glossary/repository.html">リポジトリ</a> に保存する</li>
+    </ol>
+    <p>
+      なぜ2段階なのか？それは、たくさん変更を加えたファイルの中から
+      「今回はこの変更だけ保存したい」という選択ができるようにするためです。
+      最初は深く考えずに、「add してから commit するもの」と覚えれば OK です。
+    </p>
+
+    <div class="tabs" data-group="commit">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="commit" data-name="cli">
+      <h3>add する</h3>
+      <p>ターミナルで、リポジトリのフォルダに移動した状態で次を実行します。</p>
+      <pre><code>git add hello.txt</code></pre>
+      <p>
+        これで <code>hello.txt</code> が <a class="term" href="../glossary/staging.html">ステージング</a> に登録されました。
+        画面には何も表示されませんが、それは正常な動作です。
+      </p>
+      <div class="tip">
+        変更したファイルが複数ある場合、まとめてステージングに入れるには:
+        <pre><code>git add .</code></pre>
+        と実行します。「.」は「現在のフォルダ全部」を意味します。
+      </div>
+
+      <h3>commit する</h3>
+      <p>続けて、コミットしましょう。</p>
+      <pre><code>git commit -m "最初のコミット"</code></pre>
+      <p>
+        <code>-m</code> の後ろのダブルクォートで囲まれた文字列が <strong>コミットメッセージ</strong> です。
+        「何を変更したか」を未来の自分が見てわかるように書きます。
+      </p>
+      <p>成功すると、こんな表示が出ます。</p>
+      <pre><code>[main (root-commit) abc1234] 最初のコミット
+ 1 file changed, 2 insertions(+)
+ create mode 100644 hello.txt</code></pre>
+    </div>
+
+    <div class="tab-content" data-group="commit" data-name="gui">
+      <h3>GitHub Desktop で add & commit</h3>
+      <p>
+        GitHub Desktop を起動してリポジトリを開くと、左側に変更されたファイル一覧が出ます。
+        <code>hello.txt</code> がリストに表示されているはずです。
+      </p>
+      <ol>
+        <li>左側のファイル一覧で、コミットしたいファイルにチェックを入れる<br>
+          <span style="color:#64748b; font-size:14px;">(チェックを入れた状態が「ステージング済み」と同じ意味です)</span></li>
+        <li>左下に「Summary (required)」という入力欄があるので、コミットメッセージを書く<br>
+          例: 「最初のコミット」</li>
+        <li>下の青いボタン「Commit to main」をクリック</li>
+      </ol>
+      <p>これで完了。GUI ではこのように、add と commit がほぼ一体化した操作になっています。</p>
+    </div>
+
+    <h2>確認してみよう</h2>
+    <p>コミットが残っているか、次のコマンドで確認できます。</p>
+    <pre><code>git log</code></pre>
+    <p>
+      自分の名前と、書いたコミットメッセージが表示されていれば成功です。
+      この <code>git log</code> コマンドは STEP 07 で詳しく扱います。
+    </p>
+
+    <h2>コミットメッセージの書き方</h2>
+    <p>コミットメッセージは「未来の自分」に向けて書くものです。コツは次のとおり。</p>
+    <ul>
+      <li><strong>短く要点だけ</strong> 書く (50文字以内が目安)</li>
+      <li>「〜した」より「〜を追加」「〜を修正」のような体言止めが読みやすい</li>
+      <li>「修正」だけだと意味不明。「ログイン画面のボタン色を修正」など、何をしたかわかるように</li>
+    </ul>
+    <div class="note">
+      練習中は神経質にならず、自分が後で読み返してわかればそれで OK です。
+    </div>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>変更を保存する流れ: <strong>編集 → add → commit</strong></li>
+      <li>add は <a class="term" href="../glossary/staging.html">ステージング</a> に置く操作</li>
+      <li>commit は <a class="term" href="../glossary/repository.html">リポジトリ</a> に永続的に保存する操作</li>
+      <li>コミットには「メッセージ」をつけて、何の変更かわかるようにする</li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="04-create-repo.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 04: リポジトリを作る</span>
+      </a>
+      <a class="next" href="06-status.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 06: 状態を確認</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>.gitignore - 用語集 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="../steps/14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="../steps/15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="../steps/16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="../steps/17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">用語集</div>
+    <h1>.gitignore</h1>
+
+    <div class="definition">
+      Git に <strong>「このファイル/フォルダは管理しないで」と伝える設定ファイル</strong>。
+      リポジトリの直下に置きます。
+    </div>
+
+    <h2>典型的に無視するもの</h2>
+    <ul>
+      <li><strong>パスワード・秘密鍵</strong> (<code>.env</code> など) — 公開すると危険</li>
+      <li><strong>ビルド成果物</strong> (<code>node_modules/</code>, <code>dist/</code>) — 重い & 自動生成できる</li>
+      <li><strong>OS の隠しファイル</strong> (<code>.DS_Store</code>, <code>Thumbs.db</code>)</li>
+      <li><strong>エディタ設定</strong> (<code>.idea/</code>, <code>.vscode/</code> の一部)</li>
+    </ul>
+
+    <h2>書き方</h2>
+    <pre><code># コメントは # で始める
+
+# 特定のファイル
+secret.txt
+
+# 拡張子で指定
+*.log
+
+# フォルダ全体
+node_modules/
+
+# 例外的に管理する (! で除外)
+!important.log</code></pre>
+
+    <h2>注意</h2>
+    <div class="warning">
+      <strong>すでにコミットしてしまったファイル</strong> は、後から .gitignore に追加しても無視されません。
+      その場合は <code>git rm --cached &lt;ファイル名&gt;</code> でリポジトリから削除してから、コミットし直す必要があります。
+    </div>
+
+    <h2>テンプレート集</h2>
+    <ul>
+      <li><a href="https://github.com/github/gitignore" target="_blank" rel="noopener">github.com/github/gitignore</a> — 公式テンプレート</li>
+      <li><a href="https://www.toptal.com/developers/gitignore" target="_blank" rel="noopener">gitignore.io</a> — 言語/ツール名で自動生成</li>
+    </ul>
+
+    <h2>関連ステップ</h2>
+    <ul>
+      <li><a href="../steps/17-gitignore.html">STEP 17: .gitignore で無視するファイルを指定</a></li>
+    </ul>
+
+    <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

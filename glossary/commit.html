@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コミット - 用語集 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
+        <li><a href="../steps/14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
+        <li><a href="../steps/15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
+        <li><a href="../steps/16-clone.html"><span class="step-number">16</span>クローン</a></li>
+        <li><a href="../steps/17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">用語集</div>
+    <h1>コミット (Commit)</h1>
+
+    <div class="definition">
+      ある時点での変更を <strong>「セーブポイント」として記録する操作</strong>。または、その記録そのもの。
+      ゲームのセーブと同じく、いつでもその時点に戻ることができます。
+    </div>
+
+    <h2>コミットに含まれる情報</h2>
+    <p>1つのコミットには、次のような情報が記録されます。</p>
+    <ul>
+      <li><strong>コミットID</strong> — 一意な識別子 (例: <code>f1e2d3c4b5a6...</code>)</li>
+      <li><strong>作者と日時</strong> — STEP 03 で設定した名前とメールアドレス</li>
+      <li><strong>コミットメッセージ</strong> — 何を変更したかの説明</li>
+      <li><strong>変更内容</strong> — 直前のコミットからの差分</li>
+      <li><strong>親コミット</strong> — 直前のコミットへのリンク (これがあるから「履歴」になる)</li>
+    </ul>
+
+    <h2>コミットの作り方</h2>
+    <ol>
+      <li>ファイルを編集する</li>
+      <li><code>git add</code> で <a class="term" href="staging.html">ステージング</a> に置く</li>
+      <li><code>git commit -m "メッセージ"</code> でコミット</li>
+    </ol>
+
+    <h2>関連ステップ</h2>
+    <ul>
+      <li><a href="../steps/05-add-commit.html">STEP 05: ファイルを追加してコミット</a></li>
+      <li><a href="../steps/07-log.html">STEP 07: 履歴を見る</a></li>
+      <li><a href="../steps/08-undo.html">STEP 08: 変更を取り消す</a></li>
+    </ul>
+
+    <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>
