@@ -7,6 +7,15 @@
 
 html {
   scroll-behavior: smooth;
+  /* iOS Safari でテキストの自動拡大を抑止 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  /* 横スクロール (= ページ全体ズーム) を防ぐ最終ガード */
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -16,6 +25,12 @@ body {
   line-height: 1.8;
   color: #2c3e50;
   background: #f7f9fc;
+}
+
+/* メディア要素は常に親に収める */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
 }
 
 a {
@@ -34,6 +49,13 @@ a:hover {
   display: grid;
   grid-template-columns: 280px 1fr;
   min-height: 100vh;
+  max-width: 100%;
+}
+
+/* Grid アイテムは min-width: auto なので、内部の <pre> 等が長いと
+   コンテナが viewport を超えて広がってしまう。明示的に 0 を指定して縮小を許可 */
+.container > * {
+  min-width: 0;
 }
 
 /* Sidebar */
@@ -201,10 +223,12 @@ pre {
   padding: 18px 22px;
   border-radius: 8px;
   overflow-x: auto;
+  max-width: 100%;
   margin: 16px 0;
   font-family: "Consolas", "Monaco", "Menlo", "Courier New", monospace;
   font-size: 14px;
   line-height: 1.6;
+  -webkit-overflow-scrolling: touch;
 }
 
 pre code {
@@ -213,6 +237,7 @@ pre code {
   color: inherit;
 }
 
+/* インラインの <code> は長い場合に折り返す */
 code {
   background: #f1f5f9;
   color: #be123c;
@@ -220,6 +245,8 @@ code {
   border-radius: 4px;
   font-family: "Consolas", "Monaco", "Menlo", "Courier New", monospace;
   font-size: 0.92em;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* Glossary link style */
