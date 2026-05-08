@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STEP 14: リモート連携 - Git はじめの一歩</title>
+<title>STEP 15: リモート連携 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -25,11 +25,12 @@
         <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
         <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
         <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
-        <li><a href="13-github.html"><span class="step-number">13</span>GitHub登録</a></li>
-        <li><a href="14-remote.html"><span class="step-number">14</span>リモート連携</a></li>
-        <li><a href="15-push-pull.html"><span class="step-number">15</span>プッシュとプル</a></li>
-        <li><a href="16-clone.html"><span class="step-number">16</span>クローン</a></li>
-        <li><a href="17-gitignore.html"><span class="step-number">17</span>.gitignore</a></li>
+        <li><a href="13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
       </ul>
     </div>
     <div class="nav-section">
@@ -41,7 +42,7 @@
   </aside>
 
   <main class="main">
-    <div class="step-label">STEP 14</div>
+    <div class="step-label">STEP 15</div>
     <h1>ローカルとリモートを連携させる</h1>
 
     <div class="goal-box">
@@ -73,7 +74,7 @@
     </p>
     <ul>
       <li>ローカルにすでにリポジトリがある場合 (今回のケース) → リモートを追加する</li>
-      <li>GitHub のリポジトリを新たに自分のPCに持ってくる → クローン (STEP 16) を使う</li>
+      <li>GitHub のリポジトリを新たに自分のPCに持ってくる → クローン (STEP 17) を使う</li>
     </ul>
 
     <h2>リモートを追加する</h2>
@@ -86,7 +87,7 @@
     <div class="tab-content active" data-group="remote" data-name="cli">
       <h3>① GitHub のリポジトリ URL をコピー</h3>
       <p>
-        STEP 13 で開いておいた GitHub のリポジトリ画面で、URL をコピーします。
+        STEP 14 で開いておいた GitHub のリポジトリ画面で、URL をコピーします。
         画面中央の「Quick setup」の右側に表示されているはずです。
       </p>
       <pre><code>https://github.com/&lt;ユーザー名&gt;/my-first-repo.git</code></pre>
@@ -118,10 +119,10 @@ origin  https://github.com/&lt;ユーザー名&gt;/my-first-repo.git (push)</cod
       </ol>
       <p>
         この方法だと、<strong>GitHub 上の空リポジトリは Desktop が自動で作ってくれる</strong> ので、
-        STEP 13 で説明した手動作成は実はスキップできてしまいます。
+        STEP 14 で説明した手動作成は実はスキップできてしまいます。
       </p>
       <div class="note">
-        STEP 13 で先に空リポジトリを作ってしまった場合は、上記ではなく次のようにします: 「Repository」メニュー → 「Repository settings...」 → 「Remote」タブで URL を入力。
+        STEP 14 で先に空リポジトリを作ってしまった場合は、上記ではなく次のようにします: 「Repository」メニュー → 「Repository settings...」 → 「Remote」タブで URL を入力。
       </div>
     </div>
 
@@ -144,13 +145,13 @@ git push origin main</code></pre>
     </ul>
 
     <div class="step-nav">
-      <a href="13-github.html">
+      <a href="14-github.html">
         <span class="nav-label">← 前のステップ</span>
-        <span class="nav-title">STEP 13: GitHub登録</span>
+        <span class="nav-title">STEP 14: GitHub登録</span>
       </a>
-      <a class="next" href="15-push-pull.html">
+      <a class="next" href="16-push-pull.html">
         <span class="nav-label">次のステップ →</span>
-        <span class="nav-title">STEP 15: プッシュとプル</span>
+        <span class="nav-title">STEP 16: プッシュとプル</span>
       </a>
     </div>
   </main>

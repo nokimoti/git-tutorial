@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEP 13: タグをつける - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">STEP 13</div>
+    <h1>タグをつける</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li><a class="term" href="../glossary/tag.html">タグ</a> が何のためにあるかを理解する</li>
+        <li>リリース版に <code>v1.0.0</code> のような印をつけられるようになる</li>
+        <li>軽量タグと注釈付きタグの違いを知る</li>
+      </ul>
+    </div>
+
+    <h2>タグって何？</h2>
+    <p>
+      <a class="term" href="../glossary/tag.html">タグ</a> は <strong>特定のコミットに付ける目印</strong> です。
+      たとえば「ここがバージョン 1.0.0 の状態」と分かるように、コミットに名札をつけるイメージ。
+    </p>
+    <pre><code>main:    A ── B ── C ── D ── E
+                  ↑              ↑
+                v1.0.0         v1.1.0</code></pre>
+    <p>
+      長いコミットID (<code>f1e2d3c...</code>) で「あの状態に戻したい」と指定するのは大変ですが、
+      <code>v1.0.0</code> のような分かりやすい名前で参照できるようになります。
+    </p>
+
+    <h2>ブランチとの違い</h2>
+    <ul>
+      <li><a class="term" href="../glossary/branch.html">ブランチ</a> は <strong>動く印</strong>。新しいコミットを追加すると先端が前に進む</li>
+      <li><a class="term" href="../glossary/tag.html">タグ</a> は <strong>動かない印</strong>。一度つけたらそのコミットに永遠に固定</li>
+    </ul>
+    <p>
+      この性質のおかげで、「リリース時のスナップショット」を残すのにタグはぴったりです。
+    </p>
+
+    <h2>2種類のタグ</h2>
+    <ol>
+      <li><strong>軽量タグ (lightweight)</strong> — ただの名札。コミットへのショートカット</li>
+      <li><strong>注釈付きタグ (annotated)</strong> — 名前 + 作者 + 日付 + メッセージを持つ正式なタグ</li>
+    </ol>
+    <div class="tip">
+      公開・配布するリリースには <strong>注釈付きタグ</strong> を使うのが一般的です。
+      個人的なメモ程度なら軽量タグで十分。迷ったら注釈付きを使っておけば間違いありません。
+    </div>
+
+    <h2>タグをつける</h2>
+
+    <div class="tabs" data-group="tag-create">
+      <button class="tab-button active" data-target="cli">コマンドライン (bash)</button>
+      <button class="tab-button" data-target="gui">GUI (GitHub Desktop)</button>
+    </div>
+
+    <div class="tab-content active" data-group="tag-create" data-name="cli">
+      <h3>注釈付きタグ (おすすめ)</h3>
+      <pre><code>git tag -a v1.0.0 -m "最初の正式版"</code></pre>
+      <p>
+        <code>-a</code> は「annotated」、<code>-m</code> はそのタグに添えるメッセージです。
+        現在の <a class="term" href="../glossary/head.html">HEAD</a> (= 直前のコミット) にタグが付きます。
+      </p>
+
+      <h3>軽量タグ</h3>
+      <pre><code>git tag v1.0.0-light</code></pre>
+      <p>オプションなしの一行で済みます。</p>
+
+      <h3>過去のコミットにタグをつける</h3>
+      <p>「このコミットにタグつけたかった!」と後から気づいた場合は、コミットIDを末尾に指定します。</p>
+      <pre><code>git log --oneline             # コミットIDを確認
+git tag -a v0.9.0 9876abc -m "ベータ版"</code></pre>
+    </div>
+
+    <div class="tab-content" data-group="tag-create" data-name="gui">
+      <h3>GitHub Desktop でタグを作る</h3>
+      <ol>
+        <li>上部の「History」タブを開く</li>
+        <li>タグをつけたいコミットを <strong>右クリック</strong></li>
+        <li>「Create Tag...」を選ぶ</li>
+        <li>タグ名 (例: <code>v1.0.0</code>) を入力 → 「Create Tag」をクリック</li>
+      </ol>
+      <p>
+        コミット行の右側にタグの名札が表示されるようになります。
+      </p>
+    </div>
+
+    <h2>タグを一覧する</h2>
+    <pre><code>git tag</code></pre>
+    <p>付いているタグが行ごとに表示されます。</p>
+    <pre><code>v0.9.0
+v1.0.0
+v1.0.0-light</code></pre>
+    <p>条件で絞りたいときは:</p>
+    <pre><code>git tag -l "v1.*"   # v1 で始まるタグだけ</code></pre>
+
+    <h2>タグの中身を見る</h2>
+    <pre><code>git show v1.0.0</code></pre>
+    <p>
+      注釈付きタグなら、タグのメッセージ・作者・日付に加えて、そのコミットの差分まで見られます。
+    </p>
+
+    <h2>タグの命名ルール (慣例)</h2>
+    <p>
+      自由に名前をつけられますが、世の中のプロジェクトはだいたい <strong>セマンティックバージョニング</strong> という規則を使っています。
+    </p>
+    <pre><code>v[メジャー].[マイナー].[パッチ]
+例:  v1.0.0   v1.2.3   v2.0.0-beta.1</code></pre>
+    <ul>
+      <li><strong>メジャー</strong> — 互換性のない大きな変更</li>
+      <li><strong>マイナー</strong> — 後方互換性ありの機能追加</li>
+      <li><strong>パッチ</strong> — バグ修正</li>
+    </ul>
+
+    <h2>タグを削除する</h2>
+    <pre><code>git tag -d v1.0.0-light</code></pre>
+    <p>
+      間違って付けてしまったタグや、不要になったタグを消せます。
+    </p>
+
+    <h2>タグはリモートには自動で送られない</h2>
+    <div class="warning">
+      タグを作っただけでは、ローカルにしか存在しません。
+      GitHub に送るには <strong>明示的にプッシュ</strong> する必要があります。
+      これは <a href="16-push-pull.html">STEP 16: プッシュとプル</a> の知識を踏まえてからでOKですが、書き方だけ:
+      <pre><code>git push origin v1.0.0      # タグを1つだけ送る
+git push --tags              # 未送信のタグを全部送る</code></pre>
+    </div>
+    <p>
+      GitHub にタグを送ると、GitHub の「Releases」「Tags」ページに表示され、
+      他の人がそのバージョンの ZIP を直接ダウンロードできるようになります。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>タグは <strong>動かない印</strong>。リリースのマーキングに最適</li>
+      <li>注釈付きタグ: <code>git tag -a v1.0.0 -m "メッセージ"</code></li>
+      <li>一覧: <code>git tag</code> / 詳細: <code>git show v1.0.0</code> / 削除: <code>git tag -d</code></li>
+      <li>リモートに送るには別途 <code>git push --tags</code></li>
+    </ul>
+
+    <div class="step-nav">
+      <a href="12-conflict.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">STEP 12: コンフリクト解決</span>
+      </a>
+      <a class="next" href="14-github.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">STEP 14: GitHub登録</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

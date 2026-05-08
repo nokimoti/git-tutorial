@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ステージング - 用語集 - Git はじめの一歩</title>
+<title>タグ - 用語集 - Git はじめの一歩</title>
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -43,44 +43,42 @@
 
   <main class="main">
     <div class="step-label">用語集</div>
-    <h1>ステージング (Staging)</h1>
+    <h1>タグ (Tag)</h1>
 
     <div class="definition">
-      <strong>「次の <a class="term" href="commit.html">コミット</a> に含める変更」を一時的に置く場所</strong>、
-      または <strong>変更をそこへ置く操作</strong> のこと。
+      特定の <a class="term" href="commit.html">コミット</a> につける <strong>動かない目印</strong>。
+      リリース版に <code>v1.0.0</code> のような名前をつけるのに使います。
     </div>
 
-    <h2>別名: インデックス</h2>
+    <h2>ブランチとの違い</h2>
+    <ul>
+      <li><a class="term" href="branch.html">ブランチ</a> — 動く印 (新コミットが増えると先頭が動く)</li>
+      <li><strong>タグ</strong> — 動かない印 (一度つけたら永遠にそのコミットを指す)</li>
+    </ul>
+
+    <h2>2種類のタグ</h2>
+    <ol>
+      <li><strong>軽量タグ (lightweight)</strong> — ただの名札</li>
+      <li><strong>注釈付きタグ (annotated)</strong> — 作者・日付・メッセージを持つ正式なタグ</li>
+    </ol>
+    <p>リリース用には注釈付きタグの利用が推奨されています。</p>
+
+    <h2>主なコマンド</h2>
+    <pre><code>git tag -a v1.0.0 -m "最初の正式版"   # 注釈付きタグを作成
+git tag                                # 一覧
+git show v1.0.0                        # 詳細を見る
+git tag -d v1.0.0                      # 削除
+git push origin v1.0.0                 # リモートに送る (push は自動ではない)
+git push --tags                        # 全タグをまとめて送る</code></pre>
+
+    <h2>命名の慣例</h2>
     <p>
-      ステージングエリアは「インデックス (Index)」とも呼ばれます。同じものを指す別の言葉です。
+      <strong>セマンティックバージョニング</strong> がよく使われます: <code>v[メジャー].[マイナー].[パッチ]</code>
     </p>
-
-    <h2>なぜステージングがあるの？</h2>
-    <p>
-      ステージングがあるおかげで、たくさんファイルを編集していても
-      <strong>「今回はこの変更だけコミットしたい」</strong> という選択ができます。
-      たとえば10ファイル変更したけど、3ファイルだけ意味のある変更で、残りはたまたま触っただけ、という場合に便利です。
-    </p>
-
-    <h2>ステージングへの追加と取り消し</h2>
-    <pre><code># ステージングに追加
-git add ファイル名
-
-# まとめて全部追加
-git add .
-
-# ステージングから取り消し (編集内容は残る)
-git restore --staged ファイル名</code></pre>
-
-    <h2>図で理解する</h2>
-    <pre><code>編集 → [ステージング] → コミット
-       ↑ git add     ↑ git commit</code></pre>
 
     <h2>関連ステップ</h2>
     <ul>
-      <li><a href="../steps/05-add-commit.html">STEP 05: 追加とコミット</a></li>
-      <li><a href="../steps/06-status.html">STEP 06: 状態を確認</a></li>
-      <li><a href="../steps/08-undo.html">STEP 08: 変更を取り消す</a></li>
+      <li><a href="../steps/13-tag.html">STEP 13: タグをつける</a></li>
     </ul>
 
     <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
