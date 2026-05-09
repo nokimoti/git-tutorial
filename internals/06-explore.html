@@ -76,15 +76,15 @@ echo "hello world" &gt; hello.txt
 git add hello.txt
 git commit -m "最初のコミット"</code></pre>
 
-    <h2>① .git の中身を見る</h2>
+    <h2>① <a class="term" href="../glossary/git-directory.html">.git ディレクトリ</a> の中身を見る</h2>
     <pre><code>ls .git</code></pre>
     <p>こんな構成が見えるはずです:</p>
     <pre><code>HEAD            config          description     hooks/
 info/           objects/        refs/</code></pre>
     <ul>
-      <li><code>HEAD</code> — 現在のブランチを指すファイル</li>
-      <li><code>refs/</code> — ブランチ・タグの定義</li>
-      <li><code>objects/</code> — 全オブジェクトの保管庫</li>
+      <li><code>HEAD</code> — 現在のブランチを指すファイル (<a class="term" href="../glossary/head.html">HEAD</a> 参照)</li>
+      <li><code>refs/</code> — ブランチ・タグの定義 (= 参照ファイル群)</li>
+      <li><code>objects/</code> — 全 <a class="term" href="../glossary/object.html">オブジェクト</a> の保管庫</li>
       <li><code>config</code> — リポジトリ固有の設定</li>
     </ul>
 
@@ -100,12 +100,15 @@ info/           objects/        refs/</code></pre>
     <pre><code>f1e2d3c4b5a698765432abcdef1234567890abcd</code></pre>
     <p>↑ これがあなたが作った最初のコミットの ID。</p>
 
-    <h2>④ コミットオブジェクトを覗く</h2>
+    <h2>④ コミット <a class="term" href="../glossary/object.html">オブジェクト</a> を覗く</h2>
     <p>
       ハッシュをコピーして、次のコマンドで中身を見てみます ( <code>&lt;ハッシュ&gt;</code> は実際の値に置き換え):
     </p>
     <pre><code>git cat-file -t &lt;ハッシュ&gt;     # 種類を確認 → commit
 git cat-file -p &lt;ハッシュ&gt;     # 中身を表示</code></pre>
+    <div class="note">
+      <code>git cat-file</code> は「オブジェクトを取り出す」専用コマンド。<code>-t</code>=type (種類)、<code>-p</code>=pretty print (整形して表示) です。
+    </div>
     <p>こんな出力が出ます:</p>
     <pre><code>tree abcd1234567890...
 author    Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
@@ -126,9 +129,12 @@ committer Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
     <pre><code>hello world</code></pre>
     <p>↑ これがあなたが書いたファイルの中身そのもの。</p>
 
-    <h2>⑦ ハッシュを自分で計算してみる</h2>
+    <h2>⑦ <a class="term" href="../glossary/hash.html">ハッシュ</a> を自分で計算してみる</h2>
     <p>ファイルの中身が同じなら、ハッシュも同じになります:</p>
     <pre><code>echo "hello world" | git hash-object --stdin</code></pre>
+    <div class="note">
+      <code>git hash-object</code> はファイル/標準入力の内容からハッシュを計算するだけのコマンド。<code>--stdin</code> は「ファイルじゃなくて、パイプで渡された入力を使ってね」という指示です。
+    </div>
     <p>
       ここで出るハッシュが ⑥ で見た blob ハッシュと一致するはず。<strong>「内容 = ハッシュ」</strong> の関係が体感できます。
     </p>

@@ -68,9 +68,14 @@
 
     <h2>「参照 (ref)」の正体</h2>
     <p>
-      <a class="term" href="../glossary/branch.html">ブランチ</a>・<a class="term" href="../glossary/head.html">HEAD</a>・タグ (軽量) は <strong>すべて参照 (ref) と呼ばれる仕組み</strong> で、
+      <a class="term" href="../glossary/branch.html">ブランチ</a>・<a class="term" href="../glossary/head.html">HEAD</a>・<a class="term" href="../glossary/tag.html">タグ</a> (軽量タグ) は <strong>すべて参照 (ref) と呼ばれる仕組み</strong> で、
       実体は <code>.git/</code> 内に置かれた <strong>1行のテキストファイル</strong> です。
     </p>
+    <div class="note">
+      <strong>「ref」 = reference (参照) の略</strong>。「あのコミットを指してるよ」というメモのこと。
+      重要なのは、ref は <strong>オブジェクトそのものではない</strong> ということ。
+      オブジェクトは中身 (commit や blob)、ref は「それを指す目印」。役割がきれいに分かれています。
+    </div>
 
     <h2>① ブランチの正体</h2>
     <p>
@@ -115,6 +120,15 @@ ref: refs/heads/main</code></pre>
     <p>
       <strong>HEAD は「現在のブランチ」を1段階の間接参照で指している</strong>。直接コミットを指しているのではなく、「main ブランチを見てね」と指示するだけ。
     </p>
+    <div class="note">
+      <strong>「間接参照」って?</strong> 「これを見て」と書いてあるメモを開いて、そこに書かれた本物を見る、という二段構えの参照方法のこと。たとえるなら:
+      <ul>
+        <li>HEAD = 「main 棚を見て」と書いた紙</li>
+        <li>main = 「コミット f1e2d3c... を見て」と書いた紙</li>
+        <li>commit = 本物のデータ</li>
+      </ul>
+      この間接参照のおかげで、ブランチを切り替えるときは <strong>HEAD ファイル1つを書き換えるだけ</strong> で済むのです。
+    </div>
 
     <h3>ブランチ切替 = HEAD ファイルの書き換え</h3>
     <p>
@@ -126,22 +140,22 @@ ref: refs/heads/experiment      ← この1行が書き換わるだけ!</code></
 
     <h3>ディタッチド HEAD のとき</h3>
     <p>
-      <a class="term" href="../glossary/detached-head.html">ディタッチド HEAD</a> 状態では、HEAD ファイルの中身が <code>ref: ...</code> ではなく <strong>直接コミットID</strong> になります。
+      <a class="term" href="../glossary/detached-head.html">ディタッチド HEAD</a> (= ブランチを介さず直接コミットを見ている状態) では、HEAD ファイルの中身が <code>ref: ...</code> ではなく <strong>直接 <a class="term" href="../glossary/commit-id.html">コミットID</a></strong> になります。
     </p>
     <pre><code>$ cat .git/HEAD
 abc1234567890...   ← 直接ハッシュを指している</code></pre>
     <p>「ブランチを通さずコミットを直接見ている」状態がそのままファイルに表れている、というわけ。</p>
 
-    <h2>③ タグの正体</h2>
+    <h2>③ <a class="term" href="../glossary/tag.html">タグ</a> の正体</h2>
     <p>
-      <strong>軽量タグ</strong> もブランチと同じく、ただのファイル:
+      <strong>軽量タグ</strong> (= シンプルな目印タグ) もブランチと同じく、ただのファイル:
     </p>
     <pre><code>.git/refs/tags/v1.0.0</code></pre>
     <p>
-      中身もブランチと同じく、コミットハッシュが1行入っているだけ。違うのは「動かない」 (= 自動更新されない) という運用ルールだけです。
+      中身もブランチと同じく、コミットハッシュが1行入っているだけ。違うのは「動かない」 (= 新しいコミットが来ても自動更新されない) という運用ルールだけです。
     </p>
     <p>
-      一方、<strong>注釈付きタグ</strong> は別格で、「タグオブジェクト」という独立したオブジェクトを作ります (4種類目のオブジェクト)。
+      一方、<strong>注釈付きタグ</strong> (= 作者・メッセージ付きの正式なタグ) は別格で、「タグオブジェクト」という独立した <a class="term" href="../glossary/object.html">オブジェクト</a> を作ります (これが4種類目のオブジェクト)。
       ファイルの中身はそのタグオブジェクトのハッシュ。
     </p>
 

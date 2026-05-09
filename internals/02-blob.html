@@ -68,7 +68,7 @@
 
     <h2>Blob とは</h2>
     <p>
-      <strong>blob (Binary Large OBject)</strong> は、Git が保存する 4 種類のオブジェクトの中で一番下の階層。
+      <strong>blob (ブロブ。"Binary Large OBject" の略)</strong> は、Git が保存する <a class="term" href="../glossary/object.html">オブジェクト</a> 4 種類の中で一番下の階層。
       つまり <strong>ファイルの中身そのもの</strong> を表します。
     </p>
 
@@ -80,18 +80,27 @@
       ファイル名と blob を紐づけるのは、次のステップで学ぶ <strong>tree</strong> の仕事です。
     </p>
 
-    <h2>Blob のIDは「内容のハッシュ」</h2>
+    <h2>Blob のIDは「内容の <a class="term" href="../glossary/hash.html">ハッシュ</a>」</h2>
     <p>
-      blob のIDは、その <strong>内容を SHA-1 でハッシュ化</strong> したもの。
+      blob のIDは、その <strong>内容を SHA-1 という方式でハッシュにかけた</strong> もの。
       たとえば「hello」というたった1単語の中身なら、いつ・誰が・どこで保存しても、必ず同じハッシュになります。
     </p>
+    <div class="note">
+      <strong>「ハッシュ化」のおさらい:</strong> 内容から計算される 40 文字の英数字。中身が同じなら同じハッシュ、1ビットでも違えば全く違うハッシュになる「指紋」のようなもの。
+      → <a class="term" href="../glossary/hash.html">ハッシュ</a> ページに詳しい解説あり。
+    </div>
     <pre><code>$ echo "hello" | git hash-object --stdin
 ce013625030ba8dba906f756967f9e9ca394464a</code></pre>
     <p>
-      この <code>ce0136...</code> がそのまま blob のID。同じ内容のファイルが2つあっても <strong>同じID</strong> になるので、Git は1つしか保存しません (重複排除)。
+      この <code>ce0136...</code> がそのまま blob のID。同じ内容のファイルが2つあっても <strong>同じID</strong> になるので、Git は1つしか保存しません (これを「重複排除」と呼びます)。
     </p>
 
     <h2>ファイルの中身を確認するコマンド</h2>
+    <p>新しいコマンドが2つ登場します。</p>
+    <ul>
+      <li><code>git hash-object</code> — 内容からハッシュを計算するだけのコマンド</li>
+      <li><code>git cat-file</code> — ハッシュを指定して、保存されているオブジェクトを取り出すコマンド (<code>-p</code>=中身を表示、<code>-t</code>=種類を表示)</li>
+    </ul>
     <pre><code># 既存ファイルから blob のハッシュを計算
 git hash-object hello.txt
 

@@ -76,12 +76,18 @@
       仕組みを知ると、<strong>「なぜブランチは一瞬で作れるのか」「なぜ Git は速いのか」</strong> といった疑問が一気に氷解します。実際の操作にも自信が持てるようになります。
     </div>
 
+    <div class="tip">
+      このトラックは専門用語が多めです。<strong>本文中の <a class="term" href="../glossary/index.html">[このような囲み]</a> はすべて用語集へのリンク</strong>です。意味がわからなくなったら、いつでもクリックして詳しい説明を見てください。</div>
+
     <h2>結論を先に言うと</h2>
     <p>Git の内部は驚くほどシンプルで、登場人物はたった2種類しかいません。</p>
     <ol>
-      <li><strong>オブジェクト (object)</strong> — データ本体。ハッシュで識別される</li>
-      <li><strong>参照 (ref)</strong> — オブジェクトを指すラベル (= 1行のテキストファイル)</li>
+      <li><a class="term" href="../glossary/object.html">オブジェクト</a> — データ本体 (ファイルの中身、フォルダ構造、コミットなど)。<a class="term" href="../glossary/hash.html">ハッシュ</a> で識別される</li>
+      <li><strong>参照 (ref)</strong> — オブジェクトを指す目印 (実態は <strong>1行だけのテキストファイル</strong>)</li>
     </ol>
+    <div class="note">
+      <strong>「ハッシュ」とは:</strong> 内容から計算される 40 文字の英数字。同じ内容なら必ず同じハッシュになる、いわば「データの指紋」です。詳しくは <a class="term" href="../glossary/hash.html">ハッシュ</a> ページで。
+    </div>
 
     <h2>4種類のオブジェクト</h2>
     <p>オブジェクトはさらに4種類に分かれます。これがすべての土台です。</p>
@@ -97,9 +103,12 @@
 
     <h2>参照 (ref) とは何か</h2>
     <p>
-      <a class="term" href="../glossary/branch.html">ブランチ</a>・<a class="term" href="../glossary/head.html">HEAD</a>・タグ (軽量) はすべて <strong>「ファイルに書かれた1行のハッシュ」</strong> にすぎません。
-      実体はテキストファイル。これが Git の動作が軽い理由のひとつです。詳しくは <a href="05-refs.html">A5</a> で見ます。
+      <a class="term" href="../glossary/branch.html">ブランチ</a>・<a class="term" href="../glossary/head.html">HEAD</a>・<a class="term" href="../glossary/tag.html">タグ</a> (軽量タグ) はすべて、その実体は <strong>「コミットの <a class="term" href="../glossary/hash.html">ハッシュ</a> が1行だけ書かれたテキストファイル」</strong> にすぎません。
+      これが Git の動作が軽い理由のひとつです。詳しくは <a href="05-refs.html">A5</a> で見ます。
     </p>
+    <div class="note">
+      「ref (レフ)」は reference の略で、<strong>「指している先」</strong> という意味。「あのコミットを指しているメモ」と思えばOK。
+    </div>
 
     <h2>全体像</h2>
     <pre><code>あなたのコミット履歴を裏側から見ると…

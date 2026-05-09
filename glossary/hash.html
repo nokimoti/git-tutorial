@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ハッシュ - 用語集 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>内部のしくみ</h3>
+      <ul class="nav-list">
+        <li><a href="../internals/01-overview.html"><span class="step-number">A1</span>全体像</a></li>
+        <li><a href="../internals/02-blob.html"><span class="step-number">A2</span>Blob</a></li>
+        <li><a href="../internals/03-tree.html"><span class="step-number">A3</span>Tree</a></li>
+        <li><a href="../internals/04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
+        <li><a href="../internals/05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
+        <li><a href="../internals/06-explore.html"><span class="step-number">A6</span>覗いてみる</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">用語集</a></li>
+        <li><a href="commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">用語集</div>
+    <h1>ハッシュ (Hash)</h1>
+
+    <div class="definition">
+      ある<strong>データの中身から計算される、固定長の英数字の文字列</strong>。
+      その内容にだけ対応する「指紋」のようなもので、Git のあらゆる場所で使われています。
+    </div>
+
+    <h2>例で見るハッシュ</h2>
+    <p>「hello」というたった5文字の中身を SHA-1 ハッシュにかけると、こうなります:</p>
+    <pre><code>hello
+↓ SHA-1
+aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d</code></pre>
+    <p>40文字の英数字。短い「hello」も、長い小説でも、結果は必ず40文字です。</p>
+
+    <h2>ハッシュの3つの大事な性質</h2>
+    <ol>
+      <li><strong>同じ内容 → 必ず同じハッシュ</strong> (世界中どこで計算しても同じ結果)</li>
+      <li><strong>1文字でも違う → 全く違うハッシュ</strong> ("hello" と "Hello" は別のハッシュになる)</li>
+      <li><strong>ハッシュから内容は復元できない</strong> (一方通行の計算)</li>
+    </ol>
+
+    <h2>Git での使われ方</h2>
+    <p>Git は <a class="term" href="object.html">オブジェクト</a> (blob, tree, commit, tag) すべてをハッシュで識別します:</p>
+    <ul>
+      <li><strong>blob のID</strong> = ファイル内容のハッシュ</li>
+      <li><strong>tree のID</strong> = フォルダ構造の情報のハッシュ</li>
+      <li><strong>commit のID</strong> ( <a class="term" href="commit-id.html">コミットID</a>) = tree + 親 + メタ情報のハッシュ</li>
+    </ul>
+
+    <h2>なぜハッシュが便利?</h2>
+    <ul>
+      <li><strong>同じ内容は1度しか保存されない</strong> — 重複が自動で防げる (容量節約)</li>
+      <li><strong>改ざんを検出できる</strong> — 1ビットでも変えると ID が変わる</li>
+      <li><strong>世界中で同じ ID を共有できる</strong> — サーバが違っても同じ内容なら同じ ID</li>
+    </ul>
+
+    <h2>SHA-1 とは</h2>
+    <p>
+      Git が使っているハッシュ計算の方式の名前です ("Secure Hash Algorithm 1" の略)。
+      最近では SHA-256 への移行も進んでいますが、初心者がそれを意識する必要はほぼありません。
+    </p>
+
+    <h2>関連用語</h2>
+    <ul>
+      <li><a class="term" href="commit-id.html">コミットID</a> — コミットのハッシュ</li>
+      <li><a class="term" href="object.html">オブジェクト</a> — ハッシュで管理される単位</li>
+    </ul>
+
+    <h2>関連ステップ</h2>
+    <ul>
+      <li><a href="../internals/02-blob.html">しくみA2: Blob</a></li>
+      <li><a href="../internals/01-overview.html">しくみA1: 全体像</a></li>
+    </ul>
+
+    <p style="margin-top: 40px;"><a href="index.html">← 用語集に戻る</a></p>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -68,8 +68,8 @@
 
     <h2>Tree とは</h2>
     <p>
-      <strong>tree</strong> は、ある時点のフォルダ1つ分のスナップショットを表すオブジェクトです。
-      内容はとてもシンプルで、<strong>「ファイル名 + そのファイルの blob ハッシュ」のリスト</strong> でしかありません。
+      <strong>tree (ツリー)</strong> は、ある時点のフォルダ1つ分のスナップショット (= その瞬間のフォルダの中身を写した記録) を表す <a class="term" href="../glossary/object.html">オブジェクト</a> です。
+      内容はとてもシンプルで、<strong>「ファイル名 + そのファイルの blob <a class="term" href="../glossary/hash.html">ハッシュ</a>」のリスト</strong> でしかありません。
     </p>
 
     <h2>Tree の中身を見る</h2>
@@ -86,11 +86,21 @@
 040000 tree 8f2a91...    src</code></pre>
     <p>各行を読み解くと:</p>
     <ul>
-      <li><strong>100644</strong> — ファイルのモード (権限)</li>
-      <li><strong>blob</strong> または <strong>tree</strong> — オブジェクトの種類</li>
+      <li><strong>100644</strong> — ファイルのモード (= 種類と権限を表す数字)</li>
+      <li><strong>blob</strong> または <strong>tree</strong> — <a class="term" href="../glossary/object.html">オブジェクト</a> の種類</li>
       <li><strong>ハッシュ</strong> — そのオブジェクトのID</li>
       <li><strong>名前</strong> — ファイル名 / フォルダ名</li>
     </ul>
+
+    <div class="note">
+      <strong>「モード」の数字って何?</strong> Unix 系 OS で使われる、ファイルの種類と読み書き権限を表す8進数表記です。Git でよく出るのはこの3つだけ:
+      <ul>
+        <li><code>100644</code> — 普通のファイル</li>
+        <li><code>100755</code> — 実行可能ファイル (スクリプトなど)</li>
+        <li><code>040000</code> — フォルダ (= サブの tree)</li>
+      </ul>
+      暗記する必要はありません。「100... ならファイル、040... ならフォルダ」だけ覚えれば大丈夫。
+    </div>
 
     <h2>サブフォルダ = 別の tree</h2>
     <p>

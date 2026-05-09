@@ -79,11 +79,24 @@ committer Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
 最初のコミット</code></pre>
     <p>各行を読み解くと:</p>
     <ul>
-      <li><strong>tree</strong> — このコミット時点の <strong>フォルダ全体のスナップショット</strong> ([A3](03-tree.html))</li>
-      <li><strong>parent</strong> — 直前のコミットのハッシュ。これが履歴を作る</li>
-      <li><strong>author / committer</strong> — 名前・メール・日時 (STEP 03 で設定したもの!)</li>
+      <li><strong>tree</strong> — このコミット時点の <strong>フォルダ全体のスナップショット</strong> (<a href="03-tree.html">A3 で説明した tree</a>)</li>
+      <li><strong>parent</strong> — 直前のコミットの <a class="term" href="../glossary/hash.html">ハッシュ</a>。これが履歴を作る</li>
+      <li><strong>author / committer</strong> — 名前・メール・日時 (<a href="../steps/03-setup.html">STEP 03</a> で設定したもの!)</li>
       <li>空行のあと、コミットメッセージ本文</li>
     </ul>
+
+    <div class="note">
+      <strong>「1746789600 +0900」って何?</strong>
+      <ul>
+        <li><code>1746789600</code> = <strong>Unix タイムスタンプ</strong> (1970年1月1日からの秒数で日時を表す形式)</li>
+        <li><code>+0900</code> = タイムゾーン (日本標準時は UTC+9)</li>
+      </ul>
+      「<a class="term" href="commands.html">git log</a>」コマンドで見るときは、Git が自動で人間に読める日付に変換してくれるので、普段は気にしなくてOK。
+    </div>
+
+    <div class="note">
+      <strong>author と committer の違い</strong> — 普通は同じ人ですが、<a class="term" href="../glossary/rebase.html">リベース</a> や <a class="term" href="../glossary/amend.html">アメンド</a> をすると、最初に書いた人 (author) と、最後に書き換えた人 (committer) が違うことがあります。
+    </div>
 
     <h2>「コミット」の正体</h2>
     <div class="definition">
@@ -105,7 +118,7 @@ committer Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
 
     <h2>マージコミットには親が2つ</h2>
     <p>
-      <a class="term" href="../glossary/merge.html">マージ</a> でできるマージコミットには、parent 行が <strong>2行</strong> 並びます。
+      <a class="term" href="../glossary/merge.html">マージ</a> でできるマージコミット (= 2つのブランチの合流地点に作られるコミット) には、parent 行が <strong>2行</strong> 並びます。
     </p>
     <pre><code>tree   ...
 parent abc1234   ← 取り込み先のブランチ最新
