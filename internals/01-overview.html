@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>しくみ A1: 全体像 - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>内部のしくみ</h3>
+      <ul class="nav-list">
+        <li><a href="01-overview.html"><span class="step-number">A1</span>全体像</a></li>
+        <li><a href="02-blob.html"><span class="step-number">A2</span>Blob</a></li>
+        <li><a href="03-tree.html"><span class="step-number">A3</span>Tree</a></li>
+        <li><a href="04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
+        <li><a href="05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
+        <li><a href="06-explore.html"><span class="step-number">A6</span>覗いてみる</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+        <li><a href="../glossary/commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">しくみ A1</div>
+    <h1>全体像 — Gitの中はオブジェクトと参照だけ</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>Git の内部構造をひとことで説明できるようになる</li>
+        <li>これから学ぶ「4種類のオブジェクト」と「参照」の言葉に慣れる</li>
+      </ul>
+    </div>
+
+    <h2>このトラックは何?</h2>
+    <p>
+      入門ステップでは <code>git add</code> や <code>git commit</code> などの「使い方」を学びました。
+      ここからは <strong>「Git はその裏で何をしているのか」</strong> という内部の仕組みを覗いていきます。
+      入門ステップを終えていなくても読めますが、コミット・ブランチ・<a class="term" href="../glossary/head.html">HEAD</a> の感覚があったほうが入りやすいです。
+    </p>
+
+    <div class="note">
+      仕組みを知ると、<strong>「なぜブランチは一瞬で作れるのか」「なぜ Git は速いのか」</strong> といった疑問が一気に氷解します。実際の操作にも自信が持てるようになります。
+    </div>
+
+    <h2>結論を先に言うと</h2>
+    <p>Git の内部は驚くほどシンプルで、登場人物はたった2種類しかいません。</p>
+    <ol>
+      <li><strong>オブジェクト (object)</strong> — データ本体。ハッシュで識別される</li>
+      <li><strong>参照 (ref)</strong> — オブジェクトを指すラベル (= 1行のテキストファイル)</li>
+    </ol>
+
+    <h2>4種類のオブジェクト</h2>
+    <p>オブジェクトはさらに4種類に分かれます。これがすべての土台です。</p>
+    <table>
+      <thead><tr><th>種類</th><th>役割</th><th>このトラックで詳しく</th></tr></thead>
+      <tbody>
+        <tr><td><strong>blob</strong></td><td>ファイルの中身そのもの</td><td><a href="02-blob.html">A2</a></td></tr>
+        <tr><td><strong>tree</strong></td><td>フォルダ構造 (ファイル名 + blob)</td><td><a href="03-tree.html">A3</a></td></tr>
+        <tr><td><strong>commit</strong></td><td>スナップショット + 親コミット + 作者情報</td><td><a href="04-commit-object.html">A4</a></td></tr>
+        <tr><td><strong>tag</strong> (注釈付き)</td><td>コミットへの注釈付きの目印</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h2>参照 (ref) とは何か</h2>
+    <p>
+      <a class="term" href="../glossary/branch.html">ブランチ</a>・<a class="term" href="../glossary/head.html">HEAD</a>・タグ (軽量) はすべて <strong>「ファイルに書かれた1行のハッシュ」</strong> にすぎません。
+      実体はテキストファイル。これが Git の動作が軽い理由のひとつです。詳しくは <a href="05-refs.html">A5</a> で見ます。
+    </p>
+
+    <h2>全体像</h2>
+    <pre><code>あなたのコミット履歴を裏側から見ると…
+
+[HEAD] ──→ [ブランチ main] ──→ [commit] ──→ [tree] ──→ [blob]
+                                    │           │         (ファイル内容)
+                                    │           └→ [blob]
+                                    │           └→ [tree (サブフォルダ)]
+                                    │
+                                    └→ [parent commit] ──→ [tree] ──→ [blob] …</code></pre>
+    <p>
+      矢印はすべて <strong>「ハッシュで参照する」</strong> という関係です。リポジトリの中はこのグラフが連なっただけ。
+    </p>
+
+    <h2>なぜこの仕組みが優秀?</h2>
+    <ul>
+      <li><strong>同じ内容は1つしか保存されない</strong> — 同じ blob は重複しない (容量節約)</li>
+      <li><strong>ブランチが軽い</strong> — ファイル1つ作るだけ ([A5](05-refs.html))</li>
+      <li><strong>改ざんに強い</strong> — ハッシュチェーンで変更検出</li>
+      <li><strong>分散管理ができる</strong> — リポジトリ全体が自己完結</li>
+    </ul>
+
+    <h2>これから学ぶこと</h2>
+    <ol>
+      <li>A2: <strong>Blob</strong> — ファイルの中身はどう保存される?</li>
+      <li>A3: <strong>Tree</strong> — フォルダ構造はどう表現される?</li>
+      <li>A4: <strong>Commit</strong> — コミットの正体は?</li>
+      <li>A5: <strong>参照 (ref)</strong> — ブランチ・HEAD・タグの実体は?</li>
+      <li>A6: <strong>覗いてみる</strong> — 実際に .git/ を手で操作</li>
+    </ol>
+
+    <div class="step-nav">
+      <a href="../index.html">
+        <span class="nav-label">← トップへ</span>
+        <span class="nav-title">Git はじめの一歩</span>
+      </a>
+      <a class="next" href="02-blob.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">A2: Blob</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>しくみ A4: Commit - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>内部のしくみ</h3>
+      <ul class="nav-list">
+        <li><a href="01-overview.html"><span class="step-number">A1</span>全体像</a></li>
+        <li><a href="02-blob.html"><span class="step-number">A2</span>Blob</a></li>
+        <li><a href="03-tree.html"><span class="step-number">A3</span>Tree</a></li>
+        <li><a href="04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
+        <li><a href="05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
+        <li><a href="06-explore.html"><span class="step-number">A6</span>覗いてみる</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+        <li><a href="../glossary/commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">しくみ A4</div>
+    <h1>Commit — スナップショットの結び目</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>commit = 「ある時点の tree」へのポインタ + メタ情報</li>
+        <li>親コミットへのリンクが連なって履歴になる、という構造を理解する</li>
+      </ul>
+    </div>
+
+    <h2>Commit オブジェクトの中身</h2>
+    <p>
+      <a class="term" href="../glossary/commit.html">コミット</a> オブジェクトは、思っているほど派手なものではありません。
+      実際の中身は、たった数行のテキストです。
+    </p>
+    <pre><code>$ git cat-file -p &lt;コミットハッシュ&gt;
+tree   abcd1234...
+parent ef012345...
+author    Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
+committer Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
+
+最初のコミット</code></pre>
+    <p>各行を読み解くと:</p>
+    <ul>
+      <li><strong>tree</strong> — このコミット時点の <strong>フォルダ全体のスナップショット</strong> ([A3](03-tree.html))</li>
+      <li><strong>parent</strong> — 直前のコミットのハッシュ。これが履歴を作る</li>
+      <li><strong>author / committer</strong> — 名前・メール・日時 (STEP 03 で設定したもの!)</li>
+      <li>空行のあと、コミットメッセージ本文</li>
+    </ul>
+
+    <h2>「コミット」の正体</h2>
+    <div class="definition">
+      コミットとは、結局のところ<br>
+      <strong>「tree への矢印 + 親コミットへの矢印 + 作者・日付・メッセージ」</strong><br>
+      が書かれただけの、小さなテキストオブジェクトです。
+    </div>
+
+    <h2>履歴は「親」を辿った結果</h2>
+    <p>
+      各コミットが <code>parent</code> 行で前のコミットを指しているので、
+      コミット → 親 → 親 → 親… と辿っていけば履歴がすべて見られます。
+    </p>
+    <pre><code>[最新のコミット]
+   parent → [前のコミット]
+              parent → [もっと前のコミット]
+                         parent → (続く...)</code></pre>
+    <p>これが <code>git log</code> で表示される内容の正体です。</p>
+
+    <h2>マージコミットには親が2つ</h2>
+    <p>
+      <a class="term" href="../glossary/merge.html">マージ</a> でできるマージコミットには、parent 行が <strong>2行</strong> 並びます。
+    </p>
+    <pre><code>tree   ...
+parent abc1234   ← 取り込み先のブランチ最新
+parent def5678   ← 取り込んだブランチの最新
+author ...
+committer ...
+
+ブランチ feature をマージ</code></pre>
+
+    <h2>コミットIDはどう決まる?</h2>
+    <p>
+      コミットの <a class="term" href="../glossary/commit-id.html">ID (ハッシュ)</a> は、上の中身全部をまるごとハッシュ化したもの。だから:
+    </p>
+    <ul>
+      <li>tree が違う → コミットIDが違う</li>
+      <li>親が違う → コミットIDが違う</li>
+      <li>1秒ずれる → コミットIDが違う</li>
+      <li>コミットメッセージを書き換える → コミットIDが違う</li>
+    </ul>
+    <p>
+      <code>git commit --amend</code> で「直前のコミットを書き換える」と新しいコミットIDになる、というのはこの仕組みのため。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>コミット = tree 参照 + 親コミット参照 + メタ情報</li>
+      <li>親リンクが連なって履歴になる</li>
+      <li>マージコミットは親が2つ</li>
+      <li>中身が1ビットでも違えばIDも違う</li>
+    </ul>
+
+    <p>次は、ブランチ・HEAD・タグの正体を見ていきます。</p>
+
+    <div class="step-nav">
+      <a href="03-tree.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">A3: Tree</span>
+      </a>
+      <a class="next" href="05-refs.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">A5: 参照 (ref)</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

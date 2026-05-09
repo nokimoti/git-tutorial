@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>しくみ A2: Blob - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>内部のしくみ</h3>
+      <ul class="nav-list">
+        <li><a href="01-overview.html"><span class="step-number">A1</span>全体像</a></li>
+        <li><a href="02-blob.html"><span class="step-number">A2</span>Blob</a></li>
+        <li><a href="03-tree.html"><span class="step-number">A3</span>Tree</a></li>
+        <li><a href="04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
+        <li><a href="05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
+        <li><a href="06-explore.html"><span class="step-number">A6</span>覗いてみる</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+        <li><a href="../glossary/commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">しくみ A2</div>
+    <h1>Blob — ファイルの中身が「裸」で保存される</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>blob = ファイル内容そのもの、と理解する</li>
+        <li><strong>ファイル名は blob には含まれない</strong> という事実に驚く</li>
+        <li>同じ内容のファイルが2つあっても、保存される blob は1つだけと知る</li>
+      </ul>
+    </div>
+
+    <h2>Blob とは</h2>
+    <p>
+      <strong>blob (Binary Large OBject)</strong> は、Git が保存する 4 種類のオブジェクトの中で一番下の階層。
+      つまり <strong>ファイルの中身そのもの</strong> を表します。
+    </p>
+
+    <h2>意外な事実: blob にファイル名は入っていない</h2>
+    <p>
+      blob が保存しているのは <strong>「内容」だけ</strong>。<code>hello.txt</code> という名前も、フォルダの場所も、blob 単体には記録されません。
+    </p>
+    <p>
+      ファイル名と blob を紐づけるのは、次のステップで学ぶ <strong>tree</strong> の仕事です。
+    </p>
+
+    <h2>Blob のIDは「内容のハッシュ」</h2>
+    <p>
+      blob のIDは、その <strong>内容を SHA-1 でハッシュ化</strong> したもの。
+      たとえば「hello」というたった1単語の中身なら、いつ・誰が・どこで保存しても、必ず同じハッシュになります。
+    </p>
+    <pre><code>$ echo "hello" | git hash-object --stdin
+ce013625030ba8dba906f756967f9e9ca394464a</code></pre>
+    <p>
+      この <code>ce0136...</code> がそのまま blob のID。同じ内容のファイルが2つあっても <strong>同じID</strong> になるので、Git は1つしか保存しません (重複排除)。
+    </p>
+
+    <h2>ファイルの中身を確認するコマンド</h2>
+    <pre><code># 既存ファイルから blob のハッシュを計算
+git hash-object hello.txt
+
+# 既に保存されている blob の中身を取り出す
+git cat-file -p &lt;ハッシュ&gt;
+
+# オブジェクトの種類を確認
+git cat-file -t &lt;ハッシュ&gt;     # → blob</code></pre>
+
+    <h2>どこに保存される?</h2>
+    <p>
+      blob は <code>.git/objects/</code> の中に格納されます。ハッシュの先頭2文字でフォルダ分けされる仕組み:
+    </p>
+    <pre><code>ハッシュ: ce013625030ba8dba906f756967f9e9ca394464a
+保存先 : .git/objects/ce/013625030ba8dba906f756967f9e9ca394464a</code></pre>
+    <p>
+      ファイル数が多くなるとフォルダ1つに集中しすぎるのを防ぐ工夫です。
+    </p>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>blob = ファイル内容そのもの (名前は含まない)</li>
+      <li>IDは内容のハッシュ → 同じ内容なら同じID → 重複しない</li>
+      <li><code>git hash-object</code> でハッシュを計算、<code>git cat-file -p</code> で中身を読む</li>
+    </ul>
+
+    <p>次は、ファイル名を blob に結びつける <strong>tree</strong> の話。</p>
+
+    <div class="step-nav">
+      <a href="01-overview.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">A1: 全体像</span>
+      </a>
+      <a class="next" href="03-tree.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">A3: Tree</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

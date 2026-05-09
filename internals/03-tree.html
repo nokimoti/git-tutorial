@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>しくみ A3: Tree - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>内部のしくみ</h3>
+      <ul class="nav-list">
+        <li><a href="01-overview.html"><span class="step-number">A1</span>全体像</a></li>
+        <li><a href="02-blob.html"><span class="step-number">A2</span>Blob</a></li>
+        <li><a href="03-tree.html"><span class="step-number">A3</span>Tree</a></li>
+        <li><a href="04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
+        <li><a href="05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
+        <li><a href="06-explore.html"><span class="step-number">A6</span>覗いてみる</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+        <li><a href="../glossary/commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">しくみ A3</div>
+    <h1>Tree — フォルダ構造を表す目録</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>tree = フォルダのスナップショット、と理解する</li>
+        <li>tree が <strong>ファイル名</strong> と <strong>blobのハッシュ</strong> を結びつけることを知る</li>
+        <li>サブフォルダは「tree が tree を参照する」入れ子で表現される</li>
+      </ul>
+    </div>
+
+    <h2>Tree とは</h2>
+    <p>
+      <strong>tree</strong> は、ある時点のフォルダ1つ分のスナップショットを表すオブジェクトです。
+      内容はとてもシンプルで、<strong>「ファイル名 + そのファイルの blob ハッシュ」のリスト</strong> でしかありません。
+    </p>
+
+    <h2>Tree の中身を見る</h2>
+    <p>たとえばこんなファイル構成があったとします。</p>
+    <pre><code>my-project/
+├── hello.txt
+├── README.md
+└── src/
+    └── main.py</code></pre>
+    <p>これに対応する tree オブジェクトの中身は次のような形です。</p>
+    <pre><code>$ git cat-file -p &lt;ルートtreeのハッシュ&gt;
+100644 blob ce0136...    hello.txt
+100644 blob 3b18e5...    README.md
+040000 tree 8f2a91...    src</code></pre>
+    <p>各行を読み解くと:</p>
+    <ul>
+      <li><strong>100644</strong> — ファイルのモード (権限)</li>
+      <li><strong>blob</strong> または <strong>tree</strong> — オブジェクトの種類</li>
+      <li><strong>ハッシュ</strong> — そのオブジェクトのID</li>
+      <li><strong>名前</strong> — ファイル名 / フォルダ名</li>
+    </ul>
+
+    <h2>サブフォルダ = 別の tree</h2>
+    <p>
+      <code>src</code> 行に注目してください。<strong>tree</strong> 種別で、ハッシュ <code>8f2a91...</code> の別の tree を指しています。
+    </p>
+    <p>つまり <code>src/</code> の中身は、別の tree オブジェクトに丸投げされている形:</p>
+    <pre><code>$ git cat-file -p 8f2a91...
+100644 blob 7d4ee2...    main.py</code></pre>
+    <p>
+      フォルダ階層は、このように <strong>「tree が tree を参照する入れ子構造」</strong> で表現されます。
+    </p>
+
+    <h2>blob と tree の関係</h2>
+    <pre><code>[ルートtree]
+   ├─ "hello.txt"  ──→ [blob: ce0136...]
+   ├─ "README.md"  ──→ [blob: 3b18e5...]
+   └─ "src" ────→ [tree: 8f2a91...]
+                    └─ "main.py" ──→ [blob: 7d4ee2...]</code></pre>
+    <p>
+      ファイル名は tree 側に存在し、blob は中身だけを持つ。役割がきれいに分かれています。
+    </p>
+
+    <h2>同じフォルダ構造は同じ tree</h2>
+    <p>
+      tree 自体もハッシュで識別されるので、<strong>中身が同じフォルダは同じ tree</strong> になります。
+      たとえば「2つのコミットの間で <code>src/</code> が一切変わっていない」場合、両方のコミットが同じ <code>src</code> tree を再利用します。
+    </p>
+    <div class="tip">
+      これが Git が容量効率に優れる理由のひとつ。コミットを重ねても、<strong>変わってないファイル/フォルダは再利用される</strong>ので、無駄なデータが増えません。
+    </div>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>tree = フォルダ1つ分のスナップショット</li>
+      <li>「ファイル名 + blobハッシュ」のリストを持つ</li>
+      <li>サブフォルダは「tree が tree を参照」する入れ子で表現</li>
+      <li>変わらない部分は再利用される (容量節約)</li>
+    </ul>
+
+    <p>次は、tree を「いつの・誰のスナップショットか」と意味づける <strong>commit</strong> の話。</p>
+
+    <div class="step-nav">
+      <a href="02-blob.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">A2: Blob</span>
+      </a>
+      <a class="next" href="04-commit-object.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">A4: Commit</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>

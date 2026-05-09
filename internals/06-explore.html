@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>しくみ A6: 覗いてみる - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>内部のしくみ</h3>
+      <ul class="nav-list">
+        <li><a href="01-overview.html"><span class="step-number">A1</span>全体像</a></li>
+        <li><a href="02-blob.html"><span class="step-number">A2</span>Blob</a></li>
+        <li><a href="03-tree.html"><span class="step-number">A3</span>Tree</a></li>
+        <li><a href="04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
+        <li><a href="05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
+        <li><a href="06-explore.html"><span class="step-number">A6</span>覗いてみる</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+        <li><a href="../glossary/commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">しくみ A6</div>
+    <h1>実際に .git の中身を覗いてみる</h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>これまで学んだ仕組みを <strong>自分の手で確認</strong> する</li>
+        <li>HEAD → branch → commit → tree → blob の連鎖を実際にたどる</li>
+      </ul>
+    </div>
+
+    <h2>準備</h2>
+    <p>
+      入門ステップで作った練習用リポジトリ (<code>my-first-repo</code>) があれば、それを使えます。なければ新しく作ってください:
+    </p>
+    <pre><code>mkdir explore-git
+cd explore-git
+git init
+echo "hello world" &gt; hello.txt
+git add hello.txt
+git commit -m "最初のコミット"</code></pre>
+
+    <h2>① .git の中身を見る</h2>
+    <pre><code>ls .git</code></pre>
+    <p>こんな構成が見えるはずです:</p>
+    <pre><code>HEAD            config          description     hooks/
+info/           objects/        refs/</code></pre>
+    <ul>
+      <li><code>HEAD</code> — 現在のブランチを指すファイル</li>
+      <li><code>refs/</code> — ブランチ・タグの定義</li>
+      <li><code>objects/</code> — 全オブジェクトの保管庫</li>
+      <li><code>config</code> — リポジトリ固有の設定</li>
+    </ul>
+
+    <h2>② HEAD を覗く</h2>
+    <pre><code>cat .git/HEAD</code></pre>
+    <p>結果はこんな感じ:</p>
+    <pre><code>ref: refs/heads/main</code></pre>
+    <p>↑ これが「いま main ブランチを見ているよ」という宣言。</p>
+
+    <h2>③ main ブランチを覗く</h2>
+    <pre><code>cat .git/refs/heads/main</code></pre>
+    <p>結果は40文字のハッシュ1行:</p>
+    <pre><code>f1e2d3c4b5a698765432abcdef1234567890abcd</code></pre>
+    <p>↑ これがあなたが作った最初のコミットの ID。</p>
+
+    <h2>④ コミットオブジェクトを覗く</h2>
+    <p>
+      ハッシュをコピーして、次のコマンドで中身を見てみます ( <code>&lt;ハッシュ&gt;</code> は実際の値に置き換え):
+    </p>
+    <pre><code>git cat-file -t &lt;ハッシュ&gt;     # 種類を確認 → commit
+git cat-file -p &lt;ハッシュ&gt;     # 中身を表示</code></pre>
+    <p>こんな出力が出ます:</p>
+    <pre><code>tree abcd1234567890...
+author    Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
+committer Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
+
+最初のコミット</code></pre>
+
+    <h2>⑤ tree オブジェクトを覗く</h2>
+    <p>上の出力にあった <code>tree</code> 行のハッシュをそのまま:</p>
+    <pre><code>git cat-file -p &lt;treeハッシュ&gt;</code></pre>
+    <p>こんな出力:</p>
+    <pre><code>100644 blob ce0136250...    hello.txt</code></pre>
+    <p>↑ ここで初めて <strong>ファイル名</strong> が登場します。tree が「名前 → blob」の対応表だったことを実感できます。</p>
+
+    <h2>⑥ blob を覗く</h2>
+    <pre><code>git cat-file -p &lt;blobハッシュ&gt;</code></pre>
+    <p>結果:</p>
+    <pre><code>hello world</code></pre>
+    <p>↑ これがあなたが書いたファイルの中身そのもの。</p>
+
+    <h2>⑦ ハッシュを自分で計算してみる</h2>
+    <p>ファイルの中身が同じなら、ハッシュも同じになります:</p>
+    <pre><code>echo "hello world" | git hash-object --stdin</code></pre>
+    <p>
+      ここで出るハッシュが ⑥ で見た blob ハッシュと一致するはず。<strong>「内容 = ハッシュ」</strong> の関係が体感できます。
+    </p>
+
+    <h2>⑧ ブランチを作って参照ファイルを確認</h2>
+    <pre><code>git switch -c experiment
+ls .git/refs/heads/</code></pre>
+    <p>新しく <code>experiment</code> ファイルが増えているはず:</p>
+    <pre><code>experiment      main</code></pre>
+    <pre><code>cat .git/refs/heads/experiment</code></pre>
+    <p>main と同じハッシュが入っているはずです (まだ何もコミットしていないから)。</p>
+    <pre><code>cat .git/HEAD</code></pre>
+    <p>↑ <code>ref: refs/heads/experiment</code> に書き換わっているはず。HEAD ファイルの中身が変わっただけ、というのが実感できます。</p>
+
+    <h2>謎が解けるリスト</h2>
+    <p>仕組みを知ると、入門ステップの操作が腑に落ちます。</p>
+    <table>
+      <thead><tr><th>疑問</th><th>解</th></tr></thead>
+      <tbody>
+        <tr><td>なぜブランチ作成が一瞬?</td><td>ファイルを1つ作るだけ ([A5](05-refs.html))</td></tr>
+        <tr><td>なぜブランチ切替で「ファイルが変わって見える」?</td><td>HEAD ファイル書換 → 指すコミットの tree を取り出してWDに展開</td></tr>
+        <tr><td>なぜコミットメッセージ書き換えるとIDが変わる?</td><td>コミットの内容全部をハッシュ化しているから ([A4](04-commit-object.html))</td></tr>
+        <tr><td>なぜ Git はオフラインで動く?</td><td>すべてのオブジェクトと参照が <code>.git/</code> 内に自己完結しているから</td></tr>
+        <tr><td>なぜ巨大なリポジトリでも履歴が軽い?</td><td>変わらない blob/tree は再利用されるから ([A3](03-tree.html))</td></tr>
+      </tbody>
+    </table>
+
+    <h2>🎉 内部のしくみ完了!</h2>
+    <p>
+      お疲れさまでした。これで Git の内部構造の基礎は理解できたはず。
+      もっと深く知りたい人は <code>git help glossary</code> や、Pro Git book (<a href="https://git-scm.com/book/ja/v2" target="_blank" rel="noopener">git-scm.com/book/ja/v2</a>) の Chapter 10「Git の内側」がおすすめです。
+    </p>
+
+    <div class="step-nav">
+      <a href="05-refs.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">A5: 参照 (ref)</span>
+      </a>
+      <a class="next" href="../glossary/index.html">
+        <span class="nav-label">用語集 →</span>
+        <span class="nav-title">専門用語の説明一覧</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>
