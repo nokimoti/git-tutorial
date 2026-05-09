@@ -41,7 +41,8 @@
         <li><a href="03-tree.html"><span class="step-number">A3</span>Tree</a></li>
         <li><a href="04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
         <li><a href="05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
-        <li><a href="06-explore.html"><span class="step-number">A6</span>覗いてみる</a></li>
+        <li><a href="06-tag-object.html"><span class="step-number">A6</span>タグオブジェクト</a></li>
+        <li><a href="07-explore.html"><span class="step-number">A7</span>覗いてみる</a></li>
       </ul>
     </div>
     <div class="nav-section">
@@ -158,6 +159,9 @@ abc1234567890...   ← 直接ハッシュを指している</code></pre>
       一方、<strong>注釈付きタグ</strong> (= 作者・メッセージ付きの正式なタグ) は別格で、「タグオブジェクト」という独立した <a class="term" href="../glossary/object.html">オブジェクト</a> を作ります (これが4種類目のオブジェクト)。
       ファイルの中身はそのタグオブジェクトのハッシュ。
     </p>
+    <div class="tip">
+      注釈付きタグは「2層構造」を持つ少し凝ったしくみです。なぜそうなっているのか、タグオブジェクトの中身がどうなっているのかは、次の <a href="06-tag-object.html">A6: タグオブジェクト</a> で詳しく解説します。
+    </div>
 
     <h2>全体図 (ふたたび)</h2>
     <pre><code>.git/HEAD
@@ -187,16 +191,16 @@ abc1234567890...   ← 直接ハッシュを指している</code></pre>
       <li>これらは <strong>すべてただのテキスト</strong>。だから軽い・速い</li>
     </ul>
 
-    <p>次は最後のステップ。実際に手元のリポジトリで <code>.git</code> を覗いてみましょう。</p>
+    <p>次は、注釈付きタグの内部 (4つ目のオブジェクト) を詳しく見ていきます。</p>
 
     <div class="step-nav">
       <a href="04-commit-object.html">
         <span class="nav-label">← 前のステップ</span>
         <span class="nav-title">A4: Commit</span>
       </a>
-      <a class="next" href="06-explore.html">
+      <a class="next" href="06-tag-object.html">
         <span class="nav-label">次のステップ →</span>
-        <span class="nav-title">A6: 覗いてみる</span>
+        <span class="nav-title">A6: タグオブジェクト</span>
       </a>
     </div>
   </main>

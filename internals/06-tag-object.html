@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>しくみ A6: タグオブジェクト - Git はじめの一歩</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="site-title"><a href="../index.html">Git はじめの一歩</a></div>
+    <div class="nav-section">
+      <h3>入門ステップ</h3>
+      <ul class="nav-list">
+        <li><a href="../steps/01-what-is-git.html"><span class="step-number">01</span>Gitとは</a></li>
+        <li><a href="../steps/02-install.html"><span class="step-number">02</span>インストール</a></li>
+        <li><a href="../steps/03-setup.html"><span class="step-number">03</span>初期設定</a></li>
+        <li><a href="../steps/04-create-repo.html"><span class="step-number">04</span>リポジトリを作る</a></li>
+        <li><a href="../steps/05-add-commit.html"><span class="step-number">05</span>追加とコミット</a></li>
+        <li><a href="../steps/06-status.html"><span class="step-number">06</span>状態を確認</a></li>
+        <li><a href="../steps/07-log.html"><span class="step-number">07</span>履歴を見る</a></li>
+        <li><a href="../steps/08-undo.html"><span class="step-number">08</span>変更を取り消す</a></li>
+        <li><a href="../steps/09-branch-create.html"><span class="step-number">09</span>ブランチを作る</a></li>
+        <li><a href="../steps/10-branch-switch.html"><span class="step-number">10</span>ブランチを切替</a></li>
+        <li><a href="../steps/11-merge.html"><span class="step-number">11</span>マージする</a></li>
+        <li><a href="../steps/12-conflict.html"><span class="step-number">12</span>コンフリクト解決</a></li>
+        <li><a href="../steps/13-tag.html"><span class="step-number">13</span>タグをつける</a></li>
+        <li><a href="../steps/14-github.html"><span class="step-number">14</span>GitHub登録</a></li>
+        <li><a href="../steps/15-remote.html"><span class="step-number">15</span>リモート連携</a></li>
+        <li><a href="../steps/16-push-pull.html"><span class="step-number">16</span>プッシュとプル</a></li>
+        <li><a href="../steps/17-clone.html"><span class="step-number">17</span>クローン</a></li>
+        <li><a href="../steps/18-gitignore.html"><span class="step-number">18</span>.gitignore</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>内部のしくみ</h3>
+      <ul class="nav-list">
+        <li><a href="01-overview.html"><span class="step-number">A1</span>全体像</a></li>
+        <li><a href="02-blob.html"><span class="step-number">A2</span>Blob</a></li>
+        <li><a href="03-tree.html"><span class="step-number">A3</span>Tree</a></li>
+        <li><a href="04-commit-object.html"><span class="step-number">A4</span>Commit</a></li>
+        <li><a href="05-refs.html"><span class="step-number">A5</span>参照(ref)</a></li>
+        <li><a href="06-tag-object.html"><span class="step-number">A6</span>タグオブジェクト</a></li>
+        <li><a href="07-explore.html"><span class="step-number">A7</span>覗いてみる</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <h3>リファレンス</h3>
+      <ul class="nav-list">
+        <li><a href="../glossary/index.html">用語集</a></li>
+        <li><a href="../glossary/commands.html">コマンド一覧</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="step-label">しくみ A6</div>
+    <h1>注釈付きタグの内部 — 4つ目の <a class="term" href="../glossary/object.html">オブジェクト</a></h1>
+
+    <div class="goal-box">
+      <h2>このステップのゴール</h2>
+      <ul>
+        <li>軽量タグと注釈付きタグが <strong>内部で全く違うしくみ</strong> で実装されていることを知る</li>
+        <li>「タグオブジェクト」という4つ目のオブジェクトの中身を理解する</li>
+        <li>2層構造 (ref → タグオブジェクト → コミット) のメリットが分かる</li>
+      </ul>
+    </div>
+
+    <h2>おさらい: 2種類のタグ</h2>
+    <p>
+      <a href="../steps/13-tag.html">STEP 13</a> や <a href="05-refs.html">A5</a> でも触れたように、<a class="term" href="../glossary/tag.html">タグ</a> には2種類あります。
+    </p>
+    <table>
+      <thead><tr><th></th><th>軽量タグ</th><th>注釈付きタグ</th></tr></thead>
+      <tbody>
+        <tr><td>作成</td><td><code>git tag v1.0.0</code></td><td><code>git tag -a v1.0.0 -m "..."</code></td></tr>
+        <tr><td>作者・日時</td><td>記録されない</td><td>記録される</td></tr>
+        <tr><td>メッセージ</td><td>持てない</td><td>持てる</td></tr>
+        <tr><td>署名 (GPG)</td><td>不可</td><td>可能</td></tr>
+        <tr><td>用途</td><td>個人的な目印</td><td>公開リリース</td></tr>
+      </tbody>
+    </table>
+
+    <h2>軽量タグの内部 (おさらい)</h2>
+    <p>
+      軽量タグは <a class="term" href="../glossary/object.html">オブジェクト</a> を作りません。<a class="term" href="../glossary/branch.html">ブランチ</a> と全く同じく、<strong>1行のテキストファイル</strong> でしかありません。
+    </p>
+    <pre><code>$ git tag v1.0.0-light                  # 軽量タグを作成
+
+$ ls .git/refs/tags/
+v1.0.0-light
+
+$ cat .git/refs/tags/v1.0.0-light
+f1e2d3c4b5a698765432abcdef1234567890abcd   ← コミットのハッシュ1行のみ</code></pre>
+    <p>つまり「軽量タグ = ブランチを動かなくしたもの」と言えます。</p>
+
+    <h2>注釈付きタグの内部 — ここが本題</h2>
+    <p>
+      注釈付きタグは <strong>2層構造</strong> です。図にするとこうなります:
+    </p>
+    <pre><code>.git/refs/tags/v1.0.0  ──→  タグオブジェクト  ──→  コミット
+   (ref ファイル)            (4種類目の object)      (commit object)
+   "abc1234..."              tagger / message など       tree / parent など</code></pre>
+    <p>
+      ref ファイルが直接コミットを指す軽量タグと違って、間に <strong>タグオブジェクト</strong> が挟まっています。
+    </p>
+
+    <h3>タグオブジェクトとは</h3>
+    <p>
+      タグオブジェクトは、Git の <a class="term" href="../glossary/object.html">オブジェクト</a> 4種類のうちの最後の1つ (blob/tree/commit/<strong>tag</strong>)。
+      他のオブジェクトと同じく、ハッシュで識別され、<code>.git/objects/</code> に保管されます。
+    </p>
+
+    <h3>タグオブジェクトの中身</h3>
+    <p>実際の中身を覗くと、こんな構造です:</p>
+    <pre><code>$ git cat-file -p &lt;タグオブジェクトのハッシュ&gt;
+object f1e2d3c4b5a698765432abcdef1234567890abcd
+type   commit
+tag    v1.0.0
+tagger Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
+
+最初の正式リリース版です。
+新機能Aと改善点Bを含みます。</code></pre>
+    <p>各行の意味:</p>
+    <ul>
+      <li><strong>object</strong> — このタグが指す対象の <a class="term" href="../glossary/hash.html">ハッシュ</a> (普通はコミット)</li>
+      <li><strong>type</strong> — 指す対象の種類 (<code>commit</code> / <code>tree</code> / <code>blob</code> / <code>tag</code> のいずれか。99% は commit)</li>
+      <li><strong>tag</strong> — タグの名前 (例: <code>v1.0.0</code>)</li>
+      <li><strong>tagger</strong> — 作成者と日時 (コミットの author に相当)</li>
+      <li>空行のあと、<strong>タグメッセージ本文</strong></li>
+    </ul>
+    <div class="note">
+      コミットオブジェクトの構造 (<a href="04-commit-object.html">A4</a>) とそっくりですね。違いは:
+      <ul>
+        <li>コミット: <code>tree</code> + <code>parent</code> + <code>author/committer</code> を持つ</li>
+        <li>タグ: <code>object</code> + <code>type</code> + <code>tag</code> + <code>tagger</code> を持つ</li>
+      </ul>
+    </div>
+
+    <h2>2層構造になっている本当の理由</h2>
+    <p>「なぜ ref ファイルが直接コミットを指さず、わざわざタグオブジェクトを挟むのか?」</p>
+    <p>答え: <strong>タグ自身にメタ情報を持たせるため</strong> です。</p>
+    <ul>
+      <li>軽量タグは「<strong>ハッシュ1行</strong>」しか書けない → 作者も日時もメッセージも持てない</li>
+      <li>タグオブジェクトを挟めば、ref には <strong>タグオブジェクトのハッシュ</strong> を書くだけで、メタ情報はオブジェクト側に格納できる</li>
+      <li>タグオブジェクト自身が <a class="term" href="../glossary/hash.html">ハッシュ</a> で識別される → <strong>タグの内容も改ざん検出できる</strong></li>
+      <li>GPG で <strong>署名</strong> もタグオブジェクト内に埋め込める</li>
+    </ul>
+
+    <h2>実際に作って見比べる</h2>
+    <p>練習用リポジトリ (なければ <a href="07-explore.html">A7</a> 冒頭の手順で1つ作る) で次を試してみてください。</p>
+
+    <h3>① 両方のタグを作る</h3>
+    <pre><code># 軽量タグ
+git tag v1-light
+
+# 注釈付きタグ
+git tag -a v1-annot -m "正式リリース v1"</code></pre>
+
+    <h3>② ref ファイルの中身を比較</h3>
+    <pre><code>$ cat .git/refs/tags/v1-light
+f1e2d3c4...                 ← コミットのハッシュ
+
+$ cat .git/refs/tags/v1-annot
+abcd9876...                 ← タグオブジェクトのハッシュ (コミットのではない!)</code></pre>
+    <p>
+      <strong>違いはここ。</strong> 軽量タグの ref はコミットを直接指しているのに対し、注釈付きタグの ref は <strong>タグオブジェクトを指している</strong>。
+    </p>
+
+    <h3>③ それぞれのオブジェクトの種類を確認</h3>
+    <pre><code>$ git cat-file -t f1e2d3c4...        # 軽量タグの先
+commit                                ← コミットだ
+
+$ git cat-file -t abcd9876...        # 注釈付きタグの先
+tag                                   ← タグオブジェクトだ!</code></pre>
+    <p>
+      <code>tag</code> という種類が出れば、それが <strong>4つ目のオブジェクト</strong> の正体です。
+    </p>
+
+    <h3>④ タグオブジェクトの中身を表示</h3>
+    <pre><code>$ git cat-file -p abcd9876...
+object f1e2d3c4...
+type   commit
+tag    v1-annot
+tagger Taro Yamada &lt;taro@example.com&gt; 1746789600 +0900
+
+正式リリース v1</code></pre>
+
+    <h2>git show すると同じに見える、その理由</h2>
+    <p>
+      <code>git show v1-light</code> も <code>git show v1-annot</code> も、画面に出てくるのはほぼ同じコミット情報です。
+      これは Git が裏で <strong>タグオブジェクトを「素通り」して、その先のコミットまで自動で辿ってくれる</strong> から。
+      内部構造が違っていても、ユーザー目線ではほぼ同じに使えるよう設計されているわけです。
+    </p>
+
+    <h2>GPG 署名タグ (発展)</h2>
+    <p>
+      <code>git tag -s v1.0.0 -m "..."</code> で GPG 署名付きタグを作れます。
+      タグオブジェクトの末尾に署名ブロックが追加され、後から <code>git tag -v v1.0.0</code> で <strong>「本当に作者本人が作ったタグか」</strong> を検証できます。
+    </p>
+    <pre><code>object f1e2d3c4...
+type   commit
+tag    v1.0.0
+tagger ...
+
+正式リリース
+-----BEGIN PGP SIGNATURE-----
+iQGzBAABCAAdFiEEXXXXXX...
+...
+-----END PGP SIGNATURE-----</code></pre>
+    <p>
+      OSS のリリースタグでよく見かけます。署名はタグオブジェクトのハッシュにも反映されるので、改ざんは即バレです。
+    </p>
+
+    <h2>まとめ: 全体像</h2>
+    <pre><code>軽量タグ
+  .git/refs/tags/v1-light  ──→  commit object
+
+注釈付きタグ
+  .git/refs/tags/v1-annot  ──→  tag object  ──→  commit object
+                                 (object=…)
+                                 (tag=v1-annot)
+                                 (tagger=…)
+                                 (message)
+                                 (signature?)</code></pre>
+
+    <h2>このステップのまとめ</h2>
+    <ul>
+      <li>軽量タグ = ブランチ同様のただの <strong>ref ファイル</strong></li>
+      <li>注釈付きタグ = ref + <strong>タグオブジェクト (4種類目のオブジェクト)</strong> の2層構造</li>
+      <li>タグオブジェクトはメタ情報・メッセージ・署名を持てる独立した存在</li>
+      <li>タグオブジェクト自身もハッシュで保護される → 改ざん検出可能</li>
+    </ul>
+
+    <p>次は最終ステップ。学んだことを総動員して <code>.git</code> を実際に覗いてみます。</p>
+
+    <div class="step-nav">
+      <a href="05-refs.html">
+        <span class="nav-label">← 前のステップ</span>
+        <span class="nav-title">A5: 参照 (ref)</span>
+      </a>
+      <a class="next" href="07-explore.html">
+        <span class="nav-label">次のステップ →</span>
+        <span class="nav-title">A7: 覗いてみる</span>
+      </a>
+    </div>
+  </main>
+</div>
+<script src="../js/script.js"></script>
+</body>
+</html>
